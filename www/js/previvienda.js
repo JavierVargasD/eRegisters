@@ -2266,7 +2266,7 @@ function generatePDF() {
             + "              <td class='rotate'><div>pre-viv-"+(padDigits($("#customActa").val(), 3))+"-02</div></td>"
             + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/pre-viv-" + ac +"-"+ 2 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
             + "              <td  class='rotate'><div>pre-viv-"+(padDigits($("#customActa").val(), 3))+"-01</div></td>"
-            + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/pre-viv-" + ac +"-"+ 1 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
+            + "              <td  style='width:400px;'><img src='"+  window.localStorage.getItem('imgURL') +"pre-viv-" + ac +"-"+ 1 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
             + "            </tr>"
             + "            <tr>"
             + "              <td class='rotate'><div>pre-viv-"+(padDigits($("#customActa").val(), 3))+"-04</div></td>"
@@ -2338,6 +2338,7 @@ function resolveOnSuccess(entry){
     fileSys.root.getDirectory( dir ,
                     {create:false, exclusive: true},
                     function(directory) {
+                        window.localStorage.setItem("imgURL", directory.nativeURL);                   
                         entry.copyTo(directory, newFileName,  successMove, resOnError);
                     },
                     resOnError);
