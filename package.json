@@ -1,0 +1,20 @@
+{
+  "dependencies": {},
+  "devDependencies": {
+    "cordova-android": "^9.0.0",
+    "cordova-plugin-photo-library": "~2.1.0",
+    "cordova-plugin-save-image": "~0.2.5",
+    "cordova-plugin-whitelist": "1",
+    "cordova-sqlite-storage": "^5.1.0"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-save-image": {},
+      "cordova-plugin-photo-library": {
+        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "To choose photos"
+      },
+      "cordova-sqlite-storage": {}
+    }
+  }
+}

@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+        <meta name="format-detection" content="telephone=no">
+        <meta charset=utf-8>
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/index.css" rel="stylesheet">
+
+        <title>Hello World</title>
+        <style>
+            html{
+                height: 100%;
+            }g
+            body {
+                background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#cbccc8)) fixed;
+                min-height: 100%;
+            }
+
+
+        </style>
+        <script src="js/jquery.min.js"></script> 
+        <script src="js/preerosivo.js"></script>
+        <script src="js/utils.js"></script>
+        <script type="text/javascript" src="js/jsignature-min.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">		
+        </nav>
+        <div class="container" >
+            <form class="form-inline" role="form">
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                    Datos B&aacute;sicos</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="acta">Acta No:</label>
+                                    <input type="text" class="form-control" id="acta" readonly="true">
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="permiso">Permiso No:</label>
+                                    <input type="text" class="form-control" id="permiso">
+                                </div>
+                                <div class="form-group">
+                                    <label for="linea">L&iacute;nea/Salvo:</label>
+                                    <input type="text" class="form-control" id="linea">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                                    Localizacion</a>
+                            </h4>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label style="width: 180px" for="P_DEPTO">Departamento:</label>
+                                    <select id='P_DEPTO' class="P_DEPTO">
+                                        <option value="-1">--</option>
+                                        <option value="15">BOYAC&Aacute;</option>															
+                                        <option value="25">CUNDINAMARCA</option>		
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="P_MUN">Municipio:</label>
+                                    <select id='P_MUN' class="P_MUN">
+                                        <option value="154840" class="sub_15">Buenavista</option>
+                                        <option value="154660" class="sub_15">Caldas</option>
+                                        <option value="154640" class="sub_15">Chiquinquir&aacute;</option>
+                                        <option value="154060" class="sub_15">Cucaita</option>
+                                        <option value="154820" class="sub_15">Marip&iacute;</option>
+                                        <option value="154801" class="sub_15">Pauna</option>
+                                        <option value="153801" class="sub_15">R&aacute;quira</option>
+                                        <option value="154601" class="sub_15">Saboy&aacute;</option>
+                                        <option value="153880" class="sub_15">S&aacute;chica</option>
+                                        <option value="153660" class="sub_15">Samac&aacute;</option>
+                                        <option value="153820" class="sub_15">San Miguel de Sema</option>
+                                        <option value="153860" class="sub_15">Sutamarch&aacute;n</option>
+                                        <option value="153840" class="sub_15">Tinjac&aacute;</option>
+                                        <option value="153020" class="sub_15">Almeida</option>
+                                        <option value="152420" class="sub_15">Aquitania</option>
+                                        <option value="154201" class="sub_15">Arcabuco</option>
+                                        <option value="150640" class="sub_15">Bel&eacute;n</option>
+                                        <option value="152610" class="sub_15">Berbeo</option>
+                                        <option value="150610" class="sub_15">Bet&eacute;itiva</option>
+                                        <option value="151060" class="sub_15">Boavita</option>
+                                        <option value="153610" class="sub_15">Boyac&aacute;</option>
+                                        <option value="154670" class="sub_15">Briceño</option>
+                                        <option value="152080" class="sub_15">Busbanz&aacute;</option>
+                                        <option value="150201" class="sub_15">C&oacute;mbita</option>
+                                        <option value="152640" class="sub_15">Campohermoso</option>
+                                        <option value="150620" class="sub_15">Cerinza</option>
+                                        <option value="154020" class="sub_15">Ch&iacute;quiza</option>
+                                        <option value="153280" class="sub_15">Chinavita</option>
+                                        <option value="151401" class="sub_15">Chiscas</option>
+                                        <option value="151601" class="sub_15">Chita</option>
+                                        <option value="154420" class="sub_15">Chitaraque</option>
+                                        <option value="150240" class="sub_15">Chivat&aacute;</option>
+                                        <option value="153001" class="sub_15">Chivor</option>
+                                        <option value="153440" class="sub_15">Ci&eacute;nega</option>
+                                        <option value="154860" class="sub_15">Coper</option>
+                                        <option value="152060" class="sub_15">Corrales</option>
+                                        <option value="151040" class="sub_15">Covarach&iacute;a</option>
+                                        <option value="152230" class="sub_15">Cu&iacute;tiva</option>
+                                        <option value="151420" class="sub_15">Cubar&aacute;</option>
+                                        <option value="150462" class="sub_15">Duitama</option>
+                                        <option value="151280" class="sub_15">El Cocuy</option>
+                                        <option value="151240" class="sub_15">El Espino</option>
+                                        <option value="152250" class="sub_15">Firavitoba</option>
+                                        <option value="150601" class="sub_15">Floresta</option>
+                                        <option value="152020" class="sub_15">G&aacute;meza</option>
+                                        <option value="154220" class="sub_15">Gachantiv&aacute;</option>
+                                        <option value="152860" class="sub_15">Garagoa</option>
+                                        <option value="151220" class="sub_15">Guacamayas</option>
+                                        <option value="153050" class="sub_15">Guateque</option>
+                                        <option value="153040" class="sub_15">Guayat&aacute;</option>
+                                        <option value="151440" class="sub_15">Güic&aacute;n</option>
+                                        <option value="152240" class="sub_15">Iza</option>
+                                        <option value="153601" class="sub_15">Jenesano</option>
+                                        <option value="150840" class="sub_15">Jeric&oacute;</option>
+                                        <option value="153220" class="sub_15">La Capilla</option>
+                                        <option value="150860" class="sub_15">La Uvita</option>
+                                        <option value="155001" class="sub_15">La Victoria</option>
+                                        <option value="151840" class="sub_15">Labranzagrande</option>
+                                        <option value="152840" class="sub_15">Macanal</option>
+                                        <option value="152660" class="sub_15">Miraflores</option>
+                                        <option value="152201" class="sub_15">Mongu&iacute;</option>
+                                        <option value="152001" class="sub_15">Mongua</option>
+                                        <option value="154260" class="sub_15">Moniquir&aacute;</option>
+                                        <option value="154080" class="sub_15">Motavita</option>
+                                        <option value="154880" class="sub_15">Muzo</option>
+                                        <option value="152280" class="sub_15">Nobsa</option>
+                                        <option value="153620" class="sub_15">Nuevo Col&oacute;n</option>
+                                        <option value="150220" class="sub_15">Oicat&aacute;</option>
+                                        <option value="155060" class="sub_15">Otanche</option>
+                                        <option value="152620" class="sub_15">P&aacute;ez</option>
+                                        <option value="153210" class="sub_15">Pachavita</option>
+                                        <option value="150440" class="sub_15">Paipa</option>
+                                        <option value="152401" class="sub_15">Pajarito</option>
+                                        <option value="151260" class="sub_15">Panqueba</option>
+                                        <option value="151820" class="sub_15">Paya</option>
+                                        <option value="150680" class="sub_15">Paz de R&iacute;o</option>
+                                        <option value="152460" class="sub_15">Pesca</option>
+                                        <option value="151801" class="sub_15">Pisba</option>
+                                        <option value="155201" class="sub_15">Puerto Boyac&aacute;</option>
+                                        <option value="155020" class="sub_15">Qu&iacute;pama</option>
+                                        <option value="153401" class="sub_15">Ramiriqu&iacute;</option>
+                                        <option value="153420" class="sub_15">Rond&oacute;n</option>
+                                        <option value="152601" class="sub_15">San Eduardo</option>
+                                        <option value="154460" class="sub_15">San Jos&eacute; de Pare</option>
+                                        <option value="152801" class="sub_15">San Luis de Gaceno</option>
+                                        <option value="151201" class="sub_15">San Mateo</option>
+                                        <option value="155040" class="sub_15">San Pablo de Borbur</option>
+                                        <option value="152820" class="sub_15">Santa Mar&iacute;a</option>
+                                        <option value="150480" class="sub_15">Santa Rosa de Viterbo</option>
+                                        <option value="154240" class="sub_15">Santa Sof&iacute;a</option>
+                                        <option value="154440" class="sub_15">Santana</option>
+                                        <option value="150820" class="sub_15">Sativanorte</option>
+                                        <option value="150801" class="sub_15">Sativasur</option>
+                                        <option value="153460" class="sub_15">Siachoque</option>
+                                        <option value="151001" class="sub_15">Soat&aacute;</option>
+                                        <option value="151640" class="sub_15">Socha</option>
+                                        <option value="151620" class="sub_15">Socot&aacute;</option>
+                                        <option value="152211" class="sub_15">Sogamoso</option>
+                                        <option value="153030" class="sub_15">Somondoco</option>
+                                        <option value="154040" class="sub_15">Sora</option>
+                                        <option value="153480" class="sub_15">Sorac&aacute;</option>
+                                        <option value="150420" class="sub_15">Sotaquir&aacute;</option>
+                                        <option value="150880" class="sub_15">Susac&oacute;n</option>
+                                        <option value="153060" class="sub_15">Sutatenza</option>
+                                        <option value="152040" class="sub_15">T&oacute;paga</option>
+                                        <option value="151660" class="sub_15">Tasco</option>
+                                        <option value="153201" class="sub_15">Tenza</option>
+                                        <option value="153260" class="sub_15">Tiban&aacute;</option>
+                                        <option value="152260" class="sub_15">Tibasosa</option>
+                                        <option value="151020" class="sub_15">Tipacoque</option>
+                                        <option value="150260" class="sub_15">Toca</option>
+                                        <option value="154401" class="sub_15">Togü&iacute;</option>
+                                        <option value="152440" class="sub_15">Tota</option>
+                                        <option value="150009" class="sub_15">Tunja</option>
+                                        <option value="154680" class="sub_15">Tunungu&aacute;</option>
+                                        <option value="153630" class="sub_15">Turmequ&eacute;</option>
+                                        <option value="150401" class="sub_15">Tuta</option>
+                                        <option value="150660" class="sub_15">Tutaz&aacute;</option>
+                                        <option value="153240" class="sub_15">&Uacute;mbita</option>
+                                        <option value="153640" class="sub_15">Ventaquemada</option>
+                                        <option value="154001" class="sub_15">Villa de Leyva</option>
+                                        <option value="153450" class="sub_15">Viracach&aacute;</option>
+                                        <option value="152680" class="sub_15">Zetaquira</option>
+                                        <option value="2559" class="sub_25">Simijaca</option>
+                                        <option value="2689" class="sub_25">Chocont&aacute;</option>
+                                        <option value="2094" class="sub_25">Machet&aacute;</option>
+                                        <option value="1924" class="sub_25">Manta</option>
+                                        <option value="2595" class="sub_25">Sesquil&eacute;</option>
+                                        <option value="2584" class="sub_25">Suesca</option>
+                                        <option value="1980" class="sub_25">Tibirita</option>
+                                        <option value="2715" class="sub_25">Villapinz&oacute;n</option>
+                                        <option value="380" class="sub_25">Agua de Dios</option>
+                                        <option value="289" class="sub_25">Girardot</option>
+                                        <option value="255" class="sub_25">Guataqu&iacute;</option>
+                                        <option value="300" class="sub_25">Jerusal&eacute;n</option>
+                                        <option value="265" class="sub_25">Nariño</option>
+                                        <option value="333" class="sub_25">Nilo</option>
+                                        <option value="282" class="sub_25">Ricaurte</option>
+                                        <option value="377" class="sub_25">Tocaima</option>
+                                        <option value="1107" class="sub_25">Caparrap&iacute;</option>
+                                        <option value="990" class="sub_25">Guaduas</option>
+                                        <option value="379" class="sub_25">Puerto Salgar</option>
+                                        <option value="2242" class="sub_25">Alb&aacute;n</option>
+                                        <option value="1010" class="sub_25">La Peña</option>
+                                        <option value="1167" class="sub_25">La Vega</option>
+                                        <option value="1105" class="sub_25">Nimaima</option>
+                                        <option value="1106" class="sub_25">Nocaima</option>
+                                        <option value="1363" class="sub_25">Quebradanegra</option>
+                                        <option value="1470" class="sub_25">San Francisco</option>
+                                        <option value="1185" class="sub_25">Sasaima</option>
+                                        <option value="1777" class="sub_25">Supat&aacute;</option>
+                                        <option value="500" class="sub_25">&uacute;tica</option>
+                                        <option value="1550" class="sub_25">Vergara</option>
+                                        <option value="800" class="sub_25">Villeta</option>
+                                        <option value="1712" class="sub_25">Gachal&aacute;</option>
+                                        <option value="1745" class="sub_25">Gachet&aacute;</option>
+                                        <option value="2180" class="sub_25">Gama</option>
+                                        <option value="2710" class="sub_25">Guasca</option>
+                                        <option value="2680" class="sub_25">Guatavita</option>
+                                        <option value="2300" class="sub_25">Jun&iacute;n</option>
+                                        <option value="2780" class="sub_25">La Calera</option>
+                                        <option value="1949" class="sub_25">Ubal&aacute;</option>
+                                        <option value="231" class="sub_25">Beltr&aacute;n</option>
+                                        <option value="1412" class="sub_25">Bituima</option>
+                                        <option value="1050" class="sub_25">Chaguan&iacute;</option>
+                                        <option value="1630" class="sub_25">Guayabal de S&iacute;quima</option>
+                                        <option value="1290" class="sub_25">Pul&iacute;</option>
+                                        <option value="1303" class="sub_25">San Juan de Rioseco</option>
+                                        <option value="1489" class="sub_25">Vian&iacute;</option>
+                                        <option value="520" class="sub_25">Medina</option>
+                                        <option value="256" class="sub_25">Paratebueno</option>
+                                        <option value="1746" class="sub_25">C&aacute;queza</option>
+                                        <option value="2400" class="sub_25">Chipaque</option>
+                                        <option value="1923" class="sub_25">Choach&iacute;</option>
+                                        <option value="1985" class="sub_25">F&oacute;meque</option>
+                                        <option value="2713" class="sub_25">Fosca</option>
+                                        <option value="1270" class="sub_25">Guayabetal</option>
+                                        <option value="2350" class="sub_25">Guti&eacute;rrez</option>
+                                        <option value="1496" class="sub_25">Quetame</option>
+                                        <option value="1867" class="sub_25">Ubaque</option>
+                                        <option value="2376" class="sub_25">Une</option>
+                                        <option value="1310" class="sub_25">El Peñ&oacute;n</option>
+                                        <option value="1462" class="sub_25">La Palma</option>
+                                        <option value="2136" class="sub_25">Pacho</option>
+                                        <option value="960" class="sub_25">Paime</option>
+                                        <option value="2700" class="sub_25">San Cayetano</option>
+                                        <option value="1323" class="sub_25">Topaip&iacute;</option>
+                                        <option value="1575" class="sub_25">Villag&oacute;mez</option>
+                                        <option value="2000" class="sub_25">Yacop&iacute;</option>
+                                        <option value="2558" class="sub_25">Cajic&aacute;</option>
+                                        <option value="2600" class="sub_25">Ch&iacute;a</option>
+                                        <option value="2600" class="sub_25">Cogua</option>
+                                        <option value="2568" class="sub_25">Gachancip&aacute;</option>
+                                        <option value="2585" class="sub_25">Nemoc&oacute;n</option>
+                                        <option value="2650" class="sub_25">Sop&oacute;</option>
+                                        <option value="2569" class="sub_25">Tabio</option>
+                                        <option value="2587" class="sub_25">Tenjo</option>
+                                        <option value="2605" class="sub_25">Tocancip&aacute;</option>
+                                        <option value="2652" class="sub_25">Zipaquir&aacute;</option>
+                                        <option value="2598" class="sub_25">Bojac&aacute;</option>
+                                        <option value="2566" class="sub_25">Cota</option>
+                                        <option value="2685" class="sub_25">El Rosal</option>
+                                        <option value="2586" class="sub_25">Facatativ&aacute;</option>
+                                        <option value="2548" class="sub_25">Funza</option>
+                                        <option value="2554" class="sub_25">Madrid</option>
+                                        <option value="2516" class="sub_25">Mosquera</option>
+                                        <option value="2663" class="sub_25">Subachoque</option>
+                                        <option value="2500" class="sub_25">Zipac&oacute;n</option>
+                                        <option value="2700" class="sub_25">Sibat&eacute;</option>
+                                        <option value="2566" class="sub_25">Soacha</option>
+                                        <option value="1417" class="sub_25">Arbel&aacute;ez</option>
+                                        <option value="2560" class="sub_25">Cabrera</option>
+                                        <option value="1728" class="sub_25">Fusagasug&aacute;</option>
+                                        <option value="2500" class="sub_25">Granada</option>
+                                        <option value="1024" class="sub_25">Pandi</option>
+                                        <option value="2180" class="sub_25">Pasca</option>
+                                        <option value="1600" class="sub_25">San Bernardo</option>
+                                        <option value="1470" class="sub_25">Silvania</option>
+                                        <option value="1647" class="sub_25">Tibacuy</option>
+                                        <option value="1600" class="sub_25">Venecia</option>
+                                        <option value="710" class="sub_25">Anapoima</option>
+                                        <option value="1657" class="sub_25">Anolaima</option>
+                                        <option value="420" class="sub_25">Apulo</option>
+                                        <option value="1600" class="sub_25">Cachipay</option>
+                                        <option value="990" class="sub_25">El Colegio</option>
+                                        <option value="1200" class="sub_25">La Mesa</option>
+                                        <option value="2012" class="sub_25">Quipile</option>
+                                        <option value="1540" class="sub_25">San Antonio del Tequendama</option>
+                                        <option value="1384" class="sub_25">Tena</option>
+                                        <option value="567" class="sub_25">Viot&aacute;</option>
+                                        <option value="2600" class="sub_25">Carmen de Carupa</option>
+                                        <option value="2590" class="sub_25">Cucunub&aacute;</option>
+                                        <option value="2750" class="sub_25">F&uacute;quene</option>
+                                        <option value="2688" class="sub_25">Guachet&aacute;</option>
+                                        <option value="2589" class="sub_25">Lenguazaque</option>										
+                                        <option value="2655" class="sub_25">Susa</option>
+                                        <option value="2550" class="sub_25">Sutatausa</option>
+                                        <option value="2950" class="sub_25">Tausa</option>
+                                        <option value="2556" class="sub_25">Ubat&eacute;</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="vereda">Vereda:</label>
+                                    <input type="text" class="form-control" id="vereda">
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="predio">Predio:</label>
+                                    <input type="text" class="form-control" id="predio">
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="propietario">Propietario:</label>
+                                    <input type="text" class="form-control" id="propietario">
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="propietario">Doc. Propietario:</label>
+                                    <input type="text" class="form-control" id="cc_propietario">
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="propietario">Lugar doc:</label>
+                                    <input type="text" class="form-control" id="lugar_cc_propietario">
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="telefono">Telefono:</label>
+                                    <input type="text" class="form-control" id="telefono">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                                    Ubicacion</a>
+                            </h4>
+                        </div>
+                        <div id="collapse3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label style="width: 150px" for="origen_coord">Origen de coord:</label>
+                                    <input type="text" class="form-control" id="origen_coord"  value="MAGNA COLOMBIA BOGOTA" />
+                                </div>
+                                <div class="form-group">
+                                    <label  style="width: 150px" for="coordenada_e">Coordenada E:</label>
+                                    <input type="text" class="form-control" id="coordenada_e">
+                                </div>
+                                <div class="form-group">
+                                    <label  style="width: 150px" for="coordenada_n">Coordenada N:</label>
+                                    <input type="text" class="form-control" id="coordenada_n">
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 150px" for="stk">Stk:</label>
+                                    <input type="text" class="form-control" id="stk">
+                                </div>
+                                <div class="form-group">
+                                    <label  style="width: 150px" for="sp_cercano">Vp. cercano:</label>
+                                    <input type="text" class="form-control" id="sp_cercano">
+                                </div>
+                                <div class="form-group">
+                                    <label  style="width: 150px" for="distancia_sp">Distancia Vp:</label>
+                                    <input type="text" class="form-control" id="distancia_sp">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                                    Estado del Proceso</a>
+                            </h4>
+                        </div>
+                        <div id="collapse4" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="estado_activo">Activo:</label>
+                                    <input type="checkbox" class="form-control" id="estado_activo">
+                                </div>
+                                <div class="form-group">
+                                    <label for="estado_inactivo">Inactivo:</label>
+                                    <input type="checkbox" class="form-control" id="estado_inactivo">
+                                </div>
+                                <div class="form-group">
+                                    <label for="estado_estabilizado">Estabilizado:</label>
+                                    <input type="checkbox" class="form-control" id="estado_estabilizado">
+                                </div>
+                                <div class="form-group">
+                                    <label for="unid_geologica">Unidad Geologica:</label>
+                                    <input type="text" class="form-control" id="unid_geologica">
+                                </div>
+                                <div class="form-group">
+                                    <label for="litologia">Litologia:</label>
+                                    <input type="text" class="form-control" id="litologia">
+                                </div>
+                                <br/><fieldset>
+                                    <legend>Unidad fisiografica</legend>
+                                    <div class="form-group">
+                                        <label for="uni_terraza">Terraza:</label>
+                                        <input type="checkbox" class="form-control" id="uni_terraza">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="uni_coluvion">Coluvión:</label>
+                                        <input type="checkbox" class="form-control" id="uni_coluvion">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="uni_llanura">Llanura:</label>
+                                        <input type="checkbox" class="form-control" id="uni_llanura">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="uni_loma">Loma:</label>
+                                        <input type="checkbox" class="form-control" id="uni_loma">
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse41">
+                                    Periodo climatico</a>
+                            </h4>
+                        </div>
+                        <div id="collapse41" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="periodo_verano">Verano:</label>
+                                    <input type="checkbox" class="form-control" id="periodo_verano">
+                                </div>
+                                <div class="form-group">
+                                    <label for="periodo_invierno">Invierno:</label>
+                                    <input type="checkbox" class="form-control" id="periodo_invierno">
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse42">
+                                    Usos del suelo</a>
+                            </h4>
+                        </div>
+                        <div id="collapse42" class="panel-collapse collapse">
+                            <div class="panel-body">							
+                                <div class="form-group">
+                                    <label for="bosque_primario">Bosque primario:</label>
+                                    <input type="checkbox" class="form-control" id="bosque_primario">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bosque_secundario">Bosque secundario:</label>
+                                    <input type="checkbox" class="form-control" id="bosque_secundario">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bosque_galeria">Bosque de galeria:</label>
+                                    <input type="checkbox" class="form-control" id="bosque_galeria">
+                                </div>
+                                <div class="form-group">
+                                    <label for="rastrojo">Rastrojo:</label>
+                                    <input type="checkbox" class="form-control" id="rastrojo">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cultivos">Cultivos:</label>
+                                    <input type="checkbox" class="form-control" id="cultivos">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pastos">Pastos:</label>
+                                    <input type="checkbox" class="form-control" id="pastos">
+                                </div>
+                                <div class="form-group">
+                                    <label for="eriales">Eriales:</label>
+                                    <input type="checkbox" class="form-control" id="eriales">
+                                </div>
+                                <div class="form-group">
+                                    <label  style="width: 150px" for="otro">Otro:</label>
+                                    <input type="text" class="form-control" id="otro">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse411">
+                                    Tipo de remocion en masa</a>
+                            </h4>
+                        </div>
+                        <div id="collapse411" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <br/><fieldset>
+                                    <legend>Deslizamiento</legend>
+                                    <div class="form-group">
+                                        <label for="rotacional">Rotacional:</label>
+                                        <input type="checkbox" class="form-control" id="rotacional">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="traslacional">Traslacional:</label>
+                                        <input type="checkbox" class="form-control" id="traslacional">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="complejo">Complejo:</label>
+                                        <input type="checkbox" class="form-control" id="complejo">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="masa_otro">Otro:</label>
+                                        <input type="text" class="form-control" id="masa_otro">
+                                    </div>
+                                </fieldset>
+                                <div class="form-group">
+                                    <label for="caida_rocas">Caidas rocas:</label>
+                                    <input type="checkbox" class="form-control" id="caida_rocas">
+                                </div>
+                                <div class="form-group">
+                                    <label for="volcamiento">Volcamiento:</label>
+                                    <input type="checkbox" class="form-control" id="volcamiento">
+                                </div>
+                                <br/><fieldset>
+                                    <legend>Flujos</legend>
+                                    <div class="form-group">
+                                        <label for="flujos_escombros">Escombros:</label>
+                                        <input type="checkbox" class="form-control" id="flujos_escombros">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="flujos_lodo">Lodo:</label>
+                                        <input type="checkbox" class="form-control" id="flujos_lodo">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="flujos_detritos">Detrítos:</label>
+                                        <input type="checkbox" class="form-control" id="flujos_detritos">
+                                    </div>
+                                </fieldset>
+                                <div class="form-group">
+                                    <label for="reptacion">Reptación:</label>
+                                    <input type="checkbox" class="form-control" id="reptacion">
+                                </div>
+                                <div class="form-group">
+                                    <label for="terraceras">Terracetas o pata de vaca:</label>
+                                    <input type="checkbox" class="form-control" id="terraceras">
+                                </div>
+                            </div>
+                        </div>
+                    </div>                  
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">
+                                    Tipo de erosión superficial</a>
+                            </h4>
+                        </div>
+                        <div id="collapse7" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <br/><fieldset>
+                                    <legend>Laminar</legend>
+                                    <div class="form-group">
+                                        <label for="laminar_leve">Leve:</label>
+                                        <input type="checkbox" class="form-control" id="laminar_leve">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="laminar_moderada">Moderada:</label>
+                                        <input type="checkbox" class="form-control" id="laminar_moderada">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="laminar_severa">Severa:</label>
+                                        <input type="checkbox" class="form-control" id="laminar_severa">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="laminar_muysevera">Muy severa:</label>
+                                        <input type="checkbox" class="form-control" id="laminar_muysevera">
+                                    </div>                                    
+                                </fieldset>
+                                <br/><fieldset>
+                                    <legend>En surcos</legend>
+                                    <div class="form-group">
+                                        <label for="surco_leve">Leve:</label>
+                                        <input type="checkbox" class="form-control" id="surco_leve">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="surco_moderada">Moderada:</label>
+                                        <input type="checkbox" class="form-control" id="surco_moderada">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="surco_severa">Severa:</label>
+                                        <input type="checkbox" class="form-control" id="surco_severa">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="surco_muysevera">Muy severa:</label>
+                                        <input type="checkbox" class="form-control" id="surco_muysevera">
+                                    </div>                                    
+                                </fieldset>
+                              <br/><fieldset>
+                                    <legend>En Cárcavas</legend>
+                                    <div class="form-group">
+                                        <label for="carcavas_leve">Leve:</label>
+                                        <input type="checkbox" class="form-control" id="carcavas_leve">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="carcavas_moderada">Moderada:</label>
+                                        <input type="checkbox" class="form-control" id="carcavas_moderada">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="carcavas_severa">Severa:</label>
+                                        <input type="checkbox" class="form-control" id="carcavas_severa">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="carcavas_muysevera">Muy severa:</label>
+                                        <input type="checkbox" class="form-control" id="carcavas_muysevera">
+                                    </div>                                    
+                                </fieldset>
+                                <br/><fieldset>
+                                    <legend>Socavamiento</legend>
+                                    <div class="form-group">
+                                        <label for="socava_leve">Leve:</label>
+                                        <input type="checkbox" class="form-control" id="socava_leve">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="socava_moderada">Moderada:</label>
+                                        <input type="checkbox" class="form-control" id="socava_moderada">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="socava_severa">Severa:</label>
+                                        <input type="checkbox" class="form-control" id="socava_severa">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="socava_muysevera">Muy severa:</label>
+                                        <input type="checkbox" class="form-control" id="socava_muysevera">
+                                    </div>                                    
+                                </fieldset>
+                                <br/><fieldset>
+                                    <legend>
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Otra, Cuál?" id="afectacion_otro">
+                                    </div>
+									</legend>
+                                    <div class="form-group">
+                                        <label for="otra_leve">Leve:</label>
+                                        <input type="checkbox" class="form-control" id="otro_leve">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="otra_moderada">Moderada:</label>
+                                        <input type="checkbox" class="form-control" id="otro_moderada">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="otra_severa">Severa:</label>
+                                        <input type="checkbox" class="form-control" id="otro_severa">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="otra_muysevera">Muy severa:</label>
+                                        <input type="checkbox" class="form-control" id="otro_muysevera">
+                                    </div>                                    
+                                </fieldset>
+
+                            </div>							
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse412">
+                                    Pendiente del terreno</a>
+                            </h4>
+                        </div>
+                        <div id="collapse412" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="pend_baja">Baja (1° - 15°):</label>
+                                    <input type="checkbox" class="form-control" id="pend_baja">
+                                </div>
+								<div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Area M2" id="area_baja">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pend_media">Media (15° - 30°):</label>
+                                    <input type="checkbox" class="form-control" id="pend_media">
+                                </div>
+								<div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Area M2" id="area_media">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pend_alta">Alta (30° - 45°):</label>
+                                    <input type="checkbox" class="form-control" id="pend_alta">
+                                </div>
+								<div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Area M2" id="area_alta">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pend_muyalta">Muy Alta (> 45°):</label>
+                                    <input type="checkbox" class="form-control" id="pend_muyalta">
+                                </div>
+									<div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Area M2" id="area_muyalta">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse413">
+                                    Nivel freatico</a>
+                            </h4>
+                        </div>
+                        <div id="collapse413" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="aflorante">Aflorante:</label>
+                                    <input type="checkbox" class="form-control" id="aflorante">
+                                </div>
+                                <div class="form-group">
+                                    <label for="no_aflorante">No Aflorante:</label>
+                                    <input type="checkbox" class="form-control" id="no_aflorante">
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse414">
+                                   Morfometria</a>
+                            </h4>
+                        </div>
+                        <div id="collapse414" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="morfo_ancho">Ancho:</label>
+                                    <input type="text" class="form-control" id="morfo_ancho">
+                                </div>
+                                <div class="form-group">
+                                    <label for="morfo_long">Longitud:</label>
+                                    <input type="text" class="form-control" id="morfo_long">
+                                </div> 
+                                                                <div class="form-group">
+                                    <label for="morfo_prof">Profundidad aproximada:</label>
+                                    <input type="text" class="form-control" id="morfo_prof">
+                                </div>
+                                <div class="form-group">
+                                    <label for="morfo_desplaza">Desplazamiento:</label>
+                                    <input type="text" class="form-control" id="morfo_desliza">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse9">
+                                    Observaciones Generales</a>
+                            </h4>
+                        </div>
+                        <div id="collapse9" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <textarea class="form-control" id="observa" rows="3"></textarea>
+                                </div>
+                            </div>
+							<div class="form-group">
+                                            <label for="rela_repre_prop">Relación entre representante y propietario</label>
+                                            <input type="text" class="form-control" id="rela_repre_prop">
+                                        </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse11">
+                                    Encabezados</a>
+                            </h4>
+                        </div>
+			<div id="collapse11" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="pag">Total paginas:</label>
+                                    <input type="text" class="form-control" id="pagDe" />
+                                    <label for="pag">Acta número:</label>
+                                    <input type="text" class="form-control" id="customActa" />
+                                </div>
+                            </div>
+                        </div>						
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse10">
+                                    Fotos 1...8</a>
+                            </h4>
+                        </div>
+						 <div id="collapse10" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto(1)" >Tomar Foto 1</button>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto(2)" >Tomar Foto 2</button>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto(3)" >Tomar Foto 3</button>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto(4)" >Tomar Foto 4</button>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto(5)" >Tomar Foto 5</button>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto(6)" >Tomar Foto 6</button>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto(7)" >Tomar Foto 7</button>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto(8)" >Tomar Foto 8</button>
+                                </div>
+                            </div>
+                        </div>						
+                    </div>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto()" >Tomar Foto</button>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="generatePDF()" >Generar planilla PDF</button>
+                <button class="btn btn-lg btn-success btn-block" type="button" onclick="insertUpdate()">Guardar</button>
+                <input type="hidden" id="singImagePath" value="/sdcard0/Pictures/Sing.png" name="singImagePath" />
+            </form>
+        </div> 
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+    </body>
+</html>

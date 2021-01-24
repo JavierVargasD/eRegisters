@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+        <meta name="format-detection" content="telephone=no">
+        <meta charset=utf-8>
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/index.css" rel="stylesheet">
+
+        <title>Hello World</title>
+        <style>
+            html{
+                height: 100%;
+            }g
+            body {
+                background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#cbccc8)) fixed;
+                min-height: 100%;
+            }
+
+
+        </style>
+        <script src="js/jquery.min.js"></script> 
+        <script src="js/prehidrico.js"></script>
+        <script src="js/utils.js"></script>
+        <script type="text/javascript" src="js/jsignature-min.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">		
+        </nav>
+        <div class="container" >
+            <form class="form-inline" role="form">
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                    Datos B&aacute;sicos</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="acta">Acta No:</label>
+                                    <input type="text" class="form-control" id="acta" readonly="true">
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="permiso">Permiso No:</label>
+                                    <input type="text" class="form-control" id="permiso">
+                                </div>
+                                <div class="form-group">
+                                    <label for="linea">L&iacute;nea/Salvo:</label>
+                                    <input type="text" class="form-control" id="linea">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                                    Localizacion</a>
+                            </h4>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label style="width: 180px" for="P_DEPTO">Departamento:</label>
+                                    <select id='P_DEPTO' class="P_DEPTO">
+                                        <option value="-1">--</option>
+                                        <option value="15">BOYAC&Aacute;</option>															
+                                        <option value="25">CUNDINAMARCA</option>		
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="P_MUN">Municipio:</label>
+                                   <select id='P_MUN' class="P_MUN">
+                                        <option value="154840" class="sub_15">Buenavista</option>
+                                        <option value="154660" class="sub_15">Caldas</option>
+                                        <option value="154640" class="sub_15">Chiquinquir&aacute;</option>
+                                        <option value="154060" class="sub_15">Cucaita</option>
+                                        <option value="154820" class="sub_15">Marip&iacute;</option>
+                                        <option value="154801" class="sub_15">Pauna</option>
+                                        <option value="153801" class="sub_15">R&aacute;quira</option>
+                                        <option value="154601" class="sub_15">Saboy&aacute;</option>
+                                        <option value="153880" class="sub_15">S&aacute;chica</option>
+                                        <option value="153660" class="sub_15">Samac&aacute;</option>
+                                        <option value="153820" class="sub_15">San Miguel de Sema</option>
+                                        <option value="153860" class="sub_15">Sutamarch&aacute;n</option>
+                                        <option value="153840" class="sub_15">Tinjac&aacute;</option>
+                                        <option value="153020" class="sub_15">Almeida</option>
+                                        <option value="152420" class="sub_15">Aquitania</option>
+                                        <option value="154201" class="sub_15">Arcabuco</option>
+                                        <option value="150640" class="sub_15">Bel&eacute;n</option>
+                                        <option value="152610" class="sub_15">Berbeo</option>
+                                        <option value="150610" class="sub_15">Bet&eacute;itiva</option>
+                                        <option value="151060" class="sub_15">Boavita</option>
+                                        <option value="153610" class="sub_15">Boyac&aacute;</option>
+                                        <option value="154670" class="sub_15">Briceño</option>
+                                        <option value="152080" class="sub_15">Busbanz&aacute;</option>
+                                        <option value="150201" class="sub_15">C&oacute;mbita</option>
+                                        <option value="152640" class="sub_15">Campohermoso</option>
+                                        <option value="150620" class="sub_15">Cerinza</option>
+                                        <option value="154020" class="sub_15">Ch&iacute;quiza</option>
+                                        <option value="153280" class="sub_15">Chinavita</option>
+                                        <option value="151401" class="sub_15">Chiscas</option>
+                                        <option value="151601" class="sub_15">Chita</option>
+                                        <option value="154420" class="sub_15">Chitaraque</option>
+                                        <option value="150240" class="sub_15">Chivat&aacute;</option>
+                                        <option value="153001" class="sub_15">Chivor</option>
+                                        <option value="153440" class="sub_15">Ci&eacute;nega</option>
+                                        <option value="154860" class="sub_15">Coper</option>
+                                        <option value="152060" class="sub_15">Corrales</option>
+                                        <option value="151040" class="sub_15">Covarach&iacute;a</option>
+                                        <option value="152230" class="sub_15">Cu&iacute;tiva</option>
+                                        <option value="151420" class="sub_15">Cubar&aacute;</option>
+                                        <option value="150462" class="sub_15">Duitama</option>
+                                        <option value="151280" class="sub_15">El Cocuy</option>
+                                        <option value="151240" class="sub_15">El Espino</option>
+                                        <option value="152250" class="sub_15">Firavitoba</option>
+                                        <option value="150601" class="sub_15">Floresta</option>
+                                        <option value="152020" class="sub_15">G&aacute;meza</option>
+                                        <option value="154220" class="sub_15">Gachantiv&aacute;</option>
+                                        <option value="152860" class="sub_15">Garagoa</option>
+                                        <option value="151220" class="sub_15">Guacamayas</option>
+                                        <option value="153050" class="sub_15">Guateque</option>
+                                        <option value="153040" class="sub_15">Guayat&aacute;</option>
+                                        <option value="151440" class="sub_15">Güic&aacute;n</option>
+                                        <option value="152240" class="sub_15">Iza</option>
+                                        <option value="153601" class="sub_15">Jenesano</option>
+                                        <option value="150840" class="sub_15">Jeric&oacute;</option>
+                                        <option value="153220" class="sub_15">La Capilla</option>
+                                        <option value="150860" class="sub_15">La Uvita</option>
+                                        <option value="155001" class="sub_15">La Victoria</option>
+                                        <option value="151840" class="sub_15">Labranzagrande</option>
+                                        <option value="152840" class="sub_15">Macanal</option>
+                                        <option value="152660" class="sub_15">Miraflores</option>
+                                        <option value="152201" class="sub_15">Mongu&iacute;</option>
+                                        <option value="152001" class="sub_15">Mongua</option>
+                                        <option value="154260" class="sub_15">Moniquir&aacute;</option>
+                                        <option value="154080" class="sub_15">Motavita</option>
+                                        <option value="154880" class="sub_15">Muzo</option>
+                                        <option value="152280" class="sub_15">Nobsa</option>
+                                        <option value="153620" class="sub_15">Nuevo Col&oacute;n</option>
+                                        <option value="150220" class="sub_15">Oicat&aacute;</option>
+                                        <option value="155060" class="sub_15">Otanche</option>
+                                        <option value="152620" class="sub_15">P&aacute;ez</option>
+                                        <option value="153210" class="sub_15">Pachavita</option>
+                                        <option value="150440" class="sub_15">Paipa</option>
+                                        <option value="152401" class="sub_15">Pajarito</option>
+                                        <option value="151260" class="sub_15">Panqueba</option>
+                                        <option value="151820" class="sub_15">Paya</option>
+                                        <option value="150680" class="sub_15">Paz de R&iacute;o</option>
+                                        <option value="152460" class="sub_15">Pesca</option>
+                                        <option value="151801" class="sub_15">Pisba</option>
+                                        <option value="155201" class="sub_15">Puerto Boyac&aacute;</option>
+                                        <option value="155020" class="sub_15">Qu&iacute;pama</option>
+                                        <option value="153401" class="sub_15">Ramiriqu&iacute;</option>
+                                        <option value="153420" class="sub_15">Rond&oacute;n</option>
+                                        <option value="152601" class="sub_15">San Eduardo</option>
+                                        <option value="154460" class="sub_15">San Jos&eacute; de Pare</option>
+                                        <option value="152801" class="sub_15">San Luis de Gaceno</option>
+                                        <option value="151201" class="sub_15">San Mateo</option>
+                                        <option value="155040" class="sub_15">San Pablo de Borbur</option>
+                                        <option value="152820" class="sub_15">Santa Mar&iacute;a</option>
+                                        <option value="150480" class="sub_15">Santa Rosa de Viterbo</option>
+                                        <option value="154240" class="sub_15">Santa Sof&iacute;a</option>
+                                        <option value="154440" class="sub_15">Santana</option>
+                                        <option value="150820" class="sub_15">Sativanorte</option>
+                                        <option value="150801" class="sub_15">Sativasur</option>
+                                        <option value="153460" class="sub_15">Siachoque</option>
+                                        <option value="151001" class="sub_15">Soat&aacute;</option>
+                                        <option value="151640" class="sub_15">Socha</option>
+                                        <option value="151620" class="sub_15">Socot&aacute;</option>
+                                        <option value="152211" class="sub_15">Sogamoso</option>
+                                        <option value="153030" class="sub_15">Somondoco</option>
+                                        <option value="154040" class="sub_15">Sora</option>
+                                        <option value="153480" class="sub_15">Sorac&aacute;</option>
+                                        <option value="150420" class="sub_15">Sotaquir&aacute;</option>
+                                        <option value="150880" class="sub_15">Susac&oacute;n</option>
+                                        <option value="153060" class="sub_15">Sutatenza</option>
+                                        <option value="152040" class="sub_15">T&oacute;paga</option>
+                                        <option value="151660" class="sub_15">Tasco</option>
+                                        <option value="153201" class="sub_15">Tenza</option>
+                                        <option value="153260" class="sub_15">Tiban&aacute;</option>
+                                        <option value="152260" class="sub_15">Tibasosa</option>
+                                        <option value="151020" class="sub_15">Tipacoque</option>
+                                        <option value="150260" class="sub_15">Toca</option>
+                                        <option value="154401" class="sub_15">Togü&iacute;</option>
+                                        <option value="152440" class="sub_15">Tota</option>
+                                        <option value="150009" class="sub_15">Tunja</option>
+                                        <option value="154680" class="sub_15">Tunungu&aacute;</option>
+                                        <option value="153630" class="sub_15">Turmequ&eacute;</option>
+                                        <option value="150401" class="sub_15">Tuta</option>
+                                        <option value="150660" class="sub_15">Tutaz&aacute;</option>
+                                        <option value="153240" class="sub_15">&Uacute;mbita</option>
+                                        <option value="153640" class="sub_15">Ventaquemada</option>
+                                        <option value="154001" class="sub_15">Villa de Leyva</option>
+                                        <option value="153450" class="sub_15">Viracach&aacute;</option>
+                                        <option value="152680" class="sub_15">Zetaquira</option>
+                                        <option value="2559" class="sub_25">Simijaca</option>
+                                        <option value="2689" class="sub_25">Chocont&aacute;</option>
+                                        <option value="2094" class="sub_25">Machet&aacute;</option>
+                                        <option value="1924" class="sub_25">Manta</option>
+                                        <option value="2595" class="sub_25">Sesquil&eacute;</option>
+                                        <option value="2584" class="sub_25">Suesca</option>
+                                        <option value="1980" class="sub_25">Tibirita</option>
+                                        <option value="2715" class="sub_25">Villapinz&oacute;n</option>
+                                        <option value="380" class="sub_25">Agua de Dios</option>
+                                        <option value="289" class="sub_25">Girardot</option>
+                                        <option value="255" class="sub_25">Guataqu&iacute;</option>
+                                        <option value="300" class="sub_25">Jerusal&eacute;n</option>
+                                        <option value="265" class="sub_25">Nariño</option>
+                                        <option value="333" class="sub_25">Nilo</option>
+                                        <option value="282" class="sub_25">Ricaurte</option>
+                                        <option value="377" class="sub_25">Tocaima</option>
+                                        <option value="1107" class="sub_25">Caparrap&iacute;</option>
+                                        <option value="990" class="sub_25">Guaduas</option>
+                                        <option value="379" class="sub_25">Puerto Salgar</option>
+                                        <option value="2242" class="sub_25">Alb&aacute;n</option>
+                                        <option value="1010" class="sub_25">La Peña</option>
+                                        <option value="1167" class="sub_25">La Vega</option>
+                                        <option value="1105" class="sub_25">Nimaima</option>
+                                        <option value="1106" class="sub_25">Nocaima</option>
+                                        <option value="1363" class="sub_25">Quebradanegra</option>
+                                        <option value="1470" class="sub_25">San Francisco</option>
+                                        <option value="1185" class="sub_25">Sasaima</option>
+                                        <option value="1777" class="sub_25">Supat&aacute;</option>
+                                        <option value="500" class="sub_25">&uacute;tica</option>
+                                        <option value="1550" class="sub_25">Vergara</option>
+                                        <option value="800" class="sub_25">Villeta</option>
+                                        <option value="1712" class="sub_25">Gachal&aacute;</option>
+                                        <option value="1745" class="sub_25">Gachet&aacute;</option>
+                                        <option value="2180" class="sub_25">Gama</option>
+                                        <option value="2710" class="sub_25">Guasca</option>
+                                        <option value="2680" class="sub_25">Guatavita</option>
+                                        <option value="2300" class="sub_25">Jun&iacute;n</option>
+                                        <option value="2780" class="sub_25">La Calera</option>
+                                        <option value="1949" class="sub_25">Ubal&aacute;</option>
+                                        <option value="231" class="sub_25">Beltr&aacute;n</option>
+                                        <option value="1412" class="sub_25">Bituima</option>
+                                        <option value="1050" class="sub_25">Chaguan&iacute;</option>
+                                        <option value="1630" class="sub_25">Guayabal de S&iacute;quima</option>
+                                        <option value="1290" class="sub_25">Pul&iacute;</option>
+                                        <option value="1303" class="sub_25">San Juan de Rioseco</option>
+                                        <option value="1489" class="sub_25">Vian&iacute;</option>
+                                        <option value="520" class="sub_25">Medina</option>
+                                        <option value="256" class="sub_25">Paratebueno</option>
+                                        <option value="1746" class="sub_25">C&aacute;queza</option>
+                                        <option value="2400" class="sub_25">Chipaque</option>
+                                        <option value="1923" class="sub_25">Choach&iacute;</option>
+                                        <option value="1985" class="sub_25">F&oacute;meque</option>
+                                        <option value="2713" class="sub_25">Fosca</option>
+                                        <option value="1270" class="sub_25">Guayabetal</option>
+                                        <option value="2350" class="sub_25">Guti&eacute;rrez</option>
+                                        <option value="1496" class="sub_25">Quetame</option>
+                                        <option value="1867" class="sub_25">Ubaque</option>
+                                        <option value="2376" class="sub_25">Une</option>
+                                        <option value="1310" class="sub_25">El Peñ&oacute;n</option>
+                                        <option value="1462" class="sub_25">La Palma</option>
+                                        <option value="2136" class="sub_25">Pacho</option>
+                                        <option value="960" class="sub_25">Paime</option>
+                                        <option value="2700" class="sub_25">San Cayetano</option>
+                                        <option value="1323" class="sub_25">Topaip&iacute;</option>
+                                        <option value="1575" class="sub_25">Villag&oacute;mez</option>
+                                        <option value="2000" class="sub_25">Yacop&iacute;</option>
+                                        <option value="2558" class="sub_25">Cajic&aacute;</option>
+                                        <option value="2600" class="sub_25">Ch&iacute;a</option>
+                                        <option value="2600" class="sub_25">Cogua</option>
+                                        <option value="2568" class="sub_25">Gachancip&aacute;</option>
+                                        <option value="2585" class="sub_25">Nemoc&oacute;n</option>
+                                        <option value="2650" class="sub_25">Sop&oacute;</option>
+                                        <option value="2569" class="sub_25">Tabio</option>
+                                        <option value="2587" class="sub_25">Tenjo</option>
+                                        <option value="2605" class="sub_25">Tocancip&aacute;</option>
+                                        <option value="2652" class="sub_25">Zipaquir&aacute;</option>
+                                        <option value="2598" class="sub_25">Bojac&aacute;</option>
+                                        <option value="2566" class="sub_25">Cota</option>
+                                        <option value="2685" class="sub_25">El Rosal</option>
+                                        <option value="2586" class="sub_25">Facatativ&aacute;</option>
+                                        <option value="2548" class="sub_25">Funza</option>
+                                        <option value="2554" class="sub_25">Madrid</option>
+                                        <option value="2516" class="sub_25">Mosquera</option>
+                                        <option value="2663" class="sub_25">Subachoque</option>
+                                        <option value="2500" class="sub_25">Zipac&oacute;n</option>
+                                        <option value="2700" class="sub_25">Sibat&eacute;</option>
+                                        <option value="2566" class="sub_25">Soacha</option>
+                                        <option value="1417" class="sub_25">Arbel&aacute;ez</option>
+                                        <option value="2560" class="sub_25">Cabrera</option>
+                                        <option value="1728" class="sub_25">Fusagasug&aacute;</option>
+                                        <option value="2500" class="sub_25">Granada</option>
+                                        <option value="1024" class="sub_25">Pandi</option>
+                                        <option value="2180" class="sub_25">Pasca</option>
+                                        <option value="1600" class="sub_25">San Bernardo</option>
+                                        <option value="1470" class="sub_25">Silvania</option>
+                                        <option value="1647" class="sub_25">Tibacuy</option>
+                                        <option value="1600" class="sub_25">Venecia</option>
+                                        <option value="710" class="sub_25">Anapoima</option>
+                                        <option value="1657" class="sub_25">Anolaima</option>
+                                        <option value="420" class="sub_25">Apulo</option>
+                                        <option value="1600" class="sub_25">Cachipay</option>
+                                        <option value="990" class="sub_25">El Colegio</option>
+                                        <option value="1200" class="sub_25">La Mesa</option>
+                                        <option value="2012" class="sub_25">Quipile</option>
+                                        <option value="1540" class="sub_25">San Antonio del Tequendama</option>
+                                        <option value="1384" class="sub_25">Tena</option>
+                                        <option value="567" class="sub_25">Viot&aacute;</option>
+                                        <option value="2600" class="sub_25">Carmen de Carupa</option>
+                                        <option value="2590" class="sub_25">Cucunub&aacute;</option>
+                                        <option value="2750" class="sub_25">F&uacute;quene</option>
+                                        <option value="2688" class="sub_25">Guachet&aacute;</option>
+                                        <option value="2589" class="sub_25">Lenguazaque</option>										
+                                        <option value="2655" class="sub_25">Susa</option>
+                                        <option value="2550" class="sub_25">Sutatausa</option>
+                                        <option value="2950" class="sub_25">Tausa</option>
+                                        <option value="2556" class="sub_25">Ubat&eacute;</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="vereda">Vereda:</label>
+                                    <input type="text" class="form-control" id="vereda">
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="predio">Predio:</label>
+                                    <input type="text" class="form-control" id="predio">
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="propietario">Propietario:</label>
+                                    <input type="text" class="form-control" id="propietario">
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="propietario">Doc. Propietario:</label>
+                                    <input type="text" class="form-control" id="cc_propietario">
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="propietario">Lugar doc:</label>
+                                    <input type="text" class="form-control" id="lugar_cc_propietario">
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="telefono">Telefono:</label>
+                                    <input type="text" class="form-control" id="telefono">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                                    Ubicacion</a>
+                            </h4>
+                        </div>
+                        <div id="collapse3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label style="width: 150px" for="origen_coord">Origen de coord:</label>
+                                    <input type="text" class="form-control" id="origen_coord" value="MAGNA COLOMBIA BOGOTA" >
+                                </div>
+                                <div class="form-group">
+                                    <label  style="width: 150px" for="coordenada_e">Coordenada E:</label>
+                                    <input type="text" class="form-control" id="coordenada_e">
+                                </div>
+                                <div class="form-group">
+                                    <label  style="width: 150px" for="coordenada_n">Coordenada N:</label>
+                                    <input type="text" class="form-control" id="coordenada_n">
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 150px" for="stk">Stk:</label>
+                                    <input type="text" class="form-control" id="stk">
+                                </div>
+                                <div class="form-group">
+                                    <label  style="width: 150px" for="sp_cercano">Vp. cercano:</label>
+                                    <input type="text" class="form-control" id="sp_cercano">
+                                </div>
+                                <div class="form-group">
+                                    <label  style="width: 150px" for="distancia_sp">Distancia Vp:</label>
+                                    <input type="text" class="form-control" id="distancia_sp">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                                    Estado del punto</a>
+                            </h4>
+                        </div>
+                        <div id="collapse4" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="productivo">Productivo:</label>
+                                    <input type="checkbox" class="form-control" id="productivo">
+                                </div>
+                                <div class="form-group">
+                                    <label for="reserva">Reserva:</label>
+                                    <input type="checkbox" class="form-control" id="reserva">
+                                </div>
+                                <div class="form-group">
+                                    <label for="abandonado">Abandonado:</label>
+                                    <input type="checkbox" class="form-control" id="abandonado">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inactivo">inactivo:</label>
+                                    <input type="checkbox" class="form-control" id="inactivo">
+                                </div>
+                                <div class="form-group">
+                                    <label for="sellado">Sellado:</label>
+                                    <input type="checkbox" class="form-control" id="sellado">
+                                </div>
+								<div class="form-group">
+                                    <label for="monitoreo">Monitoreo:</label>
+                                    <input type="checkbox" class="form-control" id="monitoreo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse41">
+                                    Fuente de informaci&oacute;n</a>
+                            </h4>
+                        </div>
+                        <div id="collapse41" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="en_campo">En campo:</label>
+                                    <input type="checkbox" class="form-control" id="en_campo">
+                                </div>
+                                <div class="form-group">
+                                    <label for="constructor">Constructor:</label>
+                                    <input type="checkbox" class="form-control" id="constructor">
+                                </div>
+                                <div class="form-group">
+                                    <label for="propietario">Propietario:</label>
+                                    <input type="checkbox" class="form-control" id="propietario_i">
+                                </div>
+                                <div class="form-group">
+                                    <label for="estudios">Estudios:</label>
+                                    <input type="checkbox" class="form-control" id="estudios">
+                                </div>
+                                <div class="form-group">
+                                    <label for="reportes">Reportes:</label>
+                                    <input type="checkbox" class="form-control" id="reportes">
+                                </div>
+								<div class="form-group">
+                                    <label for="otros">Otros:</label>
+                                    <input type="checkbox" class="form-control" id="otros">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse42">
+                                    Elemento Ambiental</a>
+                            </h4>
+                        </div>
+                        <div id="collapse42" class="panel-collapse collapse">
+                            <div class="panel-body">							
+                                <div class="form-group">
+                                    <label for="jagüey">Jagüey:</label>
+                                    <input type="checkbox" class="form-control" id="jagüey">
+                                </div>
+                                <div class="form-group">
+                                    <label for="estanque_piscicola">Estanque Piscicola:</label>
+                                    <input type="checkbox" class="form-control" id="estanque_piscicola">
+                                </div>
+                                <div class="form-group">
+                                    <label for="aljibe">Aljibe:</label>
+                                    <input type="checkbox" class="form-control" id="aljibe">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pozo_profundo">Pozo Profundo:</label>
+                                    <input type="checkbox" class="form-control" id="pozo_profundo">
+                                </div>
+                                <div class="form-group">
+                                    <label for="nacedero">Nacedero:</label>
+                                    <input type="checkbox" class="form-control" id="nacedero">
+                                </div>
+								<br>
+								<fieldset>
+														<legend>Información suministrada por:</legend>												
+                                                        <div class="form-group">
+                                                            <label for="info_nombre">Nombre:</label>
+                                                            <input type="text" class="form-control" id="info_nombre">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="info_direccion">Dirección:</label>
+                                                            <input type="text" class="form-control" id="info_direccion">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="info_telefono">Telefono:</label>
+                                                            <input type="text" class="form-control" id="info_telefono">
+                                                        </div>
+                                                    </fieldset>
+													<br>
+													<fieldset>
+                                                        <legend>Información del Punto</legend>												
+                                                        <div class="form-group">
+                                                            <label for="punto_legalizado">¿Punto legalizado?</label>
+															<select id="punto_legalizado" class="punto_legalizado">
+																<option value="">--</option>
+																<option value="">SI</option>
+																<option value="">NO</option>										
+															</select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                        <label for="punto_resolucion">N° de Resolución:</label>
+                                                        <input type="text" class="form-control" id="punto_resolucion">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="punto_fecha">Fecha de expedición:</label>
+                                                        <input type="text" class="form-control" id="punto_fecha">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="punto_caudal">Caudal concesionado:</label>
+                                                        <input type="text" class="form-control" id="punto_caudal">
+                                                    </div>
+                                                    </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+                                    Anotaciones Generales</a>
+                            </h4>
+                        </div>
+                        <div id="collapse5" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="panel-group" id="collapse51">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#collapse51" href="#collapse511">
+                                                    Periodo Clim&aacute;tico
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse511" class="panel-collapse collapse in">
+                                            <div class="panel-body">
+                                                <div class="form-group">
+
+                                                    <div class="form-group">
+                                                        <label for="invierno">Invierno:</label>
+                                                        <input type="checkbox" class="form-control" id="invierno">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="verano">Verano:</label>
+                                                        <input type="checkbox" class="form-control" id="verano">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="comienzo_invierno">Comienzo de Invierno:</label>
+                                                        <input type="checkbox" class="form-control" id="comienzo_invierno">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="comienzo_verano">Comienzo de Verano:</label>
+                                                        <input type="checkbox" class="form-control" id="comienzo_verano">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="ultima_lluvia">Fecha ultima lluvia:</label>
+                                                        <input type="text" class="form-control" id="ultima_lluvia">
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="panel-group" id="collapse52">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#collapse52" href="#collapse512">
+                                                    Uso del agua
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse512" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group">
+
+                                                    <div class="form-group">
+                                                        <label for="domestico">Doméstico:</label>
+                                                        <input type="checkbox" class="form-control" id="domestico">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="comunitario">Comunitario:</label>
+                                                        <input type="checkbox" class="form-control" id="comunitario">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="ganadero_sp">Ganadero sp:</label>
+                                                        <input type="text" class="form-control" id="ganadero_sp">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="ganadero_n">#</label>
+                                                        <input type="text" class="form-control" id="ganadero_n">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="agricola_tipo">Agricola Tipo:</label>
+                                                        <input type="text" class="form-control" id="agricola_tipo">
+                                                    </div>
+													<div class="form-group">
+                                                        <label for="agricola_ha">Ha:</label>
+                                                        <input type="text" class="form-control" id="agricola_ha">
+                                                    </div>
+													<div class="form-group">
+                                                        <label for="industrial">Industrial:</label>
+                                                        <input type="checkbox" class="form-control" id="industrial">
+                                                    </div>
+													<div class="form-group">
+                                                        <label for="piscicola">Piscicola:</label>
+                                                        <input type="checkbox" class="form-control" id="piscicola">
+                                                    </div>
+													<div class="form-group">
+                                                        <label for="ninguno">Ninguno:</label>
+                                                        <input type="checkbox" class="form-control" id="ninguno">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="agua_otro">Otro:</label>
+                                                        <input type="text" class="form-control" id="agua_otro">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="panel-group" id="collapse53">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#collapse53" href="#collapse513">
+                                                    Contaminaci&oacute;n
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse513" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label for="cementerio">Cementerio:</label>
+                                                        <input type="checkbox" class="form-control" id="cementerio">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="basura_estiercol">Basura/Estiércol:</label>
+                                                        <input type="checkbox" class="form-control" id="basura_estiercol">
+                                                    </div>
+													<div class="form-group">
+                                                        <label for="aguas_estancadas">Aguas estancadas:</label>
+                                                        <input type="checkbox" class="form-control" id="aguas_estancadas">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="pozo_abandonado">Pozo abandonado:</label>
+                                                        <input type="checkbox" class="form-control" id="pozo_abandonado">
+                                                    </div>
+													<div class="form-group">
+                                                        <label for="residuos_solidos">Residuos Solidos:</label>
+                                                        <input type="checkbox" class="form-control" id="residuos_solidos">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="residuos_peligrosos">Residuos peligrosos:</label>
+                                                        <input type="checkbox" class="form-control" id="residuos_peligrosos">
+                                                    </div>
+													<div class="form-group">
+                                                        <label for="plantas_sacrificio">Plantas de sacrificio:</label>
+                                                        <input type="checkbox" class="form-control" id="plantas_sacrificio">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="lagunas_oxidacion">Lagunas de oxidación:</label>
+                                                        <input type="checkbox" class="form-control" id="lagunas_oxidacion">
+                                                    </div>
+													<div class="form-group">
+                                                        <label for="contamina_otro">Otro:</label>
+                                                        <input type="text" class="form-control" id="contamina_otro">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="panel-group" id="collapse54">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#collapse54" href="#collapse514">
+                                                    Descripcion puntual
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse514" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label style="width: 150px" for="tipo_suelo">Tipo de suelo:</label>
+                                                        <input type="text" class="form-control" id="tipo_suelo">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label  style="width: 150px" for="tipo_vegetacion">Tipo de vegetación:</label>
+                                                        <input type="text" class="form-control" id="tipo_vegetacion">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label  style="width: 150px" for="aporte_agua_permanente">Aporte de agua permanente:</label>
+                                                        <input type="checkbox" class="form-control" id="aporte_agua_permanente">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label style="width: 150px" for="aporte_agua_intermitente">Aporte de agua intermitente:</label>
+                                                        <input type="checkbox" class="form-control" id="aporte_agua_intermitente">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label  style="width: 150px" for="aporte_agua_lluvias">Aporte de por lluvias:</label>
+                                                        <input type="checkbox" class="form-control" id="aporte_agua_lluvias">
+                                                    </div>
+													<div class="form-group">
+                                                        <label  style="width: 150px" for="epoca_disminucion">Epoca de disminucion:</label>
+                                                        <input type="text" class="form-control" id="epoca_disminucion">
+                                                    </div>
+													<div class="form-group">
+                                                        <label  style="width: 150px" for="otro_descp">Otro:</label>
+                                                        <input type="text" class="form-control" id="otro_descp">
+                                                    </div>
+						    <legend>Espejos de agua</legend>
+                                                    <div class="form-group">
+                                                        <label  style="width: 150px" for="espejoa_si">Si:</label>
+                                                        <input type="checkbox" class="form-control" id="espejoa_si">
+                                                    </div>
+													<div class="form-group">
+                                                        <label  style="width: 150px" for="espejoa_no">No:</label>
+                                                        <input type="checkbox" class="form-control" id="espejoa_no">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="panel-group" id="collapse55">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#collapse55" href="#collapse515">
+                                                    Metodo medida cota
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse515" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label for="gps">Gps:</label>
+                                                        <input type="checkbox" class="form-control" id="gps">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="nivelacion">Nivelación:</label>
+                                                        <input type="checkbox" class="form-control" id="nivelacion">
+                                                    </div>
+													<div class="form-group">
+                                                        <label for="mapa">Mapa:</label>
+                                                        <input type="checkbox" class="form-control" id="mapa">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="panel-group" id="collapse56">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#collapse56" href="#collapse516">
+                                                    Espejo de Agua
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse516" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label  style="width: 150px" for="espejo_ancho">Ancho/diámetro:</label>
+                                                        <input type="text" class="form-control" id="espejo_ancho">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label style="width: 150px" for="espejo_largo">Largo:</label>
+                                                        <input type="text" class="form-control" id="espejo_largo">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label  style="width: 150px" for="espejo_profundidad">Profundidad lámina de agua:</label>
+                                                        <input type="text" class="form-control" id="espejo_profundidad">
+                                                    </div>
+													<div class="form-group">
+                                                        <label  style="width: 150px" for="espejo_coloracion">Coloración:</label>
+                                                        <input type="text" class="form-control" id="espejo_coloracion">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="panel-group" id="collapse57">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#collapse57" href="#collapse517">
+                                                    Sistema de aporte de agua
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse517" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label for="manguera_gravedad">Manguera gravedad:</label>
+                                                        <input type="checkbox" class="form-control" id="manguera_gravedad">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="manguera_bombeo">Manguera bombeo:</label>
+                                                        <input type="checkbox" class="form-control" id="manguera_bombeo">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="canal_tierra">Canal de tierra:</label>
+                                                        <input type="checkbox" class="form-control" id="canal_tierra">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="canal_cemento">Canal en cemento:</label>
+                                                        <input type="checkbox" class="form-control" id="canal_cemento">
+                                                    </div>
+													<div class="form-group">
+                                                        <label for="drenaje_natural">Drenaje natural:</label>
+                                                        <input type="checkbox" class="form-control" id="drenaje_natural">
+                                                    </div>
+													<div class="form-group">
+                                                        <label for="subterraneo">Subterraneo:</label>
+                                                        <input type="checkbox" class="form-control" id="subterraneo">
+                                                    </div>
+													<div class="form-group">
+                                                        <label for="agua_lluvias">Agua lluvias:</label>
+                                                        <input type="checkbox" class="form-control" id="agua_lluvias">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="sisagua_otro">Otro:</label>
+                                                        <input type="text" class="form-control" id="sisagua_otro">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="panel-group" id="collapse58">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#collapse58" href="#collapse518">
+                                                    Sistema de captacion
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse518" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label for="capta_manual">Manual:</label>
+                                                        <input type="checkbox" class="form-control" id="capta_manual">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="bomba_sumergible">Bomba sumergible:</label>
+                                                        <input type="checkbox" class="form-control" id="bomba_sumergible">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="bomba_natural">Bomba natural:</label>
+                                                        <input type="checkbox" class="form-control" id="bomba_natural">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="electrobomba">Electrobomba:</label>
+                                                        <input type="checkbox" class="form-control" id="electrobomba">
+                                                    </div>
+													<div class="form-group">
+                                                        <label for="moto_bomba">Moto bomba:</label>
+                                                        <input type="checkbox" class="form-control" id="moto_bomba">
+                                                    </div>
+													<div class="form-group">
+                                                        <label for="represa">Represa:</label>
+                                                        <input type="checkbox" class="form-control" id="represa">
+                                                    </div>
+													<div class="form-group">
+                                                        <label for="molino_viento">Molino de viento:</label>
+                                                        <input type="checkbox" class="form-control" id="molino_viento">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="capta_otro">Otro:</label>
+                                                        <input type="text" class="form-control" id="capta_otro">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="panel-group" id="collapse59">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#collapse59" href="#collapse519">
+                                                    Caracteristicas de la bomba
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse519" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label for="bomba_clase">Clase de bomba:</label>
+                                                        <input type="text" class="form-control" id="bomba_clase">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="bomba_modelo">Modelo:</label>
+                                                        <input type="text" class="form-control" id="bomba_modelo">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="bomba_potencia">Potencia:</label>
+                                                        <input type="text" class="form-control" id="bomba_potencia">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="bomba_profundidad">Profundidad del punto de succión:</label>
+                                                        <input type="text" class="form-control" id="bomba_profundidad">
+                                                    </div>
+
+                                                    <fieldset>
+                                                        <legend>Tuberia de descarga</legend>												
+                                                        <div class="form-group">
+                                                            <label for="tuberiad_diametro">Diámetro:</label>
+                                                            <input type="text" class="form-control" id="tuberiad_diametro">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="tuberiad_longitud">Longitud:</label>
+                                                            <input type="text" class="form-control" id="tuberiad_longitud">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="tuberiad_material">Material:</label>
+                                                            <input type="text" class="form-control" id="tuberiad_material">
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+							
+							<div class="panel-body">
+                                <div class="panel-group" id="collapse66">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#collapse59" href="#collapse660">
+                                                    Condición del punto
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse660" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label for="punto_adecuada">Cubierta Adecuada:</label>
+                                                        <input type="checkbox" class="form-control" id="punto_adecuada">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="punto_cemento">Piso en cemento:</label>
+                                                        <input type="checkbox" class="form-control" id="punto_cemento">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="punto_cercado">Cercado:</label>
+                                                        <input type="checkbox" class="form-control" id="punto_cercado">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="panel-group" id="collapse60">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#collapse60" href="#collapse600">
+                                                    Caracteristicas de los manantiales
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse600" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group">
+
+                                                    <fieldset>
+                                                        <legend>Tipo de Manantial</legend>
+                                                        <div class="form-group">
+                                                            <label for="manantial_goteo">Goteo:</label>
+                                                            <input type="checkbox" class="form-control" id="manantial_goteo">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="manantial_filtracion">Filtración:</label>
+                                                            <input type="checkbox" class="form-control" id="manantial_filtracion">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="manantial_otro">Otro cual:</label>
+                                                            <input type="text" class="form-control" id="manantial_otro">
+                                                        </div>
+                                                    </fieldset> 
+                                                    <fieldset>
+                                                        <legend>Permananecia</legend>
+                                                        <div class="form-group">
+                                                            <label for="perma_perenne">Perenne:</label>
+                                                            <input type="checkbox" class="form-control" id="perma_perenne">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="perma_estacional">Estacional:</label>
+                                                            <input type="checkbox" class="form-control" id="perma_estacional">
+                                                        </div>
+														<div class="form-group">
+                                                            <label for="perma_intermitente">Intermitente:</label>
+                                                            <input type="checkbox" class="form-control" id="perma_intermitente">
+                                                        </div>
+														<div class="form-group">
+                                                            <label for="perma_sininfo">Sin información:</label>
+                                                            <input type="checkbox" class="form-control" id="perma_sininfo">
+                                                        </div>
+                                                    </fieldset> 
+                                                    <fieldset>
+                                                        <legend>Medio de surgencia</legend>
+                                                        <div class="form-group">
+                                                            <label for="surgencia_kastico">Rasgo Kárstico:</label>
+                                                            <input type="checkbox" class="form-control" id="surgencia_kastico">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="surgencia_fracturas">Fracturas:</label>
+                                                            <input type="checkbox" class="form-control" id="surgencia_fracturas">
+                                                        </div>
+														<div class="form-group">
+                                                            <label for="surgencia_contacto">Contacto:</label>
+                                                            <input type="checkbox" class="form-control" id="surgencia_contacto">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="surgencia_otro">Otro cual:</label>
+                                                            <input type="text" class="form-control" id="surgencia_otro">
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="panel-group" id="collapse61">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#collapse61" href="#collapse601">
+                                                    Pozos profundos y aljibes
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse601" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label for="pozo_fecha">Fecha de construcción::</label>
+                                                        <input type="text" class="form-control" id="pozo_fecha">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="pozo_profundidad">Profundidad:</label>
+                                                        <input type="text" class="form-control" id="pozo_profundidad">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="pozo_diametro">Diámetro:</label>
+                                                        <input type="text" class="form-control" id="pozo_diametro">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="pozo_diametrop">Diametro de la perforación:</label>
+                                                        <input type="text" class="form-control" id="pozo_diametrop">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="pozo_caudal">Caudal estimado (L/s):</label>
+                                                        <input type="text" class="form-control" id="pozo_caudal">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="pozo_proteccion">Zona de protección:</label>
+                                                        <input type="text" class="form-control" id="pozo_proteccion">
+                                                    </div>
+                                                    <fieldset>
+                                                        <legend>Material de revestimiento</legend>
+                                                        <div class="form-group">
+                                                            <label for="material_concreto">Concreto:</label>
+                                                            <input type="checkbox" class="form-control" id="material_concreto">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="material_bloque">Bloque arena-cemento:</label>
+                                                            <input type="checkbox" class="form-control" id="material_bloque">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="material_pvc">PVC:</label>
+                                                            <input type="checkbox" class="form-control" id="material_pvc">
+                                                        </div>
+														<div class="form-group">
+                                                            <label for="material_metalico">Metalico:</label>
+                                                            <input type="checkbox" class="form-control" id="material_metalico">
+                                                        </div>
+														<div class="form-group">
+                                                            <label for="material_otro">Otro:</label>
+                                                            <input type="text" class="form-control" id="material_otro">
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>							
+                            <div class="panel-body">
+                                <div class="panel-group" id="collapse62">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#collapse62" href="#collapse602">
+                                                    Descripcion jaguey es estanques pisicolas
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse602" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label for="jaguey_profundidad">Profundidad:</label>
+                                                        <input type="text" class="form-control" id="jaguey_profundidad">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="jaguey_diametro">Diámetro:</label>
+                                                        <input type="text" class="form-control" id="jaguey_diametro">
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-group">
+                                                        <label for="dique_si">Presencia de diques Si:</label>
+                                                        <input type="checkbox" class="form-control" id="dique_si">
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-group">
+                                                        <label for="dique_no">No:</label>
+                                                        <input type="checkbox" class="form-control" id="dique_no">
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-group">
+                                                        <label for="dique_estado">Estado del Dique:</label>
+                                                        <input type="text" class="form-control" id="dique_estado">
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-group">
+                                                        <label for="malla_si">Presencia de mallas Si:</label>
+                                                        <input type="checkbox" class="form-control" id="malla_si">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="malla_no">No:</label>
+                                                        <input type="checkbox" class="form-control" id="malla_no">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="jaguey_especies">Especies:</label>
+                                                        <input type="text" class="form-control" id="jaguey_especies">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="jaguey_cant_peces">cantidad actual de peces:</label>
+                                                        <input type="text" class="form-control" id="jaguey_cant_peces">
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-group">
+                                                        <label for="jaguey_cant_max">Cantidad maxima de peces:</label>
+                                                        <input type="text" class="form-control" id="jaguey_cant_max">
+                                                    </div>
+                                                    <br/>
+                                                    <br/>
+                                                    <div class="form-group">
+                                                        <label for="jaguey_tamano">Tamaño/peso:</label>
+                                                        <input type="text" class="form-control" id="jaguey_tamano">
+                                                    </div>
+                                                    <br/>
+                                                    <br/>
+                                                    <div class="form-group">
+                                                        <label for="jaguey_comercial">Comercial:</label>
+                                                        <input type="checkbox" class="form-control" id="jaguey_comercial">
+                                                    </div>
+													<div class="form-group">
+                                                        <label for="jaguey_familiar">Consumo familiar:</label>
+                                                        <input type="checkbox" class="form-control" id="jaguey_familiar">
+                                                    </div>
+													<div class="form-group">
+                                                        <label for="jaguey_zona_proteccion">Zona de protección:</label>
+                                                        <input type="checkbox" class="form-control" id="jaguey_zona_proteccion">
+                                                    </div>
+                                                    <br/>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">
+                                    Parametros fisico quimicos del agua</a>
+                            </h4>
+
+                        </div>
+                        <div id="collapse6" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="panel-group" id="collapse63">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#collapse63" href="#collapse603">
+                                                    Propiedades fisico quimicas
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse603" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label for="ph">pH:</label>
+                                                        <input type="text" class="form-control" id="ph">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="conductividad">Conductividad Eléctrica (µS/cm):</label>
+                                                        <input type="text" class="form-control" id="conductividad">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="temperatura">Temperatura (°C):</label>
+                                                        <input type="text" class="form-control" id="temperatura">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="sdt">SDT (mg/l):</label>
+                                                        <input type="text" class="form-control" id="sdt">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="panel-group" id="collapse64">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#collapse64" href="#collapse604">
+                                                    Metodo de muestreo
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse604" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label for="muestreo_manual">Manual:</label>
+                                                        <input type="checkbox" class="form-control" id="muestreo_manual">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="muestreo_bombeo">Bombeo:</label>
+                                                        <input type="checkbox" class="form-control" id="muestreo_bombeo">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="muestreo_otro">Otro cual:</label>
+                                                        <input type="text" class="form-control" id="muestreo_otro">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="panel-group" id="collapse65">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#collapse65" href="#collapse605">
+                                                    Propiedades organolepticas
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse605" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <fieldset>
+                                                        <legend>Color</legend>
+                                                        <div class="form-group">
+                                                            <label for="color_incoloro">Incoloro:</label>
+                                                            <input type="checkbox" class="form-control" id="color_incoloro">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="color_amarillo">Amarillo:</label>
+                                                            <input type="checkbox" class="form-control" id="color_amarillo">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="color_cafe">Cafe:</label>
+                                                            <input type="checkbox" class="form-control" id="color_cafe">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="color_otro">Otro:</label>
+                                                            <input type="text" class="form-control" id="color_otro">
+                                                        </div>
+                                                    </fieldset>
+                                                    <fieldset>
+                                                        <legend>Apariencia</legend>
+                                                        <div class="form-group">
+                                                            <label for="apariencia_clara">Clara:</label>
+                                                            <input type="checkbox" class="form-control" id="apariencia_clara">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="apariencia_turbia">Turbia:</label>
+                                                            <input type="checkbox" class="form-control" id="apariencia_turbia">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="apariencia_otro">Otro:</label>
+                                                            <input type="text" class="form-control" id="apariencia_otro">
+                                                        </div>
+                                                    </fieldset>
+                                                    <fieldset>
+                                                        <legend>Olor</legend>
+                                                        <div class="form-group">
+                                                            <label for="olor_inolora">Inolora:</label>
+                                                            <input type="checkbox" class="form-control" id="olor_inolora">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="olor_fetida">Fetida:</label>
+                                                            <input type="checkbox" class="form-control" id="olor_fetida">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="olor_otro">Otro:</label>
+                                                            <input type="text" class="form-control" id="olor_otro">
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">
+                                    Caracteristicas topograficas, geomorfologicas y geologicas</a>
+                            </h4>
+                        </div>
+                        <div id="collapse7" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <fieldset>
+                                    <legend>Topografia</legend>
+                                    <div class="form-group">
+                                        <label for="topo_depresion">Depresión:</label>
+                                        <input type="checkbox" class="form-control" id="topo_depresion">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="topo_planicie">Planicie:</label>
+                                        <input type="checkbox" class="form-control" id="topo_planicie">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="topo_altiplanicie">Altiplanicie:</label>
+                                        <input type="checkbox" class="form-control" id="topo_altiplanicie">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="topo_piedemonte">Piedemonte:</label>
+                                        <input type="checkbox" class="form-control" id="topo_piedemonte">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="topo_ladera">Ladera:</label>
+                                        <input type="checkbox" class="form-control" id="topo_ladera">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="topo_colina">Colina:</label>
+                                        <input type="checkbox" class="form-control" id="topo_colina">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="topo_otro">Otro cual:</label>
+                                        <input type="text" class="form-control" id="topo_otro">
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <legend>Geoforma</legend>
+                                    <div class="form-group">
+                                        <label for="geo_abanico_aluvial">Abanico Aluvial:</label>
+                                        <input type="checkbox" class="form-control" id="geo_abanico_aluvial">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="geo_cauce_aluvial">Cauce Aluvial:</label>
+                                        <input type="checkbox" class="form-control" id="geo_cauce_aluvial">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="geo_llanura_aluvial">Llanura Aluvial:</label>
+                                        <input type="checkbox" class="form-control" id="geo_llanura_aluvial">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="geo_terraza">Terraza:</label>
+                                        <input type="checkbox" class="form-control" id="geo_terraza">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="geo_luna">Luna:</label>
+                                        <input type="checkbox" class="form-control" id="geo_luna">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="geo_dolina">Dolina:</label>
+                                        <input type="checkbox" class="form-control" id="geo_dolina">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="geo_playa">Playa:</label>
+                                        <input type="checkbox" class="form-control" id="geo_playa">
+                                    </div>
+									<div class="form-group">
+                                        <label for="ninguno">Otro cual:</label>
+                                        <input type="text" class="form-control" id="geo_otro">
+                                    </div>
+                                </fieldset>
+                                <div class="form-group">
+                                    <label for="unidad_geologica1">Unidad Geologica:</label>
+                                    <input type="text" class="form-control" id="unidad_geologica1">
+                                </div>
+                                <div class="form-group">
+                                    <label for="litologia1">Litologia:</label>
+                                    <input type="text" class="form-control" id="litologia1">
+                                </div>
+                            </div>							
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse8">
+                                    Construcciones adicionales a la captacion</a>
+                            </h4>
+                        </div>
+                        <div id="collapse8" class="panel-collapse collapse">
+                            <div class="panel-body">							
+                                <div class="form-group">
+                                    <label>Embalse:</label>
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Diametro" id="embalse_diametro">
+                                    </div>
+                                    <div class="form-group">										
+                                        <input type="text" class="form-control short" placeholder="Largo" id="embalse_largo">
+                                    </div>
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Ancho" id="embalse_ancho">
+                                    </div>
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Profundidad" id="embalse_profundidad">
+                                    </div>
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Capacidad" id="embalse_capacidad">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">							
+                                <div class="form-group">
+                                    <label>Tanque:</label>
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Diametro" id="tanque_diametro">
+                                    </div>
+                                    <div class="form-group">										
+                                        <input type="text" class="form-control short" placeholder="Largo" id="tanque_largo">
+                                    </div>
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Ancho" id="tanque_ancho">
+                                    </div>
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Profundidad" id="tanque_profundidad">
+                                    </div>
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Capacidad" id="tanque_capacidad">
+                                    </div>
+                                </div>
+                            </div>	
+                            <div class="panel-body">							
+                                <div class="form-group">
+                                    <label>Alberca:</label>
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Diametro" id="alberca_diametro">
+                                    </div>
+                                    <div class="form-group">										
+                                        <input type="text" class="form-control short" placeholder="Largo" id="alberca_largo">
+                                    </div>
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Ancho" id="alberca_ancho">
+                                    </div>
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Profundidad" id="alberca_profundidad">
+                                    </div>
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Capacidad" id="alberca_capacidad">
+                                    </div>
+                                </div>
+                            </div>	
+                            <div class="panel-body">							
+                                <div class="form-group">
+                                    <label>Tuberia:</label>
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Diametro" id="tuberia_diametro">
+                                    </div>
+                                    <div class="form-group">										
+                                        <input type="text" class="form-control short" placeholder="Largo" id="tuberia_largo">
+                                    </div>
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Ancho" id="tuberia_ancho">
+                                    </div>
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Profundidad" id="tuberia_profundidad">
+                                    </div>
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Capacidad" id="tuberia_capacidad">
+                                    </div>
+                                </div>
+                            </div>	
+                            <div class="panel-body">							
+                                <div class="form-group">
+                                    <label>Otro:</label>
+                                    
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Otro? cual?" id="otro_nombre">
+                                    </div>
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Diametro" id="otro_diametro">
+                                    </div>
+                                    <div class="form-group">										
+                                        <input type="text" class="form-control short" placeholder="Largo" id="otro_largo">
+                                    </div>
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Ancho" id="otro_ancho">
+                                    </div>
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Profundidad" id="otro_profundidad">
+                                    </div>
+                                    <div class="form-group">											
+                                        <input type="text" class="form-control short" placeholder="Capacidad" id="otro_capacidad">
+                                    </div>
+                                </div>
+                            </div>								
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse9">
+                                    Observaciones Generales</a>
+                            </h4>
+                        </div>
+                        <div id="collapse9" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <textarea class="form-control" id="observa" rows="3"></textarea>
+                                </div>
+                            </div>
+                                        <div class="form-group">
+                                            <label for="rela_repre_prop">Relación entre representante y propietario</label>
+                                            <input type="text" class="form-control" id="rela_repre_prop">
+                                        </div>
+								<fieldset>
+                                    <legend>¿Todos los elementos estan relacionados en esta acta?</legend>
+										<div class="form-group">
+                                            <label for="elementos_si">Si:</label>
+                                            <input type="checkbox" class="form-control" id="elementos_si">
+                                        </div>
+										<div class="form-group">
+                                            <label for="elementos_no">No:</label>
+                                            <input type="checkbox" class="form-control" id="elementos_no">
+                                        </div>
+								</fieldset>
+										<div class="form-group">
+                                            <label for="falta_rela">¿Que falta por relacionar?</label>
+                                            <input type="text" class="form-control" id="falta_rela">
+                                        </div>
+                        </div>
+                    </div>
+                   <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse11">
+                                    Encabezados</a>
+                            </h4>
+                        </div>
+			<div id="collapse11" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="pag">Total paginas:</label>
+                                    <input type="text" class="form-control" id="pagDe" />
+                                    <label for="pag">Acta número:</label>
+                                    <input type="text" class="form-control" id="customActa" />
+                                </div>
+                            </div>
+                        </div>						
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse10">
+                                    Fotos 1...8</a>
+                            </h4>
+                        </div>
+						 <div id="collapse10" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto(1)" >Tomar Foto 1</button>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto(2)" >Tomar Foto 2</button>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto(3)" >Tomar Foto 3</button>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto(4)" >Tomar Foto 4</button>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto(5)" >Tomar Foto 5</button>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto(6)" >Tomar Foto 6</button>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto(7)" >Tomar Foto 7</button>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto(8)" >Tomar Foto 8</button>
+                                </div>
+                            </div>
+                        </div>						
+                    </div>
+                </div>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto()" >Tomar Foto</button>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="generatePDF()" >Generar planilla PDF</button>
+                <button class="btn btn-lg btn-success btn-block" type="button" onclick="insertDataPreHidrico()">Guardar</button>
+                <input type="hidden" id="singImagePath" value="/sdcard0/Pictures/Sing.png" name="singImagePath" />
+            </form>
+        </div> 
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+    </body>
+</html>

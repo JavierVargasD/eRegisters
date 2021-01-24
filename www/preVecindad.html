@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+        <meta name="format-detection" content="telephone=no">
+        <meta charset=utf-8>
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/index.css" rel="stylesheet">
+        <title>Hello World</title>
+        <style>
+            html{
+                height: 100%;
+            }g
+            body {
+                background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#cbccc8)) fixed;
+                min-height: 100%;
+            }
+
+
+        </style>
+        <script src="js/jquery.min.js"></script> 
+        <script src="js/previvienda.js"></script>
+        <script src="js/utils.js"></script>
+        <script type="text/javascript" src="js/jsignature-min.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">		
+        </nav>
+        <div class="container" >
+            <form class="form-inline" role="form">
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                    Datos B&aacute;sicos</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="acta">Acta No:</label>
+                                    <input type="text" class="form-control" id="acta" readonly="true">
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="permiso">Permiso No:</label>
+                                    <input type="text" class="form-control" id="permiso">
+                                </div>
+                                <div class="form-group">
+                                    <label for="linea">L&iacute;nea/Salvo:</label>
+                                    <input type="text" class="form-control" id="linea">
+                                </div>
+                                <div class="form-group">
+                                    <label for="linea">Contrato No:</label>
+                                    <input type="text" class="form-control" id="contrato">
+                                </div>
+                                <div class="form-group">
+                                    <label for="linea">Objeto:</label>
+                                    <input type="text" class="form-control" id="objeto">
+                                </div>                                
+                                <div class="form-group">
+                                    <label style="width: 150px" for="stk">Registro No.:</label>
+                                    <input type="text" class="form-control" id="registro">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                                    Datos Revisión</a>
+                            </h4>
+                        </div>
+                        <div id="collapse3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label style="width: 150px" for="origen_coord">Contratista:</label>
+                                    <input type="text" class="form-control" id="contratista">
+                                </div>
+                                <div class="form-group">
+                                    <label  style="width: 150px" for="coordenada_e">Interventor:</label>
+                                    <input type="text" class="form-control" id="interventor">
+                                </div>
+                                <div class="form-group">
+                                    <label  style="width: 150px" for="coordenada_n">Elaboró:</label>
+                                    <input type="text" class="form-control" id="elaboro">
+                                </div>
+
+                                <div class="form-group">
+                                    <label  style="width: 150px" for="sp_cercano">Revisó:</label>
+                                    <input type="text" class="form-control" id="reviso">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                                    Datos del predio</a>
+                            </h4>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label style="width: 180px" for="P_DEPTO">Departamento:</label>
+                                    <select id='P_DEPTO' class="P_DEPTO">
+                                        <option value="-1">--</option>
+                                        <option value="5">ANTIOQUIA</option>
+                                        <option value="13">BOLIVAR</option>	
+                                        <option value="15">BOYAC&Aacute;</option>															
+                                        <option value="17">CALDAS</option>
+                                        <option value="18">CAQUET&Aacute;</option>
+                                        <option value="85">CASANARE</option>
+                                        <option value="19">CAUCA</option>								
+                                        <option value="20">CESAR</option>
+                                        <option value="23">C&Oacute;RDOBA</option>
+                                        <option value="25">CUNDINAMARCA</option>
+                                        <option value="41">HUILA</option>
+                                        <option value="44">LA GUAJIRA</option>
+                                        <option value="47">MAGDALENA</option>
+                                        <option value="50">META</option>
+                                        <option value="52">NARI&ntilde;O</option>
+                                        <option value="54">NORTE DE SANTANDER</option>
+                                        <option value="63">QUINDIO</option>
+                                        <option value="66">RISARALDA</option>								
+                                        <option value="68">SANTANDER</option>
+                                        <option value="73">TOLIMA</option>
+                                        <option value="76">VALLE DEL CAUCA</option>										
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="P_MUN">Municipio:</label>
+                                    <select id='P_MUN' class="P_MUN">
+                                        <option value="5002" class="sub_5">ABEJORRAL</option>
+                                        <option value="5021" class="sub_5">ALEJANDR&Aacute;A</option>
+                                        <option value="5030" class="sub_5">AMAG&Aacute;</option>
+                                        <option value="5031" class="sub_5">AMALFI</option>
+                                        <option value="5034" class="sub_5">ANDES</option>
+                                        <option value="5036" class="sub_5">ANGEL&Oacute;POLIS</option>
+                                        <option value="5038" class="sub_5">ANGOSTURA</option>
+                                        <option value="5040" class="sub_5">ANOR&Aacute;</option>
+                                        <option value="5044" class="sub_5">ANZ&Aacute;</option>
+                                        <option value="5055" class="sub_5">ARGELIA</option>
+                                        <option value="5059" class="sub_5">ARMENIA</option>
+                                        <option value="5079" class="sub_5">BARBOSA</option>
+                                        <option value="5091" class="sub_5">BETANIA</option>
+                                        <option value="5093" class="sub_5">BETULIA</option>
+                                        <option value="5107" class="sub_5">BRICE&ntilde;O</option>
+                                        <option value="5113" class="sub_5">BURITIC&Aacute;</option>
+                                        <option value="5125" class="sub_5">CAICEDO</option>
+                                        <option value="5129" class="sub_5">CALDAS</option>
+                                        <option value="5134" class="sub_5">CAMPAMENTO</option>
+                                        <option value="5138" class="sub_5">CA&ntilde;ASGORDAS</option>
+                                        <option value="5145" class="sub_5">CARAMANTA</option>
+                                        <option value="5190" class="sub_5">CISNEROS</option>
+                                        <option value="5101" class="sub_5">CIUDAD BOL&Aacute;VAR</option>
+                                        <option value="5197" class="sub_5">COCORN&Aacute;</option>
+                                        <option value="5209" class="sub_5">CONCORDIA</option>
+                                        <option value="5212" class="sub_5">COPACABANA</option>
+                                        <option value="5234" class="sub_5">DABEIBA</option>
+                                        <option value="5240" class="sub_5">EB&Eacute;JICO</option>
+                                        <option value="5148" class="sub_5">EL CARMEN DE VIBORAL</option>
+                                        <option value="5541" class="sub_5">EL PE&ntilde;OL</option>
+                                        <option value="5282" class="sub_5">FREDONIA</option>
+                                        <option value="5284" class="sub_5">FRONTINO</option>
+                                        <option value="5306" class="sub_5">GIRALDO</option>
+                                        <option value="5308" class="sub_5">GIRARDOTA</option>
+                                        <option value="5310" class="sub_5">G&Oacute;MEZ PLATA</option>
+                                        <option value="5313" class="sub_5">GRANADA</option>
+                                        <option value="5315" class="sub_5">GUADALUPE</option>
+                                        <option value="5347" class="sub_5">HELICONIA</option>
+                                        <option value="5353" class="sub_5">HISPANIA</option>
+                                        <option value="5361" class="sub_5">ITUANGO</option>
+                                        <option value="5364" class="sub_5">JARD&Aacute;N</option>
+                                        <option value="5368" class="sub_5">JERIC&Oacute;</option>
+                                        <option value="5376" class="sub_5">LA CEJA</option>
+                                        <option value="5380" class="sub_5">LA ESTRELLA</option>
+                                        <option value="5411" class="sub_5">LIBORINA</option>
+                                        <option value="5425" class="sub_5">MACEO</option>
+                                        <option value="5001" class="sub_5">MEDELL&Aacute;N</option>
+                                        <option value="5467" class="sub_5">MONTEBELLO</option>
+                                        <option value="5483" class="sub_5">NARI&ntilde;O</option>
+                                        <option value="5541" class="sub_5">PE&ntilde;OL</option>
+                                        <option value="5543" class="sub_5">PEQUE</option>
+                                        <option value="5576" class="sub_5">PUEBLORRICO</option>
+                                        <option value="5615" class="sub_5">RIONEGRO</option>
+                                        <option value="5628" class="sub_5">SABANALARGA</option>
+                                        <option value="5642" class="sub_5">SALGAR</option>
+                                        <option value="5647" class="sub_5">SAN ANDR&Eacute;S DE CUERQUIA</option>
+                                        <option value="5649" class="sub_5">SAN CARLOS</option>
+                                        <option value="5652" class="sub_5">SAN FRANCISCO</option>
+                                        <option value="5656" class="sub_5">SAN JER&Oacute;NIMO</option>
+                                        <option value="5658" class="sub_5">SAN JOS&Eacute; DE LA MONTA&ntilde;A</option>
+                                        <option value="5660" class="sub_5">SAN LUIS</option>
+                                        <option value="5667" class="sub_5">SAN RAFAEL</option>
+                                        <option value="5670" class="sub_5">SAN ROQUE</option>
+                                        <option value="5679" class="sub_5">SANTA B&Aacute;RBARA</option>
+                                        <option value="5042" class="sub_5">SANTA FE DE ANTIOQUIA</option>
+                                        <option value="5686" class="sub_5">SANTA ROSA DE OSOS</option>
+                                        <option value="5690" class="sub_5">SANTO DOMINGO</option>
+                                        <option value="5756" class="sub_5">SONS&Oacute;N</option>
+                                        <option value="5761" class="sub_5">SOPETR&Aacute;N</option>
+                                        <option value="5789" class="sub_5">T&Aacute;MESIS</option>
+                                        <option value="5792" class="sub_5">TARSO</option>
+                                        <option value="5809" class="sub_5">TITIRIB&Aacute;</option>
+                                        <option value="5819" class="sub_5">TOLEDO</option>
+                                        <option value="5842" class="sub_5">URAMITA</option>
+                                        <option value="5847" class="sub_5">URRAO</option>
+                                        <option value="5856" class="sub_5">VALPARA&Aacute;SO</option>
+                                        <option value="5858" class="sub_5">VEGACH&Aacute;</option>
+                                        <option value="5861" class="sub_5">VENECIA</option>
+                                        <option value="5885" class="sub_5">YAL&Aacute;</option>
+                                        <option value="5887" class="sub_5">YARUMAL</option>
+                                        <option value="5890" class="sub_5">YOLOMB&Oacute;</option>
+                                        <option value="13001" class="sub_13">CARTAGENA</option>
+                                        <option value="13473" class="sub_13">MORALES</option>
+                                        <option value="13670" class="sub_13">SAN PABLO</option>
+                                        <option value="13683" class="sub_13">SANTA ROSA</option>
+                                        <option value="13873" class="sub_13">VILLANUEVA</option>
+                                        <option value="15090" class="sub_15">BERBEO</option>
+                                        <option value="15106" class="sub_15">BRICE&ntilde;O - TUNUNGUA</option>
+                                        <option value="15109" class="sub_15">BUENAVISTA</option>
+                                        <option value="15176" class="sub_15">CHIQUINQUIR&Aacute;</option>
+                                        <option value="15185" class="sub_15">CHITARAQUE</option>
+                                        <option value="15212" class="sub_15">COPER</option>
+                                        <option value="15325" class="sub_15">GUAYATA</option>
+                                        <option value="15442" class="sub_15">MARIPI</option>
+                                        <option value="15455" class="sub_15">MIRAFLORES</option>
+                                        <option value="15469" class="sub_15">MONIQUIRA</option>
+                                        <option value="15514" class="sub_15">PAEZ - CAMPOHERMOSO</option>
+                                        <option value="15518" class="sub_15">PAJARITO</option>
+                                        <option value="15531" class="sub_15">PAUNA</option>
+                                        <option value="15664" class="sub_15">SAN JOSE DE PARE</option>
+                                        <option value="15686" class="sub_15">SANTANA</option>
+                                        <option value="15816" class="sub_15">TOGUI</option>
+                                        <option value="15897" class="sub_15">ZETAQUIRA</option>
+                                        <option value="17013" class="sub_17">AGUADAS</option>
+                                        <option value="17042" class="sub_17">ANSERMA</option>
+                                        <option value="17050" class="sub_17">ARANZAZU</option>
+                                        <option value="17088" class="sub_17">BELALCAZAR</option>
+                                        <option value="17174" class="sub_17">CHINCHINA</option>
+                                        <option value="17272" class="sub_17">FILADELFIA</option>
+                                        <option value="17388" class="sub_17">LA MERCED</option>
+                                        <option value="17001" class="sub_17">MANIZALES</option>
+                                        <option value="17433" class="sub_17">MANZANARES</option>
+                                        <option value="17442" class="sub_17">MARMATO</option>
+                                        <option value="17444" class="sub_17">MARQUETALIA</option>
+                                        <option value="17446" class="sub_17">MARULANDA</option>
+                                        <option value="17486" class="sub_17">NEIRA</option>
+                                        <option value="17513" class="sub_17">P&Aacute;CORA</option>
+                                        <option value="17524" class="sub_17">PALESTINA</option>
+                                        <option value="17541" class="sub_17">PENSILVANIA</option>
+                                        <option value="17614" class="sub_17">RIOSUCIO</option>
+                                        <option value="17616" class="sub_17">RISARALDA</option>
+                                        <option value="17653" class="sub_17">SALAMINA</option>
+                                        <option value="17662" class="sub_17">SAMANA</option>
+                                        <option value="17662" class="sub_17">SAMAN&Aacute;</option>
+                                        <option value="17665" class="sub_17">SAN JOSE</option>
+                                        <option value="17777" class="sub_17">SUPIA</option>
+                                        <option value="17867" class="sub_17">VICTORIA</option>
+                                        <option value="17873" class="sub_17">VILLAMARIA</option>
+                                        <option value="17877" class="sub_17">VITERBO</option>
+                                        <option value="18247" class="sub_18">EL DONCELLO</option>
+                                        <option value="18001" class="sub_18">FLORENCIA</option>
+                                        <option value="18592" class="sub_18">PUERTO RICO</option>
+                                        <option value="19022" class="sub_19">ALMAGUER</option>
+                                        <option value="19050" class="sub_19">ARGELIA</option>
+                                        <option value="19075" class="sub_19">BALBOA</option>
+                                        <option value="19100" class="sub_19">BOLIVAR</option>
+                                        <option value="19100" class="sub_19">BOL&Aacute;VAR</option>
+                                        <option value="19532" class="sub_19">BORDO (PATIA)</option>
+                                        <option value="19110" class="sub_19">BUENOS AIRES</option>
+                                        <option value="19130" class="sub_19">CAJIB&Aacute;O</option>
+                                        <option value="19137" class="sub_19">CALDONO</option>
+                                        <option value="19142" class="sub_19">CALOTO</option>
+                                        <option value="19212" class="sub_19">CORINTO</option>
+                                        <option value="19256" class="sub_19">EL TAMBO</option>
+                                        <option value="19290" class="sub_19">FLORENCIA</option>
+                                        <option value="19355" class="sub_19">INZ&Aacute;</option>
+                                        <option value="19364" class="sub_19">JAMBALO</option>
+                                        <option value="19392" class="sub_19">LA SIERRA</option>
+                                        <option value="19397" class="sub_19">LA VEGA</option>
+                                        <option value="19450" class="sub_19">MERCADERES</option>
+                                        <option value="19455" class="sub_19">MIRANDA</option>
+                                        <option value="19473" class="sub_19">MORALES</option>
+                                        <option value="19517" class="sub_19">P&Aacute;EZ</option>
+                                        <option value="19532" class="sub_19">PAT&Aacute;A</option>
+                                        <option value="19548" class="sub_19">PIENDAM&Oacute;</option>
+                                        <option value="19001" class="sub_19">POPAY&Aacute;N</option>
+                                        <option value="19622" class="sub_19">ROSAS</option>
+                                        <option value="19698" class="sub_19">SANTANDER</option>
+                                        <option value="19698" class="sub_19">SANTANDER DE QUILICHAO</option>
+                                        <option value="19780" class="sub_19">SU&Aacute;REZ</option>
+                                        <option value="19785" class="sub_19">SUCRE</option>
+                                        <option value="19807" class="sub_19">TIMB&Aacute;O</option>
+                                        <option value="19821" class="sub_19">TORIB&Aacute;O</option>
+                                        <option value="20011" class="sub_20">AGUACHICA</option>
+                                        <option value="20013" class="sub_20">AGUSTIN CODAZZI</option>
+                                        <option value="20621" class="sub_20">LA PAZ</option>
+                                        <option value="20570" class="sub_20">PUEBLO BELLO</option>
+                                        <option value="20001" class="sub_20">VALLEDUPAR</option>
+                                        <option value="23570" class="sub_23">PUEBLO NUEVO</option>
+                                        <option value="25040" class="sub_25">ANOLAIMA</option>
+                                        <option value="25053" class="sub_25">ARBEL&Aacute;EZ</option>
+                                        <option value="25095" class="sub_25">BITUIMA</option>
+                                        <option value="25123" class="sub_25">CACHIPAY</option>
+                                        <option value="25148" class="sub_25">CAPARRAP&Aacute;</option>
+                                        <option value="25168" class="sub_25">CHAGUAN&Aacute;</option>
+                                        <option value="25245" class="sub_25">EL COLEGIO</option>
+                                        <option value="25258" class="sub_25">EL PE&ntilde;&Oacute;N</option>
+                                        <option value="25290" class="sub_25">FUSAGASUG&Aacute;</option>
+                                        <option value="25320" class="sub_25">GUADUAS</option>
+                                        <option value="25328" class="sub_25">GUAYABAL DE S&Aacute;QUIMA</option>
+                                        <option value="25386" class="sub_25">LA MESA</option>
+                                        <option value="25394" class="sub_25">LA PALMA</option>
+                                        <option value="25402" class="sub_25">LA VEGA</option>
+                                        <option value="25488" class="sub_25">NILO</option>
+                                        <option value="25513" class="sub_25">PACHO</option>
+                                        <option value="25518" class="sub_25">PAIME</option>
+                                        <option value="25524" class="sub_25">PANDI</option>
+                                        <option value="25580" class="sub_25">PULI - BELTRAN</option>
+                                        <option value="25596" class="sub_25">QUIPILE</option>
+                                        <option value="25645" class="sub_25">SAN ANTONIO</option>
+                                        <option value="25649" class="sub_25">SAN BERNARDO</option>
+                                        <option value="25653" class="sub_25">SAN CAYETANO</option>
+                                        <option value="25658" class="sub_25">SAN FRANCISCO</option>
+                                        <option value="25662" class="sub_25">SAN JUAN DE RIOSECO</option>
+                                        <option value="25718" class="sub_25">SASAIMA</option>
+                                        <option value="25743" class="sub_25">SILVANIA</option>
+                                        <option value="25754" class="sub_25">SOACHA</option>
+                                        <option value="25777" class="sub_25">SUPAT&Aacute;</option>
+                                        <option value="25805" class="sub_25">TIBACUY</option>
+                                        <option value="25823" class="sub_25">TOPAIP&Aacute;</option>
+                                        <option value="25506" class="sub_25">VENECIA</option>
+                                        <option value="25862" class="sub_25">VERGARA</option>
+                                        <option value="25867" class="sub_25">VIAN&Aacute;</option>
+                                        <option value="25843" class="sub_25">VILLA DE SAN DIEGO DE UBAT&Eacute;</option>
+                                        <option value="25878" class="sub_25">VIOTA</option>
+                                        <option value="25878" class="sub_25">VIOT&Aacute;</option>
+                                        <option value="25885" class="sub_25">YACOP&Aacute;</option>
+                                        <option value="41006" class="sub_41">ACEVEDO</option>
+                                        <option value="41013" class="sub_41">AGRADO</option>
+                                        <option value="41016" class="sub_41">AIPE</option>
+                                        <option value="41020" class="sub_41">ALGECIRAS</option>
+                                        <option value="41078" class="sub_41">BARAYA</option>
+                                        <option value="41132" class="sub_41">CAMPOALEGRE</option>
+                                        <option value="41206" class="sub_41">COLOMBIA</option>
+                                        <option value="41244" class="sub_41">EL&Aacute;AS</option>
+                                        <option value="41298" class="sub_41">GARZ&Oacute;N</option>
+                                        <option value="41306" class="sub_41">GIGANTE</option>
+                                        <option value="41319" class="sub_41">GUADALUPE</option>
+                                        <option value="41349" class="sub_41">HOBO</option>
+                                        <option value="41357" class="sub_41">&Aacute;QUIRA</option>
+                                        <option value="41359" class="sub_41">ISNOS</option>
+                                        <option value="41378" class="sub_41">LA ARGENTINA</option>
+                                        <option value="41396" class="sub_41">LA PLATA</option>
+                                        <option value="41483" class="sub_41">N&Aacute;TAGA</option>
+                                        <option value="41001" class="sub_41">NEIVA</option>
+                                        <option value="41503" class="sub_41">OPORAPA</option>
+                                        <option value="41518" class="sub_41">PAICOL</option>
+                                        <option value="41524" class="sub_41">PALERMO</option>
+                                        <option value="41530" class="sub_41">PALESTINA</option>
+                                        <option value="41548" class="sub_41">PITAL</option>
+                                        <option value="41551" class="sub_41">PITALITO</option>
+                                        <option value="41615" class="sub_41">RIVERA</option>
+                                        <option value="41660" class="sub_41">SALADOBLANCO</option>
+                                        <option value="41668" class="sub_41">SAN AGUST&Aacute;N</option>
+                                        <option value="41676" class="sub_41">SANTA MAR&Aacute;A</option>
+                                        <option value="41770" class="sub_41">SUAZA</option>
+                                        <option value="41791" class="sub_41">TARQUI</option>
+                                        <option value="41799" class="sub_41">TELLO</option>
+                                        <option value="41801" class="sub_41">TERUEL</option>
+                                        <option value="41797" class="sub_41">TESALIA</option>
+                                        <option value="41807" class="sub_41">TIMANA</option>
+                                        <option value="41807" class="sub_41">TIMAN&Aacute;</option>
+                                        <option value="44078" class="sub_44">BARRANCAS</option>
+                                        <option value="44110" class="sub_44">EL MOLINO</option>
+                                        <option value="44279" class="sub_44">FONSECA</option>
+                                        <option value="44874" class="sub_44">VILLANUEVA</option>
+                                        <option value="47053" class="sub_47">ARACATACA</option>
+                                        <option value="47189" class="sub_47">CI&Eacute;NAGA</option>
+                                        <option value="47245" class="sub_47">EL BANCO</option>
+                                        <option value="47288" class="sub_47">FUNDACI&Oacute;N</option>
+                                        <option value="47001" class="sub_47">SANTA MARTA</option>
+                                        <option value="50226" class="sub_50">CUMARAL</option>
+                                        <option value="50270" class="sub_50">EL DORADO</option>
+                                        <option value="50400" class="sub_50">LEJAN&Aacute;AS</option>
+                                        <option value="50330" class="sub_50">MESETAS</option>
+                                        <option value="50606" class="sub_50">RESTREPO</option>
+                                        <option value="52019" class="sub_52">ALBAN</option>
+                                        <option value="52036" class="sub_52">ANCUY&Aacute;</option>
+                                        <option value="52051" class="sub_52">ARBOLEDA</option>
+                                        <option value="52110" class="sub_52">BUESACO</option>
+                                        <option value="52203" class="sub_52">COL&Oacute;N</option>
+                                        <option value="52207" class="sub_52">CONSAC&Aacute;</option>
+                                        <option value="52254" class="sub_52">EL PE&ntilde;OL</option>
+                                        <option value="52256" class="sub_52">EL ROSARIO</option>
+                                        <option value="52258" class="sub_52">EL TABLON</option>
+                                        <option value="52258" class="sub_52">EL TABL&Oacute;N DE G&Oacute;MEZ</option>
+                                        <option value="52260" class="sub_52">EL TAMBO</option>
+                                        <option value="52381" class="sub_52">LA FLORIDA</option>
+                                        <option value="52399" class="sub_52">LA UNI&Oacute;N</option>
+                                        <option value="52405" class="sub_52">LEIVA</option>
+                                        <option value="52411" class="sub_52">LINARES</option>
+                                        <option value="52418" class="sub_52">LOS ANDES</option>
+                                        <option value="52435" class="sub_52">MALLAMA</option>
+                                        <option value="52001" class="sub_52">PASTO</option>
+                                        <option value="52678" class="sub_52">SAMANIEGO</option>
+                                        <option value="52687" class="sub_52">SAN LORENZO</option>
+                                        <option value="52693" class="sub_52">SAN PABLO</option>
+                                        <option value="52683" class="sub_52">SANDON&Aacute;</option>
+                                        <option value="52699" class="sub_52">SANTACRUZ</option>
+                                        <option value="52786" class="sub_52">TAMINANGO</option>
+                                        <option value="54051" class="sub_54">ARBOLEDAS</option>
+                                        <option value="54099" class="sub_54">BOCHALEMA</option>
+                                        <option value="54128" class="sub_54">C&Aacute;CHIRA</option>
+                                        <option value="54172" class="sub_54">CHIN&Aacute;COTA</option>
+                                        <option value="54206" class="sub_54">CONVENCI&Oacute;N</option>
+                                        <option value="54223" class="sub_54">CUCUTILLA</option>
+                                        <option value="54239" class="sub_54">DURANIA</option>
+                                        <option value="54245" class="sub_54">EL CARMEN</option>
+                                        <option value="54313" class="sub_54">GRAMALOTE</option>
+                                        <option value="54344" class="sub_54">HACAR&Aacute;</option>
+                                        <option value="54377" class="sub_54">LABATECA</option>
+                                        <option value="54418" class="sub_54">LOURDES</option>
+                                        <option value="54498" class="sub_54">OCA&ntilde;A</option>
+                                        <option value="54599" class="sub_54">RAGONVALIA</option>
+                                        <option value="54660" class="sub_54">SALAZAR</option>
+                                        <option value="54670" class="sub_54">SAN CALIXTO</option>
+                                        <option value="54720" class="sub_54">SARDINATA</option>
+                                        <option value="54800" class="sub_54">TEORAMA</option>
+                                        <option value="54820" class="sub_54">TOLEDO</option>
+                                        <option value="54871" class="sub_54">VILLA CARO</option>
+                                        <option value="63001" class="sub_63">ARMENIA</option>
+                                        <option value="63130" class="sub_63">CALARCA</option>
+                                        <option value="63130" class="sub_63">CALARC&Aacute;</option>
+                                        <option value="63190" class="sub_63">CIRCASIA</option>
+                                        <option value="63212" class="sub_63">C&Oacute;RDOBA</option>
+                                        <option value="63272" class="sub_63">FILANDIA</option>
+                                        <option value="63302" class="sub_63">GENOVA</option>
+                                        <option value="63401" class="sub_63">LA TEBAIDA</option>
+                                        <option value="63470" class="sub_63">MONTENEGRO</option>
+                                        <option value="63548" class="sub_63">PIJAO</option>
+                                        <option value="63594" class="sub_63">QUIMBAYA</option>
+                                        <option value="66045" class="sub_66">APIA</option>
+                                        <option value="66045" class="sub_66">AP&Aacute;A</option>
+                                        <option value="66075" class="sub_66">BALBOA</option>
+                                        <option value="66088" class="sub_66">BEL&Eacute;N DE UMBR&Aacute;A</option>
+                                        <option value="66170" class="sub_66">DOSQUEBRADAS</option>
+                                        <option value="66318" class="sub_66">GU&Aacute;TICA</option>
+                                        <option value="66383" class="sub_66">LA CELIA</option>
+                                        <option value="66400" class="sub_66">LA VIRGINIA</option>
+                                        <option value="66440" class="sub_66">MARSELLA</option>
+                                        <option value="66456" class="sub_66">MISTRAT&Oacute;</option>
+                                        <option value="66001" class="sub_66">PEREIRA</option>
+                                        <option value="66572" class="sub_66">PUEBLO RICO</option>
+                                        <option value="66594" class="sub_66">QUINCH&Aacute;A</option>
+                                        <option value="66682" class="sub_66">SANTA ROSA DE CABAL</option>
+                                        <option value="66687" class="sub_66">SANTUARIO</option>
+                                        <option value="68051" class="sub_68">ARATOCA</option>
+                                        <option value="68077" class="sub_68">BARBOSA</option>
+                                        <option value="68092" class="sub_68">BETULIA</option>
+                                        <option value="68001" class="sub_68">BUCARAMANGA</option>
+                                        <option value="68167" class="sub_68">CHARAL&Aacute;</option>
+                                        <option value="68176" class="sub_68">CHIMA</option>
+                                        <option value="68217" class="sub_68">COROMORO</option>
+                                        <option value="68229" class="sub_68">CURITI</option>
+                                        <option value="68235" class="sub_68">EL CARMEN DE CHUCUR&Aacute;</option>
+                                        <option value="68320" class="sub_68">GUADALUPE</option>
+                                        <option value="68322" class="sub_68">GUAPOTA</option>
+                                        <option value="68324" class="sub_68">GUAVAT&Aacute;</option>
+                                        <option value="68368" class="sub_68">JESÃšS MAR&Aacute;A</option>
+                                        <option value="68444" class="sub_68">MATANZA</option>
+                                        <option value="68464" class="sub_68">MOGOTES</option>
+                                        <option value="68498" class="sub_68">OCAMONTE</option>
+                                        <option value="68500" class="sub_68">OIBA</option>
+                                        <option value="68533" class="sub_68">PARAMO</option>
+                                        <option value="68549" class="sub_68">PINCHOTE</option>
+                                        <option value="68572" class="sub_68">PUENTE NACIONAL</option>
+                                        <option value="68615" class="sub_68">RIONEGRO</option>
+                                        <option value="68679" class="sub_68">SAN GIL</option>
+                                        <option value="68686" class="sub_68">SAN MIGUEL</option>
+                                        <option value="68689" class="sub_68">SAN VICENTE</option>
+                                        <option value="68689" class="sub_68">SAN VICENTE DE CHUCUR&Aacute;</option>
+                                        <option value="68745" class="sub_68">SIMACOTA</option>
+                                        <option value="68755" class="sub_68">SOCORRO</option>
+                                        <option value="68770" class="sub_68">SUAITA</option>
+                                        <option value="68820" class="sub_68">TONA</option>
+                                        <option value="68855" class="sub_68">VALLE DE SAN JOS&Eacute;</option>
+                                        <option value="68895" class="sub_68">ZAPATOCA</option>
+                                        <option value="73024" class="sub_73">ALPUJARRA</option>
+                                        <option value="73043" class="sub_73">ANZO&Aacute;TEGUI</option>
+                                        <option value="73067" class="sub_73">ATACO</option>
+                                        <option value="73124" class="sub_73">CAJAMARCA</option>
+                                        <option value="73152" class="sub_73">CASABIANCA</option>
+                                        <option value="73168" class="sub_73">CHAPARRAL</option>
+                                        <option value="73226" class="sub_73">CUNDAY</option>
+                                        <option value="73236" class="sub_73">DOLORES</option>
+                                        <option value="73270" class="sub_73">FALAN</option>
+                                        <option value="73283" class="sub_73">FRESNO</option>
+                                        <option value="73347" class="sub_73">HERVEO</option>
+                                        <option value="73001" class="sub_73">IBAGU&Eacute;</option>
+                                        <option value="73352" class="sub_73">ICONONZO</option>
+                                        <option value="73411" class="sub_73">L&Aacute;BANO</option>
+                                        <option value="73449" class="sub_73">MELGAR</option>
+                                        <option value="73504" class="sub_73">ORTEGA</option>
+                                        <option value="73520" class="sub_73">PALOCABILDO</option>
+                                        <option value="73555" class="sub_73">PLANADAS</option>
+                                        <option value="73616" class="sub_73">RIOBLANCO</option>
+                                        <option value="73624" class="sub_73">ROVIRA</option>
+                                        <option value="73675" class="sub_73">SAN ANTONIO</option>
+                                        <option value="73686" class="sub_73">SANTA ISABEL</option>
+                                        <option value="73854" class="sub_73">VALLE DE SAN JUAN</option>
+                                        <option value="73861" class="sub_73">VENADILLO</option>
+                                        <option value="73870" class="sub_73">VILLAHERMOSA</option>
+                                        <option value="73873" class="sub_73">VILLARRICA</option>
+                                        <option value="76020" class="sub_76">ALCAL&Aacute;</option>
+                                        <option value="76041" class="sub_76">ANSERMANUEVO</option>
+                                        <option value="76054" class="sub_76">ARGELIA</option>
+                                        <option value="76100" class="sub_76">BOLIVAR</option>
+                                        <option value="76109" class="sub_76">BUENAVENTURA</option>
+                                        <option value="76111" class="sub_76">BUGA</option>
+                                        <option value="76113" class="sub_76">BUGALAGRANDE</option>
+                                        <option value="76122" class="sub_76">CAICEDONIA</option>
+                                        <option value="76001" class="sub_76">CALI</option>
+                                        <option value="76126" class="sub_76">CALIMA</option>
+                                        <option value="76147" class="sub_76">CARTAGO</option>
+                                        <option value="76233" class="sub_76">DAGUA</option>
+                                        <option value="76126" class="sub_76">DARIEN</option>
+                                        <option value="76243" class="sub_76">EL &Aacute;GUILA</option>
+                                        <option value="76246" class="sub_76">EL CAIRO</option>
+                                        <option value="76250" class="sub_76">EL DOVIO</option>
+                                        <option value="76275" class="sub_76">FLORIDA</option>
+                                        <option value="76306" class="sub_76">GINEBRA</option>
+                                        <option value="76318" class="sub_76">GUACARI</option>
+                                        <option value="76111" class="sub_76">GUADALAJARA DE BUGA</option>
+                                        <option value="76364" class="sub_76">JAMUND&Aacute;</option>
+                                        <option value="76377" class="sub_76">LA CUMBRE</option>
+                                        <option value="76400" class="sub_76">LA UNI&Oacute;N</option>
+                                        <option value="76403" class="sub_76">LA VICTORIA</option>
+                                        <option value="76497" class="sub_76">OBANDO</option>
+                                        <option value="76520" class="sub_76">PALMIRA</option>
+                                        <option value="76606" class="sub_76">RESTREPO</option>
+                                        <option value="76616" class="sub_76">RIOFR&Aacute;O</option>
+                                        <option value="76622" class="sub_76">ROLDANILLO</option>
+                                        <option value="76736" class="sub_76">SEVILLA</option>
+                                        <option value="76823" class="sub_76">TORO</option>
+                                        <option value="76828" class="sub_76">TRUJILLO</option>
+                                        <option value="76834" class="sub_76">TULU&Aacute;</option>
+                                        <option value="76845" class="sub_76">ULLOA</option>
+                                        <option value="76863" class="sub_76">VERSALLES</option>
+                                        <option value="76869" class="sub_76">VIJES</option>
+                                        <option value="76890" class="sub_76">YOTOCO</option>
+                                        <option value="85162" class="sub_85">MONTERREY</option>
+                                        <option value="85225" class="sub_85">NUNCH&Aacute;A</option>
+                                        <option value="85315" class="sub_85">S&Aacute;CAMA</option>
+                                        <option value="85400" class="sub_85">T&Aacute;MARA</option>
+                                    </select>				
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="vereda">Vereda:</label>
+                                    <input type="text" class="form-control" id="vereda">
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="predio">Predio:</label>
+                                    <input type="text" class="form-control" id="predio">
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="propietario">Propietario:</label>
+                                    <input type="text" class="form-control" id="propietario">
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="propietario">Doc. Propietario:</label>
+                                    <input type="text" class="form-control" id="cc_propietario">
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="propietario">Lugar doc:</label>
+                                    <input type="text" class="form-control" id="lugar_cc_propietario">
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="telefono">Telefono:</label>
+                                    <input type="text" class="form-control" id="telefono">
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 180px" for="topografia">Dirección:</label>
+                                    <input type="text" class="form-control" id="direccion">
+                                </div>
+                                                                <div class="form-group">
+                                    <label style="width: 180px" for="topografia">No. pisos:</label>
+                                    <input type="text" class="form-control" id="pisos">
+                                </div>
+                                                                <div class="form-group">
+                                    <label style="width: 180px" for="topografia">Estrato:</label>
+                                    <input type="text" class="form-control" id="estrato">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                                    Servicios Públicos</a>
+                            </h4>
+                        </div>
+                        <div id="collapse4" class="panel-collapse collapse">
+                            <div class="panel-body">
+
+                                    <div class="form-group">
+                                        <label for="agua">Agua:</label>
+                                        <input type="checkbox" class="form-control" id="agua">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="alcantarillado">Alcantarillado:</label>
+                                        <input type="checkbox" class="form-control" id="alcantarillado">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="energia">Energia:</label>
+                                        <input type="checkbox" class="form-control" id="energia">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telefono">Teléfono:</label>
+                                        <input type="checkbox" class="form-control" id="telefono">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="gas">Gas:</label>
+                                        <input type="checkbox" class="form-control" id="gas">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="tv">Televisión-cable:</label>
+                                        <input type="checkbox" class="form-control" id="tv">
+                                    </div>                                
+                                    <div class="form-group">
+                                        <label style="width: 180px" for="otro_serv">Otro-cual?:</label>
+                                        <input type="text" class="form-control" id="otro_serv">
+                                    </div>                               
+                                    <div class="form-group">
+                                        <label for="observa_serv">Observaciones:</label>
+                                         <textarea class="form-control" id="observa_serv" rows="3"></textarea>
+                                    </div>
+                                 </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse41">
+                                    Clasificación de predios</a>
+                            </h4>
+                        </div>
+                        <div id="collapse41" class="panel-collapse collapse">
+                            <div class="panel-body">
+
+                                    <div class="form-group">
+                                        <label for="residencial">Residencial:</label>
+                                        <input type="checkbox" class="form-control" id="residencial">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="comercial">Comercial:</label>
+                                        <input type="checkbox" class="form-control" id="comercial">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="finaanciero">Financiero:</label>
+                                        <input type="checkbox" class="form-control" id="finaanciero">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dotacional">Dotacional:</label>
+                                        <input type="checkbox" class="form-control" id="dotacional">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="deposito">Depósito:</label>
+                                        <input type="checkbox" class="form-control" id="deposito">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="urbanizado_no_edi">Urbanizado no edificado:</label>
+                                        <input type="checkbox" class="form-control" id="urbanizado_no_edi">
+                                    </div> 
+                                
+                                    <div class="form-group">
+                                        <label for="no_urbanizables">Urbanizables no urbanizados:</label>
+                                        <input type="checkbox" class="form-control" id="urbanizables">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="no_urbanizables">No urbanizables:</label>
+                                        <input type="checkbox" class="form-control" id="no_urbanizables">
+                                    </div> 
+                                    <div class="form-group">
+                                        <label for="rural">Rural:</label>
+                                        <input type="checkbox" class="form-control" id="rural">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="rural_prod">Rural destinado a producción:</label>
+                                        <input type="checkbox" class="form-control" id="rural_prod">
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="width: 180px" for="otro_urba">Otro? cual:</label>
+                                        <input type="text" class="form-control" id="otro_urba">
+                                    </div>                               
+                                    <div class="form-group">
+                                        <label style="width: 180px" for="observa_pre">Observaciones - Descripción ( Acuerdo No. 105 de 2003.)</label>
+                                        <textarea class="form-control" id="observa_pre" rows="3"></textarea>
+                                    </div>
+                                 </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">
+                                    Descripción y estado antes</a>
+                            </h4>
+                        </div>
+                        <div id="collapse6" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                     <label style="width: 280px" for="observa_desp">Descripción y estado del predio antes de inciar el proyecto</label>
+                                    <textarea class="form-control" id="observa_desp" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto()" >Tomar Foto</button>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="generatePDF()" >Generar planilla PDF</button>
+                <button class="btn btn-lg btn-success btn-block" type="button" onclick="insertDataPreVivienda()">Guardar</button>
+                <input type="hidden" id="singImagePath" value="/sdcard0/Pictures/Sing.png" name="singImagePath" />
+            </form>
+        </div> 
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+    </body>
+</html>

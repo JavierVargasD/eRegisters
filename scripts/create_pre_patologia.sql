@@ -1,0 +1,41 @@
+CREATE TABLE IF NOT EXISTS pre_patologia_p (id integer primary key,
+id_acta	INTEGER,
+abscisa	VARCHAR(100),
+valor_p	VARCHAR(2),
+valor_e	VARCHAR(2),
+izq	VARCHAR(2),
+eje	VARCHAR(2),
+der	VARCHAR(2),
+longi	INTEGER(1),
+aleatoria	INTEGER(1),
+transver	INTEGER(1),
+long_mayor	VARCHAR(20),
+long_menor	VARCHAR(20),
+ancho_mayor	VARCHAR(20),
+ancho_menor	VARCHAR(20),
+prof_mayor	VARCHAR(20),
+prof_menor	VARCHAR(20),
+observaciones	VARCHAR(2000));
+
+
+
+
+CREATE TABLE IF NOT EXISTS pre_patologia_p (
+                                id_local integer primary key,
+				id_acta	INTEGER references pre_vial_p(id_local),
+				abscisa	VARCHAR(100),
+				valor_p	VARCHAR(2),
+				valor_e	VARCHAR(2),
+				izq	VARCHAR(2),
+				eje	VARCHAR(2),
+				der	VARCHAR(2),
+				longi	boolean,
+				aleatoria	boolean,
+				transver	boolean,
+				long_mayor	VARCHAR(20),
+				long_menor	VARCHAR(20),
+				ancho_mayor	VARCHAR(20),
+				ancho_menor	VARCHAR(20),
+				prof_mayor	VARCHAR(20),
+				prof_menor	VARCHAR(20),
+				observaciones	VARCHAR(2000))

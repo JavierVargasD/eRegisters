@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <title>Hello World</title>
+        <style>
+            html{
+                height: 100%;
+            }
+            body {
+                background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#cbccc8)) fixed;
+                min-height: 100%;
+            }
+        </style>
+        <script src="js/jquery.min.js"></script> 
+        <script type="text/javascript" src="js/config.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">		
+        </nav>
+        <div class="container">
+            <form class="form-inline" role="form">
+                <div class="form-group">
+                    <label for="operadora">Operadora:</label>
+                    <input type="text" class="form-control" id="operadora">
+                </div>
+                <div class="form-group">
+                    <label style="width: 180px" for="programa_sismico">Programa s&iacute;smico:</label>
+                    <input type="text" class="form-control" id="programa_sismico">
+                </div>
+                <div class="form-group">
+                    <label for="userc">Usuario:</label>
+                    <input type="text" class="form-control" id="userc">
+                </div>
+                <div class="form-group">
+                    <label for="passc">Contrase&ntilde;a:</label>
+                    <input type="password" class="form-control" id="passc">
+                </div>
+                <div class="form-group">
+                    <label for="userc">Nombre Representante</label>
+                    <input type="text" class="form-control" id="representante">
+                </div>
+                <div class="form-group">
+                    <label for="userc"># Documento Representante</label>
+                    <input type="text" class="form-control" id="numdocrepre">
+                </div>
+                <div class="form-group">
+                    <label for="userc">Lugar documento</label>
+                    <input type="text" class="form-control" id="lugarcc">
+                </div>
+                <div class="form-group">
+                    <label for="passc">IP servidor:</label>
+                    <input type="text" class="form-control" id="ip">
+                </div>
+                <button class="btn btn-lg btn-success btn-block" type="button" onclick="saveConfig()">Guardar</button>
+                <button class="btn btn-lg btn-success btn-block" type="button" onclick="updateTables()">Actualizar Tablas</button>
+            </form>
+        </div>
+        <script type="text/javascript" src="cordova.js"></script>
+
+    </body>
+</html>

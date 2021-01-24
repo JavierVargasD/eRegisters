@@ -1,0 +1,16 @@
+# Mac
+.DS_Store
+
+# Node
+npm-debug.log
+/node_modules
+
+# Cordova
+/platforms
+/plugins
+/node_modules
+/hooks
+/actasHTML
+
+# res
+resources/signing
