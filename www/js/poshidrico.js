@@ -7,7 +7,7 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 $(document).ready(function() {
 
-    /*function cascadeSelect(parent, child) {
+    function cascadeSelect(parent, child) {
         var childOptions = child.find('option:not(.static)');
         child.data('options', childOptions);
 
@@ -28,7 +28,7 @@ $(document).ready(function() {
         orgSelect = $("#P_DEPTO");
         terrSelect = $("#P_MUN");
         cascadeSelect(orgSelect, terrSelect);
-    });*/
+    });
 
 
 });
@@ -38,9 +38,15 @@ function onDeviceReady() {
 
     var myDB = window.sqlitePlugin.openDatabase({name: "geominutes.db", location: 'default'});
     var query = "SELECT * FROM pre_hidrico_p where id=" + window.localStorage.getItem("actaId");
-	ac =  window.localStorage.getItem("actaId");
 	
-    if (window.localStorage.getItem("editar") === 'true') {
+	if( window.localStorage.getItem("post") === 'true' ){
+		
+		query = "SELECT * FROM post_hidrico_p where id=" + window.localStorage.getItem("actaId");
+	}
+	
+	ac =  window.localStorage.getItem("actaId");
+
+    if (true) {
         myDB.transaction(function(transaction) {
             transaction.executeSql(query, [], function(tx, results) {
                 var len = results.rows.length, i;
@@ -50,7 +56,6 @@ function onDeviceReady() {
 
 					
 					$("#acta").val(results.rows.item(i).id);
-					$("#fecha").val(results.rows.item(i).fecha);
 					$("#permiso").val(results.rows.item(i).permiso);
 					$("#P_DEPTO").val(results.rows.item(i).P_DEPTO);
 					$("#P_MUN").val(results.rows.item(i).P_MUN);
@@ -256,8 +261,6 @@ function onDeviceReady() {
                                         $("#punto_cemento").prop('checked', JSON.parse(results.rows.item(i).punto_cemento));
                                          $("#punto_adecuada").prop('checked', JSON.parse(results.rows.item(i).punto_adecuada));
 										 $("#customActa").val(results.rows.item(i).custom_acta);
-										 $("#linea").val(results.rows.item(i).linea);
-										 					$("#pagDe").val(results.rows.item(i).pag_de);
                                         
 
                                         
@@ -299,7 +302,8 @@ function onDeviceReady() {
 
 function generatePDF() {
 	
-  
+	alert('gen');
+    
     var successC = function(status) {
         alert('Message: ' + status);
     };
@@ -374,7 +378,7 @@ function generatePDF() {
                         + " white-space: nowrap;"
                         + " vertical-align: middle;"
                         + " width: 2em;"
-                        + " height:600px;"
+                        + " height:650px;"
                         + "}"
                         + ".rotate div {"
                         + "    -moz-transform: rotate(-270.0deg);"
@@ -403,13 +407,13 @@ function generatePDF() {
                 
                          + " <table style='border-top: 1px solid' width='100%' border='1' cellspacing='0' cellpadding='0'>"
                          + " <tbody>"
-                         + " <tr><td class='encabezado2' colspan='4'>Pagina 1 de "+$("#pagDe").val()+" &nbsp&nbsp</td></tr>"
+                         + " <tr><td class='encabezado2' colspan='4'>Pagina 1 de 2 &nbsp&nbsp</td></tr>"
                          + "  <tr>"
                          + "  <td colspan='4'>"
                          + "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
                          + "    <tbody>"
                          + "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
-                         + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA PRE REGISTRO DE RECURSO HÍDRICO</td>"
+                         + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA POST REGISTRO DE RECURSO HÍDRICO</td>"
 						 + "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
                          + "   </tr>"
 							+ "   <tr>"
@@ -428,11 +432,11 @@ function generatePDF() {
                          + " <tbody>"
                          + "  <tr>"
                          + "  <td style='width: 12.5%'>Fecha:</td>"
-                         + "  <td style='width: 12.5%'> "+  ($("#fecha").val()) +"</td>"
+                         + "  <td style='width: 12.5%'> "+ getCurrentDate() +"</td>"
                          + "  <td style='width: 12.5%'>Línea</td>"
                          + "  <td style='width: 12.5%'>  " + ($("#linea").val())+" </td>"
                          + "  <td style='width: 12.5%'>Acta Nº.</td>"
-                         + "  <td style='width: 12.5%'>  PRE-ARH-" + $("#customActa").val() +" </td>"
+                         + "  <td style='width: 12.5%'>  POST-RH-" + $("#customActa").val() +" </td>"
                          + "   </tr>    "
                          + "  </tbody>"
                          + "</table>"
@@ -517,9 +521,22 @@ function generatePDF() {
 			+ "<tr> "
 			+ "    <td align='center'> <b>Jagüey (      " + ($("#jagüey").is(':checked') ? "X" : "") + "),     Estanque Piscícola (" + ($("#estanque_piscicola").is(':checked') ? "X" : "") + ") ,     Aljibe (" + ($("#aljibe").is(':checked') ? "X" : "") + "),   Pozo profundo (" + ($("#pozo_profundo").is(':checked') ? "X" : "") + "),   Nacedero (" + ($("#nacedero").is(':checked') ? "X" : "") + ")</b></td>"
                         +"</tr> "
+			+ "    <td style='text-align: justify'><p></p><p>"
+			
+				+ "Una vez comprobada el acta pre-registro PRE-RH-" + $("#customActa").val() +" del Jagüey (      " + ($("#jagüey").is(':checked') ? "X" : "") + "),     Estanque Piscícola (" 
+				+ ($("#estanque_piscicola").is(':checked') ? "X" : "") + ") ,     Aljibe (" + ($("#aljibe").is(':checked') ? "X" : "") + "),   Pozo profundo (" 
+				+ ($("#pozo_profundo").is(':checked') ? "X" : "") + "),   Nacedero (" + ($("#nacedero").is(':checked') ? "X" : "") + "), en el predio " 
+				+ ($("#predio").val())+", en el municipio de " + ($("#P_MUN option:selected").text()) +" vereda o barrio "+ ($("#vereda").val())+" del departamento del " 
+				+ ($("#P_DEPTO option:selected").text())+",se reunieron el funcionario (a) "+window.localStorage.getItem('representante') +" con cédula de ciudadania N° "
+				+ window.localStorage.getItem('numdocrepre')+" de "+window.localStorage.getItem('lugarcc')+", quien actúa como evaluador (a)  y el (la) señor(a) "
+				+ $("#propietario").val() +", con cédula de  ciudadanía N° "+ $("#cc_propietario").val() + " de " + $("#lugar_cc_propietario").val() + ", en calidad de propietario(a) o representante  del predio, el día "
+				+ ($("#dia").val()) +" del mes de " + ($("#mes").val()) +" del año " + ($("#ann").val())+" para verificar que el Jagüey (      " + ($("#jagüey").is(':checked') ? "X" : "") + "),     Estanque Piscícola (" 
+				+ ($("#estanque_piscicola").is(':checked') ? "X" : "") + ") ,     Aljibe (" + ($("#aljibe").is(':checked') ? "X" : "") + "),   Pozo profundo ("
+				+ ($("#pozo_profundo").is(':checked') ? "X" : "") + "),   Nacedero (" + ($("#nacedero").is(':checked') ? "X" : "") + ") y elementos anexos, " + ($("#enca").val())+" presentan afectación alguna por los trabajos efectuados en desarrollo del programa sísmico "
+				+ window.localStorage.getItem('programa_sismico') +"." 
 
-
-			+ "    <td style='text-align: justify'><p></p> En el municipio de  " + ($("#P_MUN option:selected").text())+" " + ($("#vereda").val())+ "  del departamento de  " + ($("#P_DEPTO option:selected").text())+", se reunieron el funcionario (a) "+window.localStorage.getItem('representante')+" con c&#233;dula de ciudadania "+window.localStorage.getItem('numdocrepre')+" de "+window.localStorage.getItem('lugarcc')+" quien actúa como evaluador  y el (la) señor (a) " + ($("#propietario").val())+ ", con cédula de  ciudadanía N° " + ($("#cc_propietario").val())+ "  de " + ($("#lugar_cc_propietario").val())+ ", en calidad de propietario(a) o representante del predio, con el fin de realizar una evaluación al estado de un recurso hídrico y demás anexos a este, que se describe a continuación:<p></p></td>                </tr> "
+			
+			+"</p></td></tr> "
 			+ "    </tbody> "
 			+ "</table> "
 			+ " <table width='100%' border='1' cellspacing='0' cellpadding='0'> "
@@ -808,17 +825,17 @@ function generatePDF() {
 			+ "    <td style='width:17.3%'>PVC:</td> "
 			+ "    <td style='width:16%;text-align:center'> " + ($("#material_pvc").is(':checked') ? "X" : "") + " </td> "
 			+ "    <td style='width:17%'>Comercial:</td> "
-			+ "    <td style='width:16%' colspan='4'> " + ($("#jaguey_comercial").is(':checked') ? "X" : "") + " </td></tr> "
+			+ "    <td style='width:16%' colspan='4'> " + ($("#jaguey_comercial").val())+ " </td></tr> "
 			+ " <tr><td style='width:18.3%' colspan='2'>Otro cual? " + ($("#surgencia_otro").val())+ "  "
 			+ "         </td> "
 			+ "    <td style='width:17.3%'>Metálico:</td> "
 			+ "    <td style='width:16%;text-align:center'> " + ($("#material_metalico").is(':checked') ? "X" : "") + " </td> "
 			+ "    <td style='width:17%'>Consumo familiar:</td> "
-			+ "    <td style='width:16%' colspan='4'> " + ($("#jaguey_familiar").is(':checked') ? "X" : "") + " </td></tr> "
+			+ "    <td style='width:16%' colspan='4'> " + ($("#jaguey_familiar").val())+ " </td></tr> "
 			+ " <tr><td style='width:18.3%' colspan='2'></td> "
 			+ "    <td style='width:17.3%' colspan='2'>Otro:  " + ($("#material_otro").val())+ " </td> "
 			+ "    <td style='width:17%'>Zona de protección:</td> "
-			+ "    <td style='width:16%' colspan='4'> " + ($("#jaguey_zona_proteccion").is(':checked') ? "X" : "") + " </td></tr> "
+			+ "    <td style='width:16%' colspan='4'> " + ($("#jaguey_zona_proteccion").val())+ " </td></tr> "
 			+ "        "
 			+ "    </tbody></table> "
 
@@ -935,13 +952,13 @@ function generatePDF() {
 						
 						+ " <table style='border-top: 1px solid' width='100%' border='1' cellspacing='0' cellpadding='0'>"
                         + "  <tbody>"
-                        + "   <tr><td class='encabezado2' colspan='4'>Pagina 2 de "+$("#pagDe").val()+" &nbsp&nbsp</td></tr>"
+                        + "   <tr><td class='encabezado2' colspan='4'>Pagina 2 de 3 &nbsp&nbsp</td></tr>"
 						+ "  <tr>"
 						+ "  <td colspan='4'>"
 						+ "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
 						+ "    <tbody>"
 						+ "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
-						+ "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA PRE REGISTRO DE RECURSO HÍDRICO</td>"
+						+ "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA POST REGISTRO DE RECURSO HÍDRICO</td>"
 						+ "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
 						+ "   </tr>"
 						+ "   <tr>"
@@ -960,11 +977,11 @@ function generatePDF() {
 						+ " <tbody>"
 						+ "  <tr>"
                         + "  <td style='width: 12.5%'>Fecha:</td>"
-                        + "  <td style='width: 12.5%'> "+  ($("#fecha").val()) +"</td>"
+                        + "  <td style='width: 12.5%'> "+ getCurrentDate() +"</td>"
                         + "  <td style='width: 12.5%'>Línea</td>"
                         + "  <td style='width: 12.5%'>  " + ($("#linea").val())+" </td>"
                         + "  <td style='width: 12.5%'>Acta Nº.</td>"
-                        + "  <td style='width: 12.5%'>  PRE-ARH-" + $("#customActa").val() +" </td>"
+                        + "  <td style='width: 12.5%'>  POST-RH-" + $("#customActa").val() +" </td>"
                           + "   </tr>    "
                         + "  </tbody>"
                         + "</table>"  
@@ -1017,7 +1034,7 @@ function generatePDF() {
                         + "    <td class='encabezado' colspan='4'><b>FIRMAS DE APROBACIÓN</b></td> "
                         + "</tr> "
                         + "<tr> "
-                        + "    <td width='100%' colspan='4'><p></p>Los presentes están de acuerdo con la evaluación efectuada y en constancia firman siendo las  _______ horas del día ______ del mes  de  ______________ de 201___.</td></tr> "
+                        + "    <td width='100%' colspan='4'><p></p>Los presentes firman en constancia de la evaluación realizada y las partes se declaran entre si, a paz y salvo por todo concepto y responsabilidad en especial con respecto al elemento referenciado. Para constancia se firma siendo las _________ horas del día ___________ del mes de  ______________ de 201___.</td></tr> "
                             + "<tr>"
                         + " <td>AVISO DE PRIVACIDAD PARA RECOLECCIÓN DE DATOS PERSONALES</td> "
                         + "</tr>"
@@ -1041,19 +1058,16 @@ function generatePDF() {
                         + "</table>"
             + "<table width='100%'>"
             + " <tr>"
-            + "     <td style='height:90px;vertical-align:bottom;'>____________________________________</td><td></td><td style='height:90px;vertical-align:bottom;'>___________________________________</td><td  style='font-size:8px;vertical-align:bottom;text-align:center' rowspan='3'></td>"
+            + "     <td style='height:60px;vertical-align:bottom;'>____________________________________</td><td></td><td style='height:60px;vertical-align:bottom;'>___________________________________</td><td  style='font-size:8px;vertical-align:bottom;text-align:center' rowspan='3'></td>"
             + " </tr>"
             +" <tr>"
             + "     <td>NOMBRE DEL EVALUADOR PETROSEISMIC SERVICES</td><td></td><td>FIRMA DEL EVALUADOR PETROSEISMIC SERVICES</td>"
             + "</tr>"
-            +" <tr style='height:50px;vertical-align:bottom'>"
+            +" <tr>"
             + "     <td>Teléfono_______________</td><td></td><td>C.C #_____________ de _________</td>"
-            + " </tr>" 
+            + " </tr>"   
             +" <tr>"
-            + "     <td></td><td></td><td>TP_______________</td>"
-            + " </tr>"  			
-            +" <tr>"
-            + "     <td style='height:90px;vertical-align:bottom;'> ____________________________________</td><td></td><td colspan='2' style='height:90px;vertical-align:bottom;'>___________________________________</td>"
+            + "     <td style='height:60px;vertical-align:bottom;'> ____________________________________</td><td></td><td colspan='2' style='height:60px;vertical-align:bottom;'>___________________________________</td>"
             + " </tr>"
             +" <tr>"
             + "     <td>NOMBRE DEL COORDINADOR DE ACTAS PETROSEISMIC SERVICES</td><td></td><td colspan='2'>FIRMA DEL COORDINADOR DE ACTAS PETROSEISMIC SERVICES</td>"
@@ -1061,139 +1075,65 @@ function generatePDF() {
             +" <tr>"
             + "     <td></td><td></td><td colspan='2'>C.C #_____________ de _________</td>"
             + " </tr>"   
- 			+" <tr>"
-            + "     <td></td><td></td><td>TP_______________</td>"
-            + " </tr>"  
+            +" <tr>"
+            + "     <td style='height:60px;vertical-align:bottom;'>____________________________________</td><td></td><td colspan='2' style='height:60px;vertical-align:bottom;'>___________________________________</td>"
+            + " </tr>"
+            +" <tr>"
+            + "     <td>NOMBRE DEL SUPERVISOR HSE DE CAMPO ANH</td><td></td><td colspan='2'>FIRMA DEL SUPERVISOR HSE DE CAMPO ANH</td>"
+            + "</tr>"
+            +" <tr>"
+            + "     <td></td><td></td><td colspan='2'>C.C #_____________ de _________</td>"
+            + " </tr>"
 			
-			+" <tr>"
-			+ "     <td style='height:90px;vertical-align:bottom;'>____________________________________</td><td></td><td colspan='2' style='height:90px;vertical-align:bottom;'>___________________________________</td>"
-			+ " </tr>"
-			+" <tr>"
-			+ "     <td>NOMBRE DEL INTERVENTOR AMBIENTAL</td><td></td><td colspan='2'>FIRMA DEL INTERVENTOR AMBIENTAL</td>"
-			+ "</tr>"
-			+" <tr>"
-			+ "     <td></td><td></td><td colspan='2'>C.C #_____________ de _________</td>"
-			+ " </tr>"
+			                                        +" <tr>"
+                                        + "     <td style='height:60px;vertical-align:bottom;'>____________________________________</td><td></td><td colspan='2' style='height:60px;vertical-align:bottom;'>___________________________________</td>"
+					+ " </tr>"
+                                        +" <tr>"
+                                        + "     <td>NOMBRE DEL SUPERVISOR AMBIENTAL ANH</td><td></td><td colspan='2'>FIRMA DEL SUPERVISOR AMBIENTAL ANH</td>"
+					+ "</tr>"
+                                        +" <tr>"
+                                        + "     <td></td><td></td><td colspan='2'>C.C #_____________ de _________</td>"
+					+ " </tr>"
 
 			
 			
             +" <tr>"
-            + "     <td colspan='4' style='height:90px;vertical-align:bottom;'>FECHA DE APROBACIÓN________________</td>"
+            + "     <td colspan='4' style='height:60px;vertical-align:bottom;'>FECHA DE APROBACIÓN________________</td>"
             + "</tr>"
             + "</table>"
 
-                        + "<p style='page-break-after: always;'> "     
-
-						                         + " <table style='border-top: 1px solid' width='100%' border='1' cellspacing='0' cellpadding='0'>"
-                         + " <tbody>"
-                         + " <tr><td class='encabezado2' colspan='4'>Pagina 3 de "+$("#pagDe").val()+" &nbsp&nbsp</td></tr>"
-                         + "  <tr>"
-                         + "  <td colspan='4'>"
-                         + "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
-                         + "    <tbody>"
-                         + "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
-                         + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA PRE REGISTRO DE RECURSO HÍDRICO</td>"
-						 + "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
-                         + "   </tr>"
-							+ "   <tr>"
-							+ "    <td colspan='4'>"
-							+ "    <table width='100%' border='0' cellspacing='0' cellpadding='0'><tr>"
-							+ "     <td  style='font-size:10px;text-align:left;'>COD: FOR-QC-07</td>"					
-							+ "	    <td  style='font-size:10px;text-align:right;padding-right:5px'>Versi&oacute;n 8, Octubre de 2018</td></tr></table>"
-							+ "  </td></tr><tr>"
-							+ "  <td style='width: 40%'>  "+ window.localStorage.getItem('programa_sismico') +" </td>"
-							+ "  <td style='width: 10%'>OPERADORA:</td>"
-							+ "  <td>  "+  window.localStorage.getItem('operadora') +"  </td>"
-							+ "   </tr>    "
-                         + "    </tbody>"
-                         + "</table>"
-                         + "<table width='100%' border='1' cellspacing='0' cellpadding='0'>"
-                         + " <tbody>"
-                         + "  <tr>"
-                         + "  <td style='width: 12.5%'>Fecha:</td>"
-                         + "  <td style='width: 12.5%'> "+  ($("#fecha").val()) +"</td>"
-                         + "  <td style='width: 12.5%'>Línea</td>"
-                         + "  <td style='width: 12.5%'>  " + ($("#linea").val())+" </td>"
-                         + "  <td style='width: 12.5%'>Acta Nº.</td>"
-                         + "  <td style='width: 12.5%'>  PRE-ARH-" + $("#customActa").val() +" </td>"
-                         + "   </tr>    "
-                         + "  </tbody>"
-                         + "</table>"
-
-                        
-                        + "     <table width='100%' border='1' cellspacing='0' cellpadding='0'>"
+                        + "<p style='page-break-after: always;'> "                             
+                        + "     <table width='100%' border='1' cellspacing='0' cellpadding='0'  style='padding-top: 10px;margin-top: 40px'>"
                         + "       <tbody>"
                         + "            <tr>"
-                        + "              <td class='rotate'><div>PRE-ARH-"+(padDigits($("#customActa").val(), 3))+"-02</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-hid-" + ac +"-"+ 2 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
-                        + "              <td  class='rotate'><div>PRE-ARH-"+(padDigits($("#customActa").val(), 3))+"-01</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-hid-" + ac +"-"+ 1 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
+                        + "              <td class='rotate'><div>POST-RH-"+(padDigits($("#customActa").val(), 3))+"-02</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-hid-" + ac +"-"+ 2 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
+                        + "              <td  class='rotate'><div>POST-RH-"+(padDigits($("#customActa").val(), 3))+"-01</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-hid-" + ac +"-"+ 1 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
                         + "            </tr>"
                         + "            <tr>"
-                        + "              <td class='rotate'><div>PRE-ARH-"+(padDigits($("#customActa").val(), 3))+"-04</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-hid-" + ac +"-"+ 4 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
-                        + "              <td  class='rotate' ><div>PRE-ARH-"+(padDigits($("#customActa").val(), 3))+"-03</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-hid-" + ac +"-"+ 3 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
+                        + "              <td class='rotate'><div>POST-RH-"+(padDigits($("#customActa").val(), 3))+"-04</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-hid-" + ac +"-"+ 4 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
+                        + "              <td  class='rotate' ><div>POST-RH-"+(padDigits($("#customActa").val(), 3))+"-03</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-hid-" + ac +"-"+ 3 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
                         + "            </tr>"
                         + "         </tbody>"
                         + "       </table></p>"	
-						
-						
-						
                         + "     <p style='page-break-after: always;'> "
-						
-						
-						                         + " <table style='border-top: 1px solid' width='100%' border='1' cellspacing='0' cellpadding='0'>"
-                         + " <tbody>"
-                         + " <tr><td class='encabezado2' colspan='4'>Pagina 4 de "+$("#pagDe").val()+" &nbsp&nbsp</td></tr>"
-                         + "  <tr>"
-                         + "  <td colspan='4'>"
-                         + "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
-                         + "    <tbody>"
-                         + "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
-                         + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA PRE REGISTRO DE RECURSO HÍDRICO</td>"
-						 + "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
-                         + "   </tr>"
-							+ "   <tr>"
-							+ "    <td colspan='4'>"
-							+ "    <table width='100%' border='0' cellspacing='0' cellpadding='0'><tr>"
-							+ "     <td  style='font-size:10px;text-align:left;'>COD: FOR-QC-07</td>"					
-							+ "	    <td  style='font-size:10px;text-align:right;padding-right:5px'>Versi&oacute;n 8, Octubre de 2018</td></tr></table>"
-							+ "  </td></tr><tr>"
-							+ "  <td style='width: 40%'>  "+ window.localStorage.getItem('programa_sismico') +" </td>"
-							+ "  <td style='width: 10%'>OPERADORA:</td>"
-							+ "  <td>  "+  window.localStorage.getItem('operadora') +"  </td>"
-							+ "   </tr>    "
-                         + "    </tbody>"
-                         + "</table>"
-                         + "<table width='100%' border='1' cellspacing='0' cellpadding='0'>"
-                         + " <tbody>"
-                         + "  <tr>"
-                         + "  <td style='width: 12.5%'>Fecha:</td>"
-                         + "  <td style='width: 12.5%'> "+  ($("#fecha").val()) +"</td>"
-                         + "  <td style='width: 12.5%'>Línea</td>"
-                         + "  <td style='width: 12.5%'>  " + ($("#linea").val())+" </td>"
-                         + "  <td style='width: 12.5%'>Acta Nº.</td>"
-                         + "  <td style='width: 12.5%'>  PRE-ARH-" + $("#customActa").val() +" </td>"
-                         + "   </tr>    "
-                         + "  </tbody>"
-                         + "</table>"
-						
-						
-                        + "     <table width='95%' border='1' cellspacing='0' cellpadding='0' >"
+                        + "     <table width='100%' border='1' cellspacing='0' cellpadding='0'  style='padding-top: 10px;margin-top: 40px'>"
                         + "       <tbody>"
                         + "            <tr>"
                         + "            <tr>"
-                        + "              <td class='rotate'><div>PRE-ARH-"+(padDigits($("#customActa").val(), 3))+"-06</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-hid-" + ac +"-"+ 6 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
-                        + "              <td  class='rotate'><div>PRE-ARH-"+(padDigits($("#customActa").val(), 3))+"-05</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-hid-" + ac +"-"+ 5 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
+                        + "              <td class='rotate' style='height:650px;width:30px;'><div>POST-RH-"+(padDigits($("#customActa").val(), 3))+"-06</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-hid-" + ac +"-"+ 6 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
+                        + "              <td  class='rotate' style='height:650px;width:30px;'><div>POST-RH-"+(padDigits($("#customActa").val(), 3))+"-05</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-hid-" + ac +"-"+ 5 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
                         + "            </tr>"
                         + "            <tr>"
-                        + "              <td class='rotate' ><div>PRE-ARH-"+(padDigits($("#customActa").val(), 3))+"-07</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-hid-" + ac +"-"+ 7 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
-                        + "              <td  class='rotate' ><div>PRE-ARH-"+(padDigits($("#customActa").val(), 3))+"-08</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-hid-" + ac +"-"+ 8 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
+                        + "              <td class='rotate' style='height:650px;width:30px;'><div>POST-RH-"+(padDigits($("#customActa").val(), 3))+"-07</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-hid-" + ac +"-"+ 7 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
+                        + "              <td  class='rotate' style='height:650px;width:30px;'><div>POST-RH-"+(padDigits($("#customActa").val(), 3))+"-08</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-hid-" + ac +"-"+ 8 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
                         + "            </tr>"
                         + "         </tbody>"
                         + "       </table></p>"
@@ -1201,7 +1141,7 @@ function generatePDF() {
             documentSize: 'A4',
             landscape: 'portrait',
             type: 'share',
-			fileName: 'pre-hid-'+ $("#acta").val()
+			fileName: 'post-hid-'+ $("#acta").val()
         }, this.success, this.failure);
 }
 
@@ -1228,11 +1168,11 @@ function resolveOnSuccess(entry){
     var d = new Date();
     var n = d.getTime();
     //new file name
-    var newFileName = 'pre-hid-' + ac +'-'+ hidImageNumber + ".jpg";
+    var newFileName = 'post-hid-' + ac +'-'+ hidImageNumber + ".jpg";
     i++;
     
     var dir = '/';
-    window.localStorage.setItem('pre-hid-' + ac +'-'+ hidImageNumber,'');
+    window.localStorage.setItem('post-hid-' + ac +'-'+ hidImageNumber,'');
 
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys) {      
     //The folder is created if doesn't exist
@@ -1240,7 +1180,6 @@ function resolveOnSuccess(entry){
     fileSys.root.getDirectory( dir ,
                     {create:false, exclusive: true},
                     function(directory) {
-						window.localStorage.setItem("imgURL", directory.nativeURL);
                         entry.copyTo(directory, newFileName,  successMove, resOnError);
                     },
                     resOnError);
@@ -1252,7 +1191,7 @@ function resolveOnSuccess(entry){
 function successMove(entry) {
     //I do my insert with "entry.fullPath" as for the path
 	var url = entry.toURL(); // file or remote URL. url can also be dataURL, but giving it a file path is much faster
-	var album = 'pre-hid-' + ac;
+	var album = 'post-hid-' + ac;
 	cordova.plugins.photoLibrary.saveImage(url, album, function (libraryItem) {}, function (err) {});
 }
 
@@ -1292,7 +1231,7 @@ function insertDataPreHidrico() {
     var id = $("#acta").val();
 	var programa_sismico = window.localStorage.getItem("programa_sismico");
     var operadora = window.localStorage.getItem("operadora");
-    var fecha = $("#fecha").val();
+    var fecha = getCurrentDateTime();
     var linea = $("#linea").val();
 	var permiso = $("#permiso").val();
 	var P_DEPTO = $("#P_DEPTO").val();
@@ -1501,14 +1440,10 @@ function insertDataPreHidrico() {
         var punto_cercado = $("#punto_cercado").is(':checked');
         var punto_cemento = $("#punto_cercado").is(':checked');
         var punto_adecuada = $("#punto_cercado").is(':checked');
-		
-		var customActa =  $("#customActa").val();
-		
-			var pagDe =  $("#pagDe").val();
 
     if (window.localStorage.getItem("editar") === 'true') {
 
-        var executeQuery = "UPDATE pre_hidrico_p SET "
+        var executeQuery = "UPDATE post_hidrico_p SET "
 				+ "vereda=?,"
 				+ "predio=?,"
 				+ "propietario=?,"
@@ -1705,15 +1640,10 @@ function insertDataPreHidrico() {
 				+ "rela_repre_prop=?,"
 				+ "elementos_si=?,"
 				+ "falta_rela=?,"
-				+"sisagua_otro=?,"
-				+"punto_cercado=?,"
-				+"punto_cemento=?,"
-				+ "	custom_acta=?,"
-				+"punto_adecuada=?,"
-				+ "	fecha=?,"
-				+ "	pag_de=?,"
-				+"P_DEPTO=?,"
-				+"P_MUN=?"							
+                                +"sisagua_otro=?,"
+                                +"punto_cercado=?,"
+                                +"punto_cemento=?,"
+                                +"punto_adecuada=?"
                 + " WHERE id =" + id;
 
         myDB.transaction(function(transaction) {
@@ -1915,16 +1845,10 @@ function insertDataPreHidrico() {
 				rela_repre_prop,
 				elementos_si,
 				falta_rela,
-				sisagua_otro,
-				punto_cercado,
-				punto_cemento,
-				customActa,
-				punto_adecuada,	
-				fecha,
-				pagDe,
-				P_DEPTO,
-				P_MUN
-								
+                                sisagua_otro,
+                                punto_cercado,
+                                punto_cemento,
+                                punto_adecuada
                                 
                                 
             ]
@@ -1942,7 +1866,7 @@ function insertDataPreHidrico() {
 
 
         myDB.transaction(function(transaction) {
-            var executeQuery = "INSERT INTO pre_hidrico_p ("
+            var executeQuery = "INSERT INTO post_hidrico_p ("
                     + "id,"
 					+ "programa_sismico,"
                     + "operadora,"
@@ -2154,8 +2078,6 @@ function insertDataPreHidrico() {
                                         + "sisagua_otro,"
                                         + "punto_cercado,"
                                         + "punto_cemento,"
-										+ "	custom_acta,"
-										+ "pag_de,"	
                                         + "punto_adecuada"
                                         + ") VALUES ("
                                         + "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
@@ -2178,7 +2100,7 @@ function insertDataPreHidrico() {
 					+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
 					+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
 					+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " 
-					+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?" 
+					+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?" 
 					+ ");";
 					
 
@@ -2392,10 +2314,7 @@ function insertDataPreHidrico() {
                                 estado,
                                 sisagua_otro,
                                 punto_cercado,
-								
                                 punto_cemento,
-								customActa,
-								pagDe,
                                 punto_adecuada
             ]
             , function(tx, result) {

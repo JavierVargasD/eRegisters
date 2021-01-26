@@ -29,9 +29,11 @@
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
         <meta name="format-detection" content="telephone=no">
+        <meta charset=utf-8>
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/index.css" rel="stylesheet">
         <title>Hello World</title>
         <style>
             html{
@@ -43,51 +45,19 @@
             }
         </style>
         <script src="js/jquery.min.js"></script> 
-        <script type="text/javascript" src="js/config.js"></script>
+        <script src="js/poserosivoController.js"></script>
     </head>
     <body>
         <nav class="navbar navbar-inverse">		
         </nav>
         <div class="container">
-            <form class="form-inline" role="form">
-                <div class="form-group">
-                    <label for="operadora">Operadora:</label>
-                    <input type="text" class="form-control" id="operadora">
-                </div>
-                <div class="form-group">
-                    <label style="width: 180px" for="programa_sismico">Programa s&iacute;smico:</label>
-                    <input type="text" class="form-control" id="programa_sismico">
-                </div>
-                <div class="form-group">
-                    <label for="userc">Usuario:</label>
-                    <input type="text" class="form-control" id="userc">
-                </div>
-                <div class="form-group">
-                    <label for="passc">Contrase&ntilde;a:</label>
-                    <input type="password" class="form-control" id="passc">
-                </div>
-                <div class="form-group">
-                    <label for="userc">Nombre Representante</label>
-                    <input type="text" class="form-control" id="representante">
-                </div>
-                <div class="form-group">
-                    <label for="userc"># Documento Representante</label>
-                    <input type="text" class="form-control" id="numdocrepre">
-                </div>
-                <div class="form-group">
-                    <label for="userc">Lugar documento</label>
-                    <input type="text" class="form-control" id="lugarcc">
-                </div>
-                <div class="form-group">
-                    <label for="passc">IP servidor:</label>
-                    <input type="text" class="form-control" id="ip">
-                </div>
-                <button class="btn btn-lg btn-success btn-block" type="button" onclick="saveConfig()">Guardar</button>
-                <button class="btn btn-lg btn-success btn-block" type="button" onclick="updateTables()">Actualizar Tablas</button>
-				<button class="btn btn-lg btn-success btn-block" type="button" onclick="copyDB()">Copiar BD</button>
-            </form>
+            <ul class="list-group" id="TableData">
+            </ul>
+            <script type="text/javascript" src="js/index.js"></script>
         </div>
-        <script type="text/javascript" src="cordova.js"></script>
-
-    </body>
+    </form>
+</div>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="cordova.js"></script>
+</body>
 </html>

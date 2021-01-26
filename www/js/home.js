@@ -828,6 +828,7 @@ function createDBTables() {
                 + "deshabitada VARCHAR(2),"
                 + "rural VARCHAR(2),"
                 + "urbano VARCHAR(2),"
+				+ "custom_acta VARCHAR(20),"
                 + "observa VARCHAR(2000))", [],
                 function(tx, result) {
                     console.log("Table created successfully");
@@ -875,7 +876,7 @@ function createDBTables() {
 				+ "estudios	INTEGER(1),"
 				+ "reportes	INTEGER(1),"
 				+ "otros	INTEGER(1),"
-				+ "jagüey	INTEGER(1),"
+				+ "jaguey	INTEGER(1),"
 				+ "estanque_piscicola	INTEGER(1),"
 				+ "aljibe	INTEGER(1),"
 				+ "pozo_profundo	INTEGER(1),"
@@ -1053,6 +1054,7 @@ function createDBTables() {
                                 + "punto_adecuada	INTEGER(1)," 
                                 + "usuario VARCHAR(15),"
                                 + "fecha_modificada VARCHAR(20),"
+								+ "custom_acta VARCHAR(20),"
                                 + "estado VARCHAR(1),"
 				+ "falta_rela	VARCHAR(250))", [],
                 function(tx, result) {
@@ -1301,6 +1303,7 @@ function createDBTables() {
 				+ "fecha_inicio VARCHAR(20),"
                 + "usuario VARCHAR(15),"
                 + "fecha_modificada VARCHAR(20),"
+				+ "custom_acta VARCHAR(20),"
                 + "estado VARCHAR(1),"
 				+ "falta_rela	VARCHAR(250))", [],
                 function(tx, result) {
@@ -1407,6 +1410,7 @@ function createDBTables() {
 				+ "fecha_inicio VARCHAR(20),"
                 + "usuario VARCHAR(15),"
                 + "fecha_modificada VARCHAR(20),"
+				+ "custom_acta VARCHAR(20),"
                 + "estado VARCHAR(1),"
 				+ "rela_repre_prop	VARCHAR(50))", [],
                 function(tx, result) {
@@ -1490,6 +1494,9 @@ function createDBTables() {
                                 + "estructura VARCHAR(250),"
                                 + "geometria VARCHAR(250),"
                                 + "parrafo_general VARCHAR(2000),"
+								+ "custom_acta VARCHAR(20),"
+								+ "via VARCHAR(250),"
+								+ "pag_de VARCHAR(20),"								
                                 + "concepto_general VARCHAR(2000))", [],
                 function(tx, result) {
                     

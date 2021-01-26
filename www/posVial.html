@@ -48,7 +48,7 @@
 
         </style>
         <script src="js/jquery.min.js"></script> 
-        <script src="js/preevial.js"></script>
+        <script src="js/posvial.js"></script>
         <script src="js/utils.js"></script>
         <script type="text/javascript" src="js/jsignature-min.js"></script>
     </head>
@@ -109,7 +109,7 @@
                                 <div class="form-group">
                                     <label style="width: 180px" for="P_MUN">Municipio:</label>
                                     <select id='P_MUN' class="P_MUN">
-									    <option value="23182" >CHINÚ</option>
+									    <option value="23182" >CHINU</option>
                                         <option value="70233" >EL ROBLE</option>
                                         <option value="70742" >SINCÉ</option>
                                         <option value="70678" >SAN BENITO ABAD</option>
@@ -134,7 +134,7 @@
                                     <input type="text" class="form-control" id="lugar_cc_propietario">
                                 </div>
                                 <div class="form-group">
-                                    <label style="width: 180px" for="telefono">Id campo:</label>
+                                    <label style="width: 180px" for="telefono">Telefono:</label>
                                     <input type="text" class="form-control" id="telefono">
                                 </div>
                             </div>
@@ -151,7 +151,7 @@
                             <div class="panel-body">
                                 <div class="form-group">
                                     <label style="width: 150px" for="origen_coord">Origen de coord:</label>
-                                    <input type="text" class="form-control" id="origen_coord" value="MAGNA COLOMBIA BOGOTÁ">
+                                    <input type="text" class="form-control" id="origen_coord" value="MAGNA COLOMBIA BOGOTA">
                                 </div>
                                 <div class="form-group">
                                     <label style="width: 150px" for="coordenadasi_e">Ini E:</label>
@@ -292,6 +292,10 @@
                                     <label for="texcom">Texto representante:</label>
                                     <input type="text" class="form-control" id="texcom">
                                 </div>
+								                                <div class="form-group">
+                                    <label for="enca">Encabezado:</label>
+                                    <input type="text" class="form-control" id="enca">
+                                </div>
                                <div class="form-group">
                                     <label for="texcom">Párrafo Inicial:</label>
                                     <textarea class="form-control" id="parrafo_general" rows="3"></textarea>
@@ -424,7 +428,6 @@
                                 <span class="table-add glyphicon glyphicon-plus"></span>
                                 <table class="table">
                                     <tr>
-										<th id='removeR'>Eliminar</th>
                                         <th id='cod_obra_arte'>Cod</th>
                                         <th id='abscisa'>Abs</th>
                                         <th id='estribos_col_m'>M</th>
@@ -460,13 +463,10 @@
                                         <th id='observaciones_o'>Obs</th>
                                     </tr>
                                     <!-- This is our clonable table line -->
-                                    <tr class="hide">    
-										<td contenteditable="false">
-											<input type="checkbox" class="form-control" id="removeR">
-										</td>
+                                    <tr class="hide">                                      
                                         <td contenteditable="false">
                                              <select name="cod_obra_arte">
-                                                <option value="-">-</option>
+                                                <option value=""></option>
                                                 <option value="1">Alcantarilla</option>
                                                 <option value="2">Ponton</option>	
                                                 <option value="3">Puente</option>
@@ -478,7 +478,7 @@
                                         <td contenteditable="true" id="abscisa"></td>
                                         <td contenteditable="false">
                                              <select name="estribos_col_m">
-                                                        <option value="-">-</option>
+                                                        <option value=""></option>
                                                         <option value="1">Concreto Simple</option>
                                                         <option value="2">Concreto Reforzado</option>	
                                                         <option value="3">Tuberia concreto ref.</option>
@@ -488,14 +488,14 @@
                                         </td>
                                         <td contenteditable="false">
                                              <select name="estribos_col_e">
-                                                        <option value="-">-</option>
+                                                        <option value=""></option>
                                                         <option value="1">Malo</option>
                                                         <option value="2">Regular</option>	
                                                         <option value="3">Bueno</option>
                                         </td>
                                         <td contenteditable="false">
                                              <select name="estribos_col_p">
-                                                        <option value="-">-</option>
+                                                        <option value=""></option>
                                                         <option value="1">Grietas</option>
                                                         <option value="2">Fisuras</option>	
                                                         <option value="3">Desprendimientos</option>
@@ -527,7 +527,7 @@
                                         
 										<td contenteditable="false">
                                              <select name="vigas_col_m">
-                                                        <option value="-">-</option>
+                                                        <option value=""></option>
                                                         <option value="1">Concreto Simple</option>
                                                         <option value="2">Concreto Reforzado</option>	
                                                         <option value="3">Tuberia concreto ref.</option>
@@ -537,14 +537,14 @@
                                         </td>
                                         <td contenteditable="false">
                                              <select name="vigas_col_e">
-                                                        <option value="-">-</option>
+                                                        <option value=""></option>
                                                         <option value="1">Malo</option>
                                                         <option value="2">Regular</option>	
                                                         <option value="3">Bueno</option>
                                         </td>
                                         <td contenteditable="false">
                                              <select name="vigas_col_p">
-                                                        <option value="-">-</option>
+                                                        <option value=""></option>
                                                         <option value="1">Grietas</option>
                                                         <option value="2">Fisuras</option>	
                                                         <option value="3">Desprendimientos</option>
@@ -576,7 +576,7 @@
 										
 										<td contenteditable="false">
                                              <select name="placas_col_m">
-                                                        <option value="-">-</option>
+                                                        <option value=""></option>
                                                         <option value="1">Concreto Simple</option>
                                                         <option value="2">Concreto Reforzado</option>	
                                                         <option value="3">Tuberia concreto ref.</option>
@@ -586,14 +586,14 @@
                                         </td>
                                         <td contenteditable="false">
                                              <select name="placas_col_e">
-                                                        <option value="-">-</option>
+                                                        <option value=""></option>
                                                         <option value="1">Malo</option>
                                                         <option value="2">Regular</option>	
                                                         <option value="3">Bueno</option>
                                         </td>
                                         <td contenteditable="false">
                                              <select name="placas_col_p">
-                                                        <option value="-">-</option>
+                                                        <option value=""></option>
                                                         <option value="1">Grietas</option>
                                                         <option value="2">Fisuras</option>	
                                                         <option value="3">Desprendimientos</option>
@@ -644,7 +644,6 @@
                                 <span class="table-add2 glyphicon glyphicon-plus"></span>
                                 <table class="table">
                                     <tr>
-									    <th id='removeRP'>Eliminar</th>
                                         <th id="abscisa">Absisa</th>
                                         <th id="valor_p">P</th>
                                         <th id="valor_e">E</th>
@@ -664,13 +663,10 @@
                                     </tr>
                                     <!-- This is our clonable table line -->
                                     <tr class="hide">
-										<td contenteditable="false">
-											<input type="checkbox" class="form-control" id="removeRP">
-										</td>
                                         <td contenteditable="true" id="abscisa"></td>
                                         <td contenteditable="false">
                                              <select name="valor_p">
-                                                        <option value="-">-</option>
+                                                        <option value=""></option>
                                                         <option value="1">Fisuras</option>
 														<option value="2">Grietas</option>
 														<option value="3">Baches</option>
@@ -689,7 +685,7 @@
                                         </td>
                                         <td contenteditable="false">
                                              <select name="valor_e">
-                                                        <option value="-">-</option>
+                                                        <option value=""></option>
                                                         <option value="1">Malo</option>
                                                         <option value="2">Regular</option>	
                                                         <option value="3">Bueno</option>
@@ -789,17 +785,33 @@
                                     <input type="text" class="form-control" id="customActa" />
                                 </div>
                                 <div class="form-group">
-                                    <!--button class="btn btn-lg btn-primary btn-block" type="button" onclick="generarEncabezado()" >Generar encabezado</button-->
+                                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="generarEncabezado()" >Generar encabezado</button>
                                 </div>
                             </div>
                         </div>						
                     </div>
                     
+					<div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse999">
+                                    Parrafo Info general</a>
+                            </h4>
+                        </div>
+                        <div id="collapse999" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <textarea class="form-control" id="postVialParrafo" rows="6"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
                     <br/>
-                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto()" >Tomar Foto</button>
+                <!--button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto()" >Tomar Foto</button-->
                 <button class="btn btn-lg btn-primary btn-block" type="button" onclick="generatePDF()" >Generar planilla PDF</button>
-                <button class="btn btn-lg btn-success btn-block" type="button" onclick="insertUpdate()">Guardar</button>
+                <!--button class="btn btn-lg btn-success btn-block" type="button" onclick="insertUpdate()">Guardar</button-->
+				 <button class="btn btn-lg btn-success btn-block" type="button" onclick="insertUpdate()">Guardar</button>
                 <input type="hidden" id="singImagePath" value="/sdcard0/Pictures/Sing.png" name="singImagePath" />
             </form>
         </div> 

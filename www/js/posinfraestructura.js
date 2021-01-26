@@ -5,10 +5,7 @@ var infraImgageNumber;
 document.addEventListener("deviceready", onDeviceReady, false);
 
 $(document).ready(function() {
-	
-	
 
-/*
     function cascadeSelect(parent, child) {
         var childOptions = child.find('option:not(.static)');
         child.data('options', childOptions);
@@ -30,7 +27,7 @@ $(document).ready(function() {
         orgSelect = $("#P_DEPTO");
         terrSelect = $("#P_MUN");
         cascadeSelect(orgSelect, terrSelect);
-    });*/
+    });
 
 
 });
@@ -40,9 +37,16 @@ function onDeviceReady() {
 
     var myDB = window.sqlitePlugin.openDatabase({name: "geominutes.db", location: 'default'});
     var query = "SELECT * FROM pre_infra_p where id=" + window.localStorage.getItem("actaId");
+	
+	if( window.localStorage.getItem("post") === 'true' ){
+		
+		query = "SELECT * FROM post_infra_p where id=" + window.localStorage.getItem("actaId");
+	}
+		
+		
 	ac =  window.localStorage.getItem("actaId");
 
-    if (window.localStorage.getItem("editar") === 'true') {
+    if (true) {
         myDB.transaction(function(transaction) {
             transaction.executeSql(query, [], function(tx, results) {
                 var len = results.rows.length, i;
@@ -50,7 +54,6 @@ function onDeviceReady() {
                 for (i = 0; i < len; i++) {
 					
 					$("#acta").val(results.rows.item(i).id);
-					$("#fecha").val(results.rows.item(i).fecha);
 					$("#permiso").val(results.rows.item(i).permiso);
 					$("#P_DEPTO").val(results.rows.item(i).P_DEPTO);
 					$("#P_MUN").val(results.rows.item(i).P_MUN);
@@ -279,8 +282,6 @@ function onDeviceReady() {
                                         $("#dique_presa").prop('checked', JSON.parse(results.rows.item(i).dique_presa));
 										
 										$("#customActa").val(results.rows.item(i).custom_acta);
-										$("#linea").val(results.rows.item(i).linea);
-															$("#pagDe").val(results.rows.item(i).pag_de);
 
                 }
             }, function(tx, error)
@@ -395,7 +396,7 @@ function generatePDF() {
                         + " white-space: nowrap;"
                         + " vertical-align: middle;"
                         + " width: 2em;"
-                        + " height:600px;"
+                        + " height:650px;"
                         + "}"
                         + ".rotate div {"
                         + "    -moz-transform: rotate(-270.0deg);"
@@ -424,13 +425,13 @@ function generatePDF() {
 			
             + " <table style='border-top: 1px solid' width='100%' border='1' cellspacing='0' cellpadding='0'>"
             + " <tbody>"
-            + " <tr><td class='encabezado2' colspan='4'>Pagina 1 de "+$("#pagDe").val()+" &nbsp&nbsp</td></tr>"
+            + " <tr><td class='encabezado2' colspan='4'>Pagina 1 de 2 &nbsp&nbsp</td></tr>"
                                              + "  <tr>"
                     + "  <td colspan='4'>"
                     + "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
                     + "    <tbody>"
                     + "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
-                    + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA PRE REGISTRO DE INFRAESTRUCTURA</td>"
+                    + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA POST REGISTRO DE INFRAESTRUCTURA</td>"
 					+ "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
                     + "   </tr>"
 					+ "   <tr>"
@@ -449,11 +450,11 @@ function generatePDF() {
                     + " <tbody>"
                     + "  <tr>"
             + "  <td style='width: 12.5%'>Fecha:</td>"
-            + "  <td style='width: 12.5%'> "+ ($("#fecha").val()) +"</td>"
+            + "  <td style='width: 12.5%'> "+ getCurrentDate() +"</td>"
             + "  <td style='width: 12.5%'>Línea</td>"
             + "  <td style='width: 12.5%'>  " + ($("#linea").val())+" </td>"
             + "  <td style='width: 12.5%'>Acta Nº.</td>"
-            + "  <td style='width: 12.5%'>  PRE-AINF-" + $("#customActa").val() +" </td>"
+            + "  <td style='width: 12.5%'>  POST-INF-" + $("#customActa").val() +" </td>"
             + "   </tr>    "
             + "  </tbody>"
             + "</table>"  
@@ -883,13 +884,13 @@ function generatePDF() {
 			   + "<p style='page-break-after: always;'> "                  
                         + " <table style='border-top: 1px solid' width='100%' border='1' cellspacing='0' cellpadding='0'>"
                         + " <tbody>"
-                        + " <tr><td class='encabezado2' colspan='4'>Pagina 2 de "+$("#pagDe").val()+"&nbsp&nbsp</td></tr>"
+                        + " <tr><td class='encabezado2' colspan='4'>Pagina 2 de 2&nbsp&nbsp</td></tr>"
                                  + "  <tr>"
                     + "  <td colspan='4'>"
                     + "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
                     + "    <tbody>"
                     + "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
-                    + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA PRE REGISTRO DE INFRAESTRUCTURA</td>"
+                    + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA POST REGISTRO DE INFRAESTRUCTURA</td>"
 					+ "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
                     + "   </tr>"
 					+ "   <tr>"
@@ -908,11 +909,11 @@ function generatePDF() {
                     + " <tbody>"
                     + "  <tr>"
                         + "  <td style='width: 12.5%'>Fecha:</td>"
-                        + "  <td style='width: 12.5%'>"+ ($("#fecha").val()) +"</td>"
+                        + "  <td style='width: 12.5%'> "+ getCurrentDate() +"</td>"
                         + "  <td style='width: 12.5%'>Línea</td>"
                         + "  <td style='width: 12.5%'>  " + ($("#linea").val())+" </td>"
                         + "  <td style='width: 12.5%'>Acta Nº.</td>"
-                        + "  <td style='width: 12.5%'>  PRE-AINF-" + $("#customActa").val() +" </td>"
+                        + "  <td style='width: 12.5%'>  POST-INF-" + $("#customActa").val() +" </td>"
  
                         + "   </tr>    "
                         + "  </tbody>"
@@ -945,17 +946,33 @@ function generatePDF() {
 			+ "</table>"
                         
                 
-                
-                     
-                
-                
+             			+ "<table width='100%' border='1' cellspacing='0' cellpadding='0' style='border: 1px solid black;'>"
+			+ "<tbody>"
+			+ "<tr>"			
+			+ " <td><p align='justify' style='padding: 5px'>"
+			
+			
+			+ "Una vez comprobada las condiciones de la obra de arte/infraestructura del acta PRE-INF-" + $("#customActa").val() +" correspondiente a " 
+			+ "Puente (  (" + ($("#puente").is(':checked') ? "X" : "") + ")  ), Boxcoulvert (  (" + ($("#boxcoulvert").is(':checked') ? "X" : "") + ")  ), Canal (  (" + ($("#canal").is(':checked') ? "X" : "") + ")  ), Bocatoma (  (" + ($("#bocatoma").is(':checked') ? "X" : "") + ")  ), Acueducto (  (" + ($("#acueducto").is(':checked') ? "X" : "") + ")  ), Tanque elevado (  (" + ($("#tanque_elevado").is(':checked') ? "X" : "") + ")  ), Polideportivo (  (" + ($("#polideportivo").is(':checked') ? "X" : "") + ")  ), Antena telefónica (  (" + ($("#antena_telefonica").is(':checked') ? "X" : "") + ")  ), Dique o Presa (  (" + ($("#dique_presa").is(':checked') ? "X" : "") + ")"
+			+" ubicada en el predio predio "+ $("#predio").val() 
+			+", en el municipio de " + $("#P_MUN option:selected").text()+ " vereda o barrio " + $("#vereda").val() + "	en el departamento de " + $("#P_DEPTO option:selected").text()
+			+"  se reunieron el (la) funcionario(a) "+window.localStorage.getItem('representante')+"  con cédula de ciudadanía "+window.localStorage.getItem('numdocrepre')
+			+" de  "+window.localStorage.getItem('lugarcc')+" quien actúa como evaluador(a) y el (la) señor(a) "+ $("#propietario").val() + ", con cédula de  Ciudadania No." + $("#cc_propietario").val() 
+			+ " de " + $("#lugar_cc_propietario").val() + ", como " + ($("#texcom").val()) +", el día  " + ($("#dia").val())+" del mes de " + ($("#mes").val())+" del año " + ($("#ann").val())
+			+"  con el fin de comprobar y manifestar que la obra de arte ó infraestructura y construcciones anexas referenciadas  en el acta pre-registro Codigo PRE-INF " + $("#customActa").val() +" , " + ($("#enca").val())
+			+" presentan afectación alguna por los trabajos de sísmica efectuados en desarrollo del programa sísmico "+ window.localStorage.getItem('programa_sismico') +". "              
+
+	
+			+ "</td></tr>"   
+            + "</tbody>"
+			+ "</table>"
 			+ "<table width='100%' border='1' cellspacing='0' cellpadding='0' style='border: 1px solid black;'>"
 			+ "<tbody>"
 			+ "<tr>"
 			+ "    <td class='encabezado' colspan='5'><b>FIRMAS DE APROBACIÓN</b></td>"
 			+ "</tr>"
 			+ "<tr>"
-			+ "    <td width='100%' colspan='4'><p></p>Los presentes están de acuerdo con la evaluación efectuada y en constancia firman siendo las  _______ horas del día ______ del mes  de  ______________ de 201___.</td></tr>"
+			+ "    <td width='100%' colspan='4'><p></p>Los presentes firman en constancia de la evaluación realizada y las partes se declaran entre si, a paz y salvo por todo concepto y responsabilidad en especial en lo referente a las afectaciones a la infraestructura. Para constancia se firma siendo las _________ horas del día ___________ del mes de  ______________ de 201___.</td></tr>"
 			        + "<tr>"
                         + " <td>AVISO DE PRIVACIDAD PARA RECOLECCIÓN DE DATOS PERSONALES</td> "
                         + "</tr>"
@@ -974,25 +991,22 @@ function generatePDF() {
                         +" <tr>"
                         + "     <td width='45%'>NOMBRE DEL PROPIETARIO O REPRESENTANTE DEL PREDIO</td><td  width='45%'>FIRMA DEL PROPIETARIO O REPRESENTANTE DEL PREDIO</td>"
                         + " </tr>"
-                        +" <tr style='height:50px;vertical-align:bottom'>"
+                        +" <tr>"
                         + "     <td>Teléfono_______________</td><td>C.C #_____________ de _________</td>"
                         + " </tr>"  
                         + "</table>"
 						+ "<table width='100%'>"
 						+ " <tr>"
-						+ "     <td style='height:100px;vertical-align:bottom;'>____________________________________</td><td></td><td style='height:100px;vertical-align:bottom;'>___________________________________</td><td  style='font-size:8px;vertical-align:bottom;text-align:center' rowspan='3'></td>"
+						+ "     <td style='height:60px;vertical-align:bottom;'>____________________________________</td><td></td><td style='height:60px;vertical-align:bottom;'>___________________________________</td><td  style='font-size:8px;vertical-align:bottom;text-align:center' rowspan='3'></td>"
 						+ " </tr>"
 						+" <tr>"
 						+ "     <td>NOMBRE DEL EVALUADOR PETROSEISMIC SERVICES</td><td></td><td>FIRMA DEL EVALUADOR PETROSEISMIC SERVICES</td>"
 						+ "</tr>"
 						+" <tr>"
 						+ "     <td>Teléfono_______________</td><td></td><td>C.C #_____________ de _________</td>"
-						+ " </tr>"  
+						+ " </tr>"   
 						+" <tr>"
-						+ "     <td></td><td></td><td>TP_______________</td>"
-						+ " </tr>"  						
-						+" <tr>"
-						+ "     <td style='height:100px;vertical-align:bottom;'> ____________________________________</td><td></td><td colspan='2' style='height:100px;vertical-align:bottom;'>___________________________________</td>"
+						+ "     <td style='height:60px;vertical-align:bottom;'> ____________________________________</td><td></td><td colspan='2' style='height:60px;vertical-align:bottom;'>___________________________________</td>"
 						+ " </tr>"
 						+" <tr>"
 						+ "     <td>NOMBRE DEL COORDINADOR DE ACTAS PETROSEISMIC SERVICES</td><td></td><td colspan='2'>FIRMA DEL COORDINADOR DE ACTAS PETROSEISMIC SERVICES</td>"
@@ -1001,134 +1015,65 @@ function generatePDF() {
 						+ "     <td></td><td></td><td colspan='2'>C.C #_____________ de _________</td>"
 						+ " </tr>"   
 						+" <tr>"
-						+ "     <td></td><td></td><td>TP_______________</td>"
-						+ " </tr>"  
-
-						+" <tr>"
-						+ "     <td style='height:100px;vertical-align:bottom;'>____________________________________</td><td></td><td colspan='2' style='height:100px;vertical-align:bottom;'>___________________________________</td>"
+						+ "     <td style='height:60px;vertical-align:bottom;'>____________________________________</td><td></td><td colspan='2' style='height:60px;vertical-align:bottom;'>___________________________________</td>"
 						+ " </tr>"
 						+" <tr>"
-						+ "     <td>NOMBRE DEL INTERVENTOR AMBIENTAL</td><td></td><td colspan='2'>FIRMA DEL INTERVENTOR AMBIENTAL</td>"
+						+ "     <td>NOMBRE DEL SUPERVISOR HSE DE CAMPO ANH</td><td></td><td colspan='2'>FIRMA DEL SUPERVISOR HSE DE CAMPO ANH</td>"
 						+ "</tr>"
 						+" <tr>"
 						+ "     <td></td><td></td><td colspan='2'>C.C #_____________ de _________</td>"
 						+ " </tr>"
 						
 						
+									                                        +" <tr>"
+                                        + "     <td style='height:60px;vertical-align:bottom;'>____________________________________</td><td></td><td colspan='2' style='height:60px;vertical-align:bottom;'>___________________________________</td>"
+					+ " </tr>"
+                                        +" <tr>"
+                                        + "     <td>NOMBRE DEL SUPERVISOR AMBIENTAL ANH</td><td></td><td colspan='2'>FIRMA DEL SUPERVISOR AMBIENTAL ANH</td>"
+					+ "</tr>"
+                                        +" <tr>"
+                                        + "     <td></td><td></td><td colspan='2'>C.C #_____________ de _________</td>"
+					+ " </tr>"
+						
+						
+						
 						+" <tr>"
-						+ "     <td colspan='4' style='height:100px;vertical-align:bottom;'>FECHA DE APROBACIÓN________________</td>"
+						+ "     <td colspan='4' style='height:60px;vertical-align:bottom;'>FECHA DE APROBACIÓN________________</td>"
 						+ "</tr>"
 						+ "</table>"
 
-                        + "<p style='page-break-after: always;'> "    
-
-					            + " <table style='border-top: 1px solid' width='100%' border='1' cellspacing='0' cellpadding='0'>"
-            + " <tbody>"
-            + " <tr><td class='encabezado2' colspan='4'>Pagina 3 de "+$("#pagDe").val()+" &nbsp&nbsp</td></tr>"
-                                             + "  <tr>"
-                    + "  <td colspan='4'>"
-                    + "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
-                    + "    <tbody>"
-                    + "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
-                    + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA PRE REGISTRO DE INFRAESTRUCTURA</td>"
-					+ "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
-                    + "   </tr>"
-					+ "   <tr>"
-					+ "    <td colspan='4'>"
-					+ "    <table width='100%' border='0' cellspacing='0' cellpadding='0'><tr>"
-					+ "     <td  style='font-size:10px;text-align:left;'>COD: FOR-QC-10</td>"					
-					+ "	    <td  style='font-size:10px;text-align:right;padding-right:5px'>Versi&oacute;n 8, Octubre de 2018</td></tr></table>"
-                    + "  </td></tr><tr>"
-                    + "  <td style='width: 40%'>  "+ window.localStorage.getItem('programa_sismico') +" </td>"
-                    + "  <td style='width: 10%'>OPERADORA:</td>"
-                    + "  <td>  "+  window.localStorage.getItem('operadora') +"  </td>"
-                    + "   </tr>    "
-                    + "    </tbody>"
-                    + "</table>"
-                    + "<table width='100%' border='1' cellspacing='0' cellpadding='0'>"
-                    + " <tbody>"
-                    + "  <tr>"
-            + "  <td style='width: 12.5%'>Fecha:</td>"
-            + "  <td style='width: 12.5%'> "+ ($("#fecha").val()) +"</td>"
-            + "  <td style='width: 12.5%'>Línea</td>"
-            + "  <td style='width: 12.5%'>  " + ($("#linea").val())+" </td>"
-            + "  <td style='width: 12.5%'>Acta Nº.</td>"
-            + "  <td style='width: 12.5%'>  PRE-AINF-" + $("#customActa").val() +" </td>"
-            + "   </tr>    "
-            + "  </tbody>"
-            + "</table>"  	
-						
-
-						
-                        + "     <table width='100%' border='1' cellspacing='0' cellpadding='0' >"
+                        + "<p style='page-break-after: always;'> "                             
+                        + "     <table width='100%' border='1' cellspacing='0' cellpadding='0'  style='padding-top: 10px;margin-top: 40px'>"
                         + "       <tbody>"
                         + "            <tr>"
-                        + "              <td class='rotate'><div>PRE-AINF-"+(padDigits($("#customActa").val(), 3))+"-02</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-inf-" + ac +"-"+ 2 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
-                        + "              <td  class='rotate'><div>PRE-AINF-"+(padDigits($("#customActa").val(), 3))+"-01</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+  window.localStorage.getItem('imgURL') +"pre-inf-" + ac +"-"+ 1 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
+                        + "              <td class='rotate'><div>POST-INF-"+(padDigits($("#customActa").val(), 3))+"-02</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-inf-" + ac +"-"+ 2 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
+                        + "              <td  class='rotate'><div>POST-INF-"+(padDigits($("#customActa").val(), 3))+"-01</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-inf-" + ac +"-"+ 1 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
                         + "            </tr>"
                         + "            <tr>"
-                        + "              <td class='rotate'><div>PRE-AINF-"+(padDigits($("#customActa").val(), 3))+"-04</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-inf-" + ac +"-"+ 4 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
-                        + "              <td  class='rotate' ><div>PRE-AINF-"+(padDigits($("#customActa").val(), 3))+"-03</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+  window.localStorage.getItem('imgURL') +"pre-inf-" + ac +"-"+ 3 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
+                        + "              <td class='rotate'><div>POST-INF-"+(padDigits($("#customActa").val(), 3))+"-04</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-inf-" + ac +"-"+ 4 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
+                        + "              <td  class='rotate' ><div>POST-INF-"+(padDigits($("#customActa").val(), 3))+"-03</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-inf-" + ac +"-"+ 3 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
                         + "            </tr>"
                         + "         </tbody>"
                         + "       </table></p>"	
                         + "     <p style='page-break-after: always;'> "
-						
-            + " <table style='border-top: 1px solid' width='100%' border='1' cellspacing='0' cellpadding='0'>"
-            + " <tbody>"
-            + " <tr><td class='encabezado2' colspan='4'>Pagina 4 de "+$("#pagDe").val()+" &nbsp&nbsp</td></tr>"
-                                             + "  <tr>"
-                    + "  <td colspan='4'>"
-                    + "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
-                    + "    <tbody>"
-                    + "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
-                    + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA PRE REGISTRO DE INFRAESTRUCTURA</td>"
-					+ "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
-                    + "   </tr>"
-					+ "   <tr>"
-					+ "    <td colspan='4'>"
-					+ "    <table width='100%' border='0' cellspacing='0' cellpadding='0'><tr>"
-					+ "     <td  style='font-size:10px;text-align:left;'>COD: FOR-QC-10</td>"					
-					+ "	    <td  style='font-size:10px;text-align:right;padding-right:5px'>Versi&oacute;n 8, Octubre de 2018</td></tr></table>"
-                    + "  </td></tr><tr>"
-                    + "  <td style='width: 40%'>  "+ window.localStorage.getItem('programa_sismico') +" </td>"
-                    + "  <td style='width: 10%'>OPERADORA:</td>"
-                    + "  <td>  "+  window.localStorage.getItem('operadora') +"  </td>"
-                    + "   </tr>    "
-                    + "    </tbody>"
-                    + "</table>"
-                    + "<table width='100%' border='1' cellspacing='0' cellpadding='0'>"
-                    + " <tbody>"
-                    + "  <tr>"
-            + "  <td style='width: 12.5%'>Fecha:</td>"
-            + "  <td style='width: 12.5%'> "+ ($("#fecha").val()) +"</td>"
-            + "  <td style='width: 12.5%'>Línea</td>"
-            + "  <td style='width: 12.5%'>  " + ($("#linea").val())+" </td>"
-            + "  <td style='width: 12.5%'>Acta Nº.</td>"
-            + "  <td style='width: 12.5%'>  PRE-AINF-" + $("#customActa").val() +" </td>"
-            + "   </tr>    "
-            + "  </tbody>"
-            + "</table>"  						
-						
-
-                        + "     <table width='100%' border='1' cellspacing='0' cellpadding='0' >"
+                        + "     <table width='100%' border='1' cellspacing='0' cellpadding='0'  style='padding-top: 10px;margin-top: 40px'>"
                         + "       <tbody>"
                         + "            <tr>"
                         + "            <tr>"
-                        + "              <td class='rotate'><div>PRE-AINF-"+(padDigits($("#customActa").val(), 3))+"-06</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+  window.localStorage.getItem('imgURL') +"pre-inf-" + ac +"-"+ 6 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
-                        + "              <td  class='rotate'><div>PRE-AINF-"+(padDigits($("#customActa").val(), 3))+"-05</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+  window.localStorage.getItem('imgURL') +"pre-inf-" + ac +"-"+ 5 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
+                        + "              <td class='rotate' style='height:650px;width:30px;'><div>POST-INF-"+(padDigits($("#customActa").val(), 3))+"-06</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-inf-" + ac +"-"+ 6 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
+                        + "              <td  class='rotate' style='height:650px;width:30px;'><div>POST-INF-"+(padDigits($("#customActa").val(), 3))+"-05</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-inf-" + ac +"-"+ 5 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
                         + "            </tr>"
                         + "            <tr>"
-                        + "              <td class='rotate' ><div>PRE-AINF-"+(padDigits($("#customActa").val(), 3))+"-07</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+  window.localStorage.getItem('imgURL') +"pre-inf-" + ac +"-"+ 7 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
-                        + "              <td  class='rotate' ><div>PRE-AINF-"+(padDigits($("#customActa").val(), 3))+"-08</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+  window.localStorage.getItem('imgURL') +"pre-inf-" + ac +"-"+ 8 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
+                        + "              <td class='rotate' style='height:650px;width:30px;'><div>POST-INF-"+(padDigits($("#customActa").val(), 3))+"-07</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-inf-" + ac +"-"+ 7 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
+                        + "              <td  class='rotate' style='height:650px;width:30px;'><div>POST-INF-"+(padDigits($("#customActa").val(), 3))+"-08</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-inf-" + ac +"-"+ 8 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
                         + "            </tr>"
                         + "         </tbody>"
                         + "       </table></p>"		
@@ -1136,7 +1081,7 @@ function generatePDF() {
             documentSize: 'A4',
             landscape: 'portrait',
             type: 'share',
-			fileName: 'pre-inf-'+ $("#acta").val()
+			fileName: 'post-inf-'+ $("#acta").val()
         }, this.success, this.failure);
 }
 
@@ -1163,11 +1108,11 @@ function resolveOnSuccess(entry){
     var d = new Date();
     var n = d.getTime();
     //new file name
-    var newFileName = 'pre-inf-' + ac +'-'+ infraImgageNumber + ".jpg";
+    var newFileName = 'post-inf-' + ac +'-'+ infraImgageNumber + ".jpg";
     i++;
     
     var dir = '/';
-    window.localStorage.setItem('pre-inf-' + ac +'-'+ infraImgageNumber,'');
+    window.localStorage.setItem('post-inf-' + ac +'-'+ infraImgageNumber,'');
 
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys) {      
     //The folder is created if doesn't exist
@@ -1175,7 +1120,6 @@ function resolveOnSuccess(entry){
     fileSys.root.getDirectory( dir ,
                     {create:false, exclusive: true},
                     function(directory) {
-						window.localStorage.setItem("imgURL", directory.nativeURL);
                         entry.copyTo(directory, newFileName,  successMove, resOnError);
                     },
                     resOnError);
@@ -1187,7 +1131,7 @@ function resolveOnSuccess(entry){
 function successMove(entry) {
     //I do my insert with "entry.fullPath" as for the path
 	var url = entry.toURL(); // file or remote URL. url can also be dataURL, but giving it a file path is much faster
-	var album = 'pre-inf-' + ac;
+	var album = 'post-inf-' + ac;
 	cordova.plugins.photoLibrary.saveImage(url, album, function (libraryItem) {}, function (err) {});
 }
 
@@ -1227,7 +1171,7 @@ function insertUpdate() {
     var id = $("#acta").val();
 	var programa_sismico = window.localStorage.getItem("programa_sismico");
     var operadora = window.localStorage.getItem("operadora");
-    var fecha = $("#fecha").val();
+    var fecha = getCurrentDateTime();
     var linea = $("#linea").val();
 	var permiso = $("#permiso").val();
 	var P_DEPTO = $("#P_DEPTO").val();
@@ -1456,9 +1400,6 @@ function insertUpdate() {
         var antena_telefonica = $("#antena_telefonica").is(':checked');
         var dique_presa = $("#dique_presa").is(':checked');
         
-		var customActa =  $("#customActa").val();
-		
-			var pagDe =  $("#pagDe").val();
         
         
     var fechaHoraInicio = window.localStorage.getItem("fechaHoraIni");
@@ -1467,7 +1408,7 @@ function insertUpdate() {
 	
     if (window.localStorage.getItem("editar") === 'true') {
 
-        var executeQuery = "UPDATE pre_infra_p SET "				
+        var executeQuery = "UPDATE post_infra_p SET "				
 				+ "permiso=?,"
 				+ "P_DEPTO=?,"
 				+ "P_MUN=?,"
@@ -1693,9 +1634,7 @@ function insertUpdate() {
                                 + "polideportivo=?,"
                                 + "antena_telefonica=?,"
                                 + "dique_presa=?,"
-								+ "	custom_acta=?,"
-                 + "	fecha=?," 
-				+ "	pag_de=?,"				 
+                        
 				+ "constru_si=?"
                 + " WHERE id =" + id;
 
@@ -1917,18 +1856,15 @@ function insertUpdate() {
 				caudal_otro,
 				trafico_pesado,
 				trafico_liviano,
-				puente,
-				boxcoulvert,
-				canal,
-				bocatoma,
-				acueducto,
-				tanque_elevado,
-				polideportivo,
-				antena_telefonica,
-				dique_presa,
-				customActa,
-				fecha,
-				pagDe,
+                                puente,
+                                boxcoulvert,
+                                canal,
+                                bocatoma,
+                                acueducto,
+                                tanque_elevado,
+                                polideportivo,
+                                antena_telefonica,
+                                dique_presa,
 				constru_si
             ]
             , function(tx, result) {
@@ -1945,11 +1881,11 @@ function insertUpdate() {
 
 
         myDB.transaction(function(transaction) {
-            var executeQuery = "INSERT INTO pre_infra_p ("
+            var executeQuery = "INSERT INTO post_infra_p ("
                     + "id,"
 					+ "programa_sismico,"
 					+ "operadora,"
-					+ "fecha,"
+					+ "fecha_modificada,"
 					+ "linea,"
 					+ "permiso,"
 					+ "P_DEPTO,"
@@ -2175,9 +2111,6 @@ function insertUpdate() {
                                         + "polideportivo,"
                                         + "antena_telefonica,"
                                         + "dique_presa,"
-										+ "	custom_acta,"
-										+ "pag_de,"
-
 					+ "constru_si,"
 					+ "fecha_inicio,"
                     + "usuario,"
@@ -2206,7 +2139,7 @@ function insertUpdate() {
 					+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " 
 					+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " 
 					+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " 
-					+ "?, ?, ?, ?, ? );";
+					+ "?, ?, ? );";
 					
 
             transaction.executeSql(executeQuery, [id,
@@ -2438,8 +2371,6 @@ function insertUpdate() {
                                 polideportivo,
                                 antena_telefonica,
                                 dique_presa,
-								customActa,
-								pagDe,
 				constru_si,
 				fechaHoraInicio,
                 usuario,

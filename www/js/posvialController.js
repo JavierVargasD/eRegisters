@@ -9,15 +9,29 @@ function onDeviceReady() {
     myDB = window.sqlitePlugin.openDatabase({name: "geominutes.db", location: 'default'});
 
     myDB.transaction(function(transaction) {
+		
         transaction.executeSql('SELECT * FROM pre_vial_p', [], function(tx, results) {
             var len = results.rows.length, i;
             for (i = 0; i < len; i++) {
-                $("#TableData").append("<li class='list-group-item'><input id='" + results.rows.item(i).id + "' type='checkbox' aria-label='...'>&nbsp;&nbsp;&nbsp;<a href='javascript:prepareEdit(" + results.rows.item(i).id + ")' >act-pre-vial-" + results.rows.item(i).id + " "+ results.rows.item(i).custom_acta +"</a></li>");
+                $("#TableData").append("<li class='list-group-item'><input id='" + results.rows.item(i).id + "' type='checkbox' aria-label='...'>&nbsp;&nbsp;&nbsp;<a href='javascript:prepareEdit(" + results.rows.item(i).id + ")' >act-pre-vial-00" + results.rows.item(i).id + "</a></li>");
             }
         }, function(tx, error)
         {
             alert('Error occurred');
         });
+		
+		
+		transaction.executeSql('SELECT * FROM post_vial_p', [], function(tx, results) {
+            var len = results.rows.length, i;
+            for (i = 0; i < len; i++) {
+                $("#TableData").append("<li class='list-group-item'><input id='" + results.rows.item(i).id + "' type='checkbox' aria-label='...'>&nbsp;&nbsp;&nbsp;<a href='javascript:prepareEditPost(" + results.rows.item(i).id + ")' >act-post-vial-00" + results.rows.item(i).id + "</a></li>");
+            }
+        }, function(tx, error)
+        {
+            alert('Error occurred');
+        });
+		
+		
     });
 	
 }
@@ -250,9 +264,18 @@ function transmit() {
 
 function prepareEdit(actaId) {
 
+    window.localStorage.setItem("editar", "false");
+    window.localStorage.setItem("actaId", actaId);
+	window.localStorage.setItem("post", "false");
+    window.location.href = "posVial.html";
+}
+
+function prepareEditPost(actaId) {
+
     window.localStorage.setItem("editar", "true");
     window.localStorage.setItem("actaId", actaId);
-    window.location.href = "preVial.html";
+	window.localStorage.setItem("post", "true");
+    window.location.href = "posVial.html";
 }
 
 function prepareCreate() {

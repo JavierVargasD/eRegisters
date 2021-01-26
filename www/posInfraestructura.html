@@ -47,7 +47,7 @@
 
         </style>
         <script src="js/jquery.min.js"></script> 
-        <script src="js/preinfraestructura.js"></script>
+        <script src="js/posinfraestructura.js"></script>
         <script src="js/utils.js"></script>
         <script type="text/javascript" src="js/jsignature-min.js"></script>
     </head>
@@ -78,10 +78,6 @@
                                     <label for="linea">L&iacute;nea/Salvo:</label>
                                     <input type="text" class="form-control" id="linea">
                                 </div>
-								                                <div class="form-group">
-                                    <label for="fecha">Fecha:</label>
-                                    <input type="text" class="form-control" id="fecha">
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -94,7 +90,6 @@
                         </div>
                         <div id="collapse2" class="panel-collapse collapse">
                             <div class="panel-body">
-							
                                 <div class="form-group">
                                     <label style="width: 180px" for="P_DEPTO">Departamento:</label>
                                     <select id='P_DEPTO' class="P_DEPTO">
@@ -105,15 +100,14 @@
                                 <div class="form-group">
                                     <label style="width: 180px" for="P_MUN">Municipio:</label>
                                     <select id='P_MUN' class="P_MUN">
-									    <option value="23182" >CHINÚ</option>
+									    <option value="23182" >CHINU</option>
                                         <option value="70233" >EL ROBLE</option>
                                         <option value="70742" >SINCÉ</option>
                                         <option value="70678" >SAN BENITO ABAD</option>
                                         <option value="70215" >COROZAL</option>
                                         <option value="70235" >GALERAS</option>
                                     </select>				
-                                </div>
-   
+                                </div>  
                                 <div class="form-group">
                                     <label style="width: 180px" for="vereda">Vereda:</label>
                                     <input type="text" class="form-control" id="vereda">
@@ -160,7 +154,7 @@
                             <div class="panel-body">
                                 <div class="form-group">
                                     <label style="width: 150px" for="origen_coord">Origen de coord:</label>
-                                    <input type="text" class="form-control" id="origen_coord" value="MAGNA COLOMBIA BOGOTÁ">
+                                    <input type="text" class="form-control" id="origen_coord" value="MAGNA COLOMBIA BOGOTA">
                                 </div>
                                 <div class="form-group">
                                     <label  style="width: 150px" for="coordenada_e">Coordenada E:</label>
@@ -2325,25 +2319,7 @@
                                         </div>
                         </div>
                     </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse11">
-                                    Encabezados</a>
-                            </h4>
-                        </div>
-			<div id="collapse11" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label for="pag">Total paginas:</label>
-                                    <input type="text" class="form-control" id="pagDe" />
-                                    <label for="pag">Acta número:</label>
-                                    <input type="text" class="form-control" id="customActa" />
-                                </div>
-                            </div>
-                        </div>						
-                    </div>
-                    <div class="panel panel-default">
+					                    <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse10">
@@ -2379,8 +2355,61 @@
                             </div>
                         </div>						
                     </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse11">
+                                    Encabezados</a>
+                            </h4>
+                        </div>
+			<div id="collapse11" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="pag">Total paginas:</label>
+                                    <input type="text" class="form-control" id="pagDe" />
+                                    <label for="pag">Acta número:</label>
+                                    <input type="text" class="form-control" id="customActa" />
+                                </div>
+                            </div>
+                        </div>						
+                    </div>
+																				<div class="panel panel-default">
+					      <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse422">
+                                    Informaci&oacute;n General</a>
+                            </h4>
+                        </div>
+					     <div id="collapse422" class="panel-collapse collapse">
+                            <div class="panel-body">							
+                                <div class="form-group">
+                                    <label for="dia">Dia:</label>
+                                    <input type="text" class="form-control" id="dia">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mes">Mes:</label>
+                                    <input type="text" class="form-control" id="mes">
+                                </div>
+                                <div class="form-group">
+                                    <label for="ann">A&ntilde;o:</label>
+                                    <input type="text" class="form-control" id="ann">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="enca">Resultó afectado?:</label>
+                                    <input type="text" class="form-control" id="enca">
+                                </div>
+								                                <div class="form-group">
+                                    <label for="texcom">Texto representante:</label>
+                                    <input type="text" class="form-control" id="texcom">
+                                </div>
+
+                                
+                            </div>
+                        </div>					
+                    </div>
+
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="capturePhoto()" >Tomar Foto</button>
                 <button class="btn btn-lg btn-primary btn-block" type="button" onclick="generatePDF()" >Generar planilla PDF</button>
                 <button class="btn btn-lg btn-success btn-block" type="button" onclick="insertUpdate()">Guardar</button>
                 <input type="hidden" id="singImagePath" value="/sdcard0/Pictures/Sing.png" name="singImagePath" />

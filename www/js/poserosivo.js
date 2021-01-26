@@ -7,7 +7,7 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 $(document).ready(function() {
 
-    /*function cascadeSelect(parent, child) {
+    function cascadeSelect(parent, child) {
         var childOptions = child.find('option:not(.static)');
         child.data('options', childOptions);
 
@@ -28,7 +28,7 @@ $(document).ready(function() {
         orgSelect = $("#P_DEPTO");
         terrSelect = $("#P_MUN");
         cascadeSelect(orgSelect, terrSelect);
-    });*/
+    });
 
 
 });
@@ -37,10 +37,19 @@ $(document).ready(function() {
 function onDeviceReady() {
 
     var myDB = window.sqlitePlugin.openDatabase({name: "geominutes.db", location: 'default'});
+	
+	
     var query = "SELECT * FROM pre_erosivo_p where id=" + window.localStorage.getItem("actaId");
+	
+	if( window.localStorage.getItem("post") === 'true' ){
+		
+		 query = "SELECT * FROM post_erosivo_p where id=" + window.localStorage.getItem("actaId");
+	}
+	
+	
 	ac =  window.localStorage.getItem("actaId");
 
-    if (window.localStorage.getItem("editar") === 'true') {
+    if (true) {
         myDB.transaction(function(transaction) {
             transaction.executeSql(query, [], function(tx, results) {
                 var len = results.rows.length, i;
@@ -141,8 +150,7 @@ function onDeviceReady() {
 					$("#aflorante").prop('checked', JSON.parse(results.rows.item(i).aflorante));
 					$("#no_aflorante").prop('checked', JSON.parse(results.rows.item(i).no_aflorante));
 					$("#customActa").val(results.rows.item(i).custom_acta);
-					$("#linea").val(results.rows.item(i).linea);
-										$("#pagDe").val(results.rows.item(i).pag_de);
+					
 
                 }
             }, function(tx, error)
@@ -258,7 +266,7 @@ function generatePDF() {
                         + " white-space: nowrap;"
                         + " vertical-align: middle;"
                         + " width: 2em;"
-                        + " height:600px;"
+                        + " height:650px;"
                         + "}"
                         + ".rotate div {"
                         + "    -moz-transform: rotate(-270.0deg);"
@@ -286,13 +294,13 @@ function generatePDF() {
 			+ "<body>"                
                         + " <table style='border-top: 1px solid' width='100%' border='1' cellspacing='0' cellpadding='0'>"
                         + " <tbody>"
-                        + " <tr><td class='encabezado2' colspan='4'>Pagina 1 de "+$("#pagDe").val()+" &nbsp&nbsp</td></tr>"
+                        + " <tr><td class='encabezado2' colspan='4'>Pagina 1 de 2 &nbsp&nbsp</td></tr>"
                         + "  <tr>"
                         + "  <td colspan='4'>"
                         + "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
                         + "    <tbody>"
                         + "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
-                        + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA PRE REGISTRO PROCESO EROSIVO</td>"
+                        + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA POST REGISTRO PROCESO EROSIVO</td>"
 						+ "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
                         + "   </tr>"
 							+ "   <tr>"
@@ -311,11 +319,11 @@ function generatePDF() {
                         + " <tbody>"
                         + "  <tr>"
                         + "  <td style='width: 12.5%'>Fecha:</td>"
-                        + "  <td style='width: 12.5%'> "+  ($("#fecha").val()) +"</td>"
+                        + "  <td style='width: 12.5%'> "+ getCurrentDate() +"</td>"
                         + "  <td style='width: 12.5%'>Línea</td>"
                         + "  <td style='width: 12.5%'>  " + ($("#linea").val())+" </td>"
                         + "  <td style='width: 12.5%'>Acta Nº.</td>"
-                        + "  <td style='width: 12.5%'>  PRE-APE-" + $("#customActa").val() +" </td>"
+                        + "  <td style='width: 12.5%'>  POST-PE-" + $("#customActa").val() +" </td>"
                         + "   </tr>    "
                         + "  </tbody>"
                         + "</table>"
@@ -606,13 +614,13 @@ function generatePDF() {
                 
                         + " <table style='border-top: 1px solid' width='100%' border='1' cellspacing='0' cellpadding='0'>"
                         + " <tbody>"
-                        + " <tr><td class='encabezado2' colspan='4'>Pagina 2 de "+$("#pagDe").val()+" &nbsp&nbsp</td></tr>"
+                        + " <tr><td class='encabezado2' colspan='4'>Pagina 2 de 2 &nbsp&nbsp</td></tr>"
 						+ "  <tr>"
                         + "  <td colspan='4'>"
                         + "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
                         + "    <tbody>"
                         + "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
-                        + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA PRE REGISTRO PROCESO EROSIVO</td>"
+                        + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA POST REGISTRO PROCESO EROSIVO</td>"
 						+ "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
                         + "   </tr>"
 							+ "   <tr>"
@@ -631,23 +639,33 @@ function generatePDF() {
                         + " <tbody>"
                         + "  <tr>"
                         + "  <td style='width: 12.5%'>Fecha:</td>"
-                        + "  <td style='width: 12.5%'> "+  ($("#fecha").val()) +"</td>"
+                        + "  <td style='width: 12.5%'> "+ getCurrentDate() +"</td>"
                         + "  <td style='width: 12.5%'>Línea</td>"
                         + "  <td style='width: 12.5%'>  " + ($("#linea").val())+" </td>"
                         + "  <td style='width: 12.5%'>Acta Nº.</td>"
-                        + "  <td style='width: 12.5%'>  PRE-APE-" + $("#customActa").val() +" </td>"
+                        + "  <td style='width: 12.5%'>  POST-PE-" + $("#customActa").val() +" </td>"
 
                         + "   </tr>    "
                         + "  </tbody>"
                         + "</table>"
-                 
-			+ " <table width='100%' border='1' cellspacing='0' cellpadding='0' style='border: 1px solid black;'>"
-			+ "   <tbody>"
-			+ "       <tr>"
-			+ "    <td class='encabezado' colspan='5'><b>FIRMAS DE APROBACIÓN</b></td>"
-			+ "       </tr>"
-			+ "<tr>"
-			+ "    <td width='100%' colspan='4'><p></p>Los presentes están de acuerdo con la evaluación efectuada y en constancia firman siendo las  _______ horas del día ______ del mes  de  ______________ de 201___.</td></tr>"
+						
+						+ " <table width='100%' border='1' cellspacing='0' cellpadding='0' style='border: 1px solid black;'>"
+						+ "<tr><td style='width:100%;padding:3px;' align='justify'><p>"
+						
+						+ "Una vez comprobada el acta pre-registro PRE-PE-" + $("#customActa").val() +" del Proceso Erosivo, en el predio " + ($("#predio").val())+", en el municipio de " + ($("#P_MUN option:selected").text())
+						+" vereda o barrio "+ ($("#vereda").val())+" del departamento del " + ($("#P_DEPTO option:selected").text())+",se reunieron el funcionario (a) "+window.localStorage.getItem('representante')
+						+" con cédula de ciudadania N° "+window.localStorage.getItem('numdocrepre')+" de "+window.localStorage.getItem('lugarcc')+", quien actúa como evaluador (a)  y el (la) señor(a) "+ $("#propietario").val() 
+						+", con cédula de  ciudadanía N° "+ $("#cc_propietario").val() + " de " + $("#lugar_cc_propietario").val() + ", en calidad de propietario(a) o representante  del predio, el día " + ($("#dia").val())
+						+" del mes de " + ($("#mes").val()) +" del año " + ($("#ann").val())+" para verificar que el Proceso Erosivo y elementos anexos, " + ($("#enca").val())+" presentan afectación alguna por los trabajos efectuados en desarrollo del programa sísmico "
+						+ window.localStorage.getItem('programa_sismico') +"." 
+						+ "</p></td></tr></table>  "
+						+ " <table width='100%' border='1' cellspacing='0' cellpadding='0' style='border: 1px solid black;'>"
+						+ "   <tbody>"
+						+ "       <tr>"
+						+ "    <td class='encabezado' colspan='5'><b>FIRMAS DE APROBACIÓN</b></td>"
+						+ "       </tr>"
+						+ "<tr>"
+						+ "    <td width='100%' colspan='4'><p></p>Los presentes firman en constancia de la evaluación realizada y las partes se declaran entre si, a paz y salvo por todo concepto y responsabilidad en especial con respecto al elemento referenciado. Para constancia se firma siendo las _________ horas del día ___________ del mes de  ______________ de 201___.</td></tr>"
                         + "<tr>"
                         + " <td>AVISO DE PRIVACIDAD PARA RECOLECCIÓN DE DATOS PERSONALES</td> "
                         + "</tr>"
@@ -666,166 +684,88 @@ function generatePDF() {
                         +" <tr>"
                         + "     <td width='45%'>NOMBRE DEL PROPIETARIO O REPRESENTANTE DEL PREDIO</td><td  width='45%'>FIRMA DEL PROPIETARIO O REPRESENTANTE DEL PREDIO</td>"
                         + " </tr>"
-                        +" <tr style='height:50px;vertical-align:bottom'>"
+                        +" <tr>"
                         + "     <td>Teléfono_______________</td><td>C.C #_____________ de _________</td>"
                         + " </tr>"  
                         + "</table>"
 						+ "<table width='100%'>"
 						+ " <tr>"
-						+ "     <td style='height:100px;vertical-align:bottom;'>____________________________________</td><td></td><td style='height:100px;vertical-align:bottom;'>___________________________________</td><td  style='font-size:8px;vertical-align:bottom;text-align:center' rowspan='3'></td>"
+						+ "     <td style='height:60px;vertical-align:bottom;'>____________________________________</td><td></td><td style='height:60px;vertical-align:bottom;'>___________________________________</td><td  style='font-size:8px;vertical-align:bottom;text-align:center' rowspan='3'></td>"
 						+ " </tr>"
 						+" <tr>"
 						+ "     <td>NOMBRE DEL EVALUADOR PETROSEISMIC SERVICES</td><td></td><td>FIRMA DEL EVALUADOR PETROSEISMIC SERVICES</td>"
 						+ "</tr>"
 						+" <tr>"
 						+ "     <td>Teléfono_______________</td><td></td><td>C.C #_____________ de _________</td>"
-						+ " </tr>"  
+						+ " </tr>"   
 						+" <tr>"
-						+ "     <td></td><td></td><td>TP_______________</td>"
-						+ " </tr>"  						
-						+" <tr>"
-						+ "     <td style='height:100px;vertical-align:bottom;'> ____________________________________</td><td></td><td colspan='2' style='height:100px;vertical-align:bottom;'>___________________________________</td>"
+						+ "     <td style='height:60px;vertical-align:bottom;'> ____________________________________</td><td></td><td colspan='2' style='height:60px;vertical-align:bottom;'>___________________________________</td>"
 						+ " </tr>"
 						+" <tr>"
 						+ "     <td>NOMBRE DEL COORDINADOR DE ACTAS PETROSEISMIC SERVICES</td><td></td><td colspan='2'>FIRMA DEL COORDINADOR DE ACTAS PETROSEISMIC SERVICES</td>"
 						+ "</tr>"
 						+" <tr>"
 						+ "     <td></td><td></td><td colspan='2'>C.C #_____________ de _________</td>"
+						+ " </tr>"   
+						+" <tr>"
+						+ "     <td style='height:60px;vertical-align:bottom;'>____________________________________</td><td></td><td colspan='2' style='height:60px;vertical-align:bottom;'>___________________________________</td>"
 						+ " </tr>"
 						+" <tr>"
-						+ "     <td></td><td></td><td>TP_______________</td>"
-						+ " </tr>"  
-						+" <tr>"
-						+ "     <td style='height:100px;vertical-align:bottom;'>____________________________________</td><td></td><td colspan='2' style='height:100px;vertical-align:bottom;'>___________________________________</td>"
-						+ " </tr>"					
-						+" <tr>"
-						+ "     <td style='height:100px;vertical-align:bottom;'>____________________________________</td><td></td><td colspan='2' style='height:100px;vertical-align:bottom;'>___________________________________</td>"
-						+ " </tr>"
-						+" <tr>"
-						+ "     <td>NOMBRE DEL INTERVENTOR AMBIENTAL</td><td></td><td colspan='2'>FIRMA DEL INTERVENTOR AMBIENTAL</td>"
+						+ "     <td>NOMBRE DEL SUPERVISOR HSE DE CAMPO ANH</td><td></td><td colspan='2'>FIRMA DEL SUPERVISOR HSE DE CAMPO ANH</td>"
 						+ "</tr>"
 						+" <tr>"
 						+ "     <td></td><td></td><td colspan='2'>C.C #_____________ de _________</td>"
-						+ " </tr>"	
+						+ " </tr>"
+						
+						                                        +" <tr>"
+                                        + "     <td style='height:60px;vertical-align:bottom;'>____________________________________</td><td></td><td colspan='2' style='height:60px;vertical-align:bottom;'>___________________________________</td>"
+					+ " </tr>"
+                                        +" <tr>"
+                                        + "     <td>NOMBRE DEL SUPERVISOR AMBIENTAL ANH</td><td></td><td colspan='2'>FIRMA DEL SUPERVISOR AMBIENTAL ANH</td>"
+					+ "</tr>"
+                                        +" <tr>"
+                                        + "     <td></td><td></td><td colspan='2'>C.C #_____________ de _________</td>"
+					+ " </tr>"
+
+						
 						
 						+" <tr>"
-						+ "     <td colspan='4' style='height:100px;vertical-align:bottom;'>FECHA DE APROBACIÓN________________</td>"
+						+ "     <td colspan='4' style='height:60px;vertical-align:bottom;'>FECHA DE APROBACIÓN________________</td>"
 						+ "</tr>"
 						+ "</table>"
 
-                        + "<p style='page-break-after: always;'> "  
-
-
-						                        + " <table style='border-top: 1px solid' width='100%' border='1' cellspacing='0' cellpadding='0'>"
-                        + " <tbody>"
-                        + " <tr><td class='encabezado2' colspan='4'>Pagina 3 de "+$("#pagDe").val()+" &nbsp&nbsp</td></tr>"
-						+ "  <tr>"
-                        + "  <td colspan='4'>"
-                        + "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
-                        + "    <tbody>"
-                        + "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
-                        + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA PRE REGISTRO PROCESO EROSIVO</td>"
-						+ "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
-                        + "   </tr>"
-							+ "   <tr>"
-							+ "    <td colspan='4'>"
-							+ "    <table width='100%' border='0' cellspacing='0' cellpadding='0'><tr>"
-							+ "     <td  style='font-size:10px;text-align:left;'>COD: FOR-QC-08</td>"					
-							+ "	    <td  style='font-size:10px;text-align:right;padding-right:5px'>Versi&oacute;n 8, Octubre de 2018</td></tr></table>"
-							+ "  </td></tr><tr>"
-							+ "  <td style='width: 40%'>  "+ window.localStorage.getItem('programa_sismico') +" </td>"
-							+ "  <td style='width: 10%'>OPERADORA:</td>"
-							+ "  <td>  "+  window.localStorage.getItem('operadora') +"  </td>"
-							+ "   </tr>    "  
-                        + "    </tbody>"
-                        + "</table>"
-                        + "<table width='100%' border='1' cellspacing='0' cellpadding='0'>"
-                        + " <tbody>"
-                        + "  <tr>"
-                        + "  <td style='width: 12.5%'>Fecha:</td>"
-                        + "  <td style='width: 12.5%'> "+  ($("#fecha").val()) +"</td>"
-                        + "  <td style='width: 12.5%'>Línea</td>"
-                        + "  <td style='width: 12.5%'>  " + ($("#linea").val())+" </td>"
-                        + "  <td style='width: 12.5%'>Acta Nº.</td>"
-                        + "  <td style='width: 12.5%'>  PRE-APE-" + $("#customActa").val() +" </td>"
-
-                        + "   </tr>    "
-                        + "  </tbody>"
-                        + "</table>"
-
-						
-                        + "     <table width='100%' border='1' cellspacing='0' cellpadding='0' >"
+                       + "<p style='page-break-after: always;'> "                             
+                        + "     <table width='100%' border='1' cellspacing='0' cellpadding='0'  style='padding-top: 10px;margin-top: 40px'>"
                         + "       <tbody>"
                         + "            <tr>"
-                        + "              <td class='rotate'><div>PRE-APE-"+(padDigits($("#customActa").val(), 3))+"-02</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-ero-" + ac +"-"+ 2 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
-                        + "              <td  class='rotate'><div>PRE-APE-"+(padDigits($("#customActa").val(), 3))+"-01</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-ero-" + ac +"-"+ 1 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
+                        + "              <td class='rotate'><div>POST-PE-"+(padDigits($("#customActa").val(), 3))+"-02</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-ero-" + ac +"-"+ 2 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
+                        + "              <td  class='rotate'><div>POST-PE-"+(padDigits($("#customActa").val(), 3))+"-01</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-ero-" + ac +"-"+ 1 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
                         + "            </tr>"
                         + "            <tr>"
-                        + "              <td class='rotate'><div>PRE-APE-"+(padDigits($("#customActa").val(), 3))+"-04</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-ero-" + ac +"-"+ 4 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
-                        + "              <td  class='rotate' ><div>PRE-APE-"+(padDigits($("#customActa").val(), 3))+"-03</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-ero-" + ac +"-"+ 3 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
+                        + "              <td class='rotate'><div>POST-PE-"+(padDigits($("#customActa").val(), 3))+"-04</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-ero-" + ac +"-"+ 4 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
+                        + "              <td  class='rotate' ><div>POST-PE-"+(padDigits($("#customActa").val(), 3))+"-03</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-ero-" + ac +"-"+ 3 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
                         + "            </tr>"
                         + "         </tbody>"
                         + "       </table></p>"	
                         + "     <p style='page-break-after: always;'> "
-						
-						
-						                        + " <table style='border-top: 1px solid' width='100%' border='1' cellspacing='0' cellpadding='0'>"
-                        + " <tbody>"
-                        + " <tr><td class='encabezado2' colspan='4'>Pagina 4 de "+$("#pagDe").val()+" &nbsp&nbsp</td></tr>"
-						+ "  <tr>"
-                        + "  <td colspan='4'>"
-                        + "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
-                        + "    <tbody>"
-                        + "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
-                        + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA PRE REGISTRO PROCESO EROSIVO</td>"
-						+ "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
-                        + "   </tr>"
-							+ "   <tr>"
-							+ "    <td colspan='4'>"
-							+ "    <table width='100%' border='0' cellspacing='0' cellpadding='0'><tr>"
-							+ "     <td  style='font-size:10px;text-align:left;'>COD: FOR-QC-08</td>"					
-							+ "	    <td  style='font-size:10px;text-align:right;padding-right:5px'>Versi&oacute;n 8, Octubre de 2018</td></tr></table>"
-							+ "  </td></tr><tr>"
-							+ "  <td style='width: 40%'>  "+ window.localStorage.getItem('programa_sismico') +" </td>"
-							+ "  <td style='width: 10%'>OPERADORA:</td>"
-							+ "  <td>  "+  window.localStorage.getItem('operadora') +"  </td>"
-							+ "   </tr>    "  
-                        + "    </tbody>"
-                        + "</table>"
-                        + "<table width='100%' border='1' cellspacing='0' cellpadding='0'>"
-                        + " <tbody>"
-                        + "  <tr>"
-                        + "  <td style='width: 12.5%'>Fecha:</td>"
-                        + "  <td style='width: 12.5%'> "+  ($("#fecha").val()) +"</td>"
-                        + "  <td style='width: 12.5%'>Línea</td>"
-                        + "  <td style='width: 12.5%'>  " + ($("#linea").val())+" </td>"
-                        + "  <td style='width: 12.5%'>Acta Nº.</td>"
-                        + "  <td style='width: 12.5%'>  PRE-APE-" + $("#customActa").val() +" </td>"
-
-                        + "   </tr>    "
-                        + "  </tbody>"
-                        + "</table>"
-						
-						
-						
-                        + "       <table width='100%' border='1' cellspacing='0' cellpadding='0'  >"
+                        + "       <table width='100%' border='1' cellspacing='0' cellpadding='0'  style='padding-top: 10px;margin-top: 40px'>"
                         + "       <tbody>"
                         + "            <tr>"
                         + "            <tr>"
-                        + "              <td class='rotate'><div>PRE-APE-"+(padDigits($("#customActa").val(), 3))+"-06</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-ero-" + ac +"-"+ 6 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
-                        + "              <td  class='rotate'><div>PRE-APE-"+(padDigits($("#customActa").val(), 3))+"-05</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-ero-" + ac +"-"+ 5 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
+                        + "              <td class='rotate' style='height:650px;width:30px;'><div>POST-PE-"+(padDigits($("#customActa").val(), 3))+"-06</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-ero-" + ac +"-"+ 6 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
+                        + "              <td  class='rotate' style='height:650px;width:30px;'><div>POST-PE-"+(padDigits($("#customActa").val(), 3))+"-05</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-ero-" + ac +"-"+ 5 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
                         + "            </tr>"
                         + "            <tr>"
-                        + "              <td class='rotate'><div>PRE-APE-"+(padDigits($("#customActa").val(), 3))+"-07</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-ero-" + ac +"-"+ 7 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
-                        + "              <td  class='rotate'><div>PRE-APE-"+(padDigits($("#customActa").val(), 3))+"-08</div></td>"
-                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-ero-" + ac +"-"+ 8 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
+                        + "              <td class='rotate' style='height:650px;width:30px;'><div>POST-PE-"+(padDigits($("#customActa").val(), 3))+"-07</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-ero-" + ac +"-"+ 7 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
+                        + "              <td  class='rotate' style='height:650px;width:30px;'><div>POST-PE-"+(padDigits($("#customActa").val(), 3))+"-08</div></td>"
+                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-ero-" + ac +"-"+ 8 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
                         + "            </tr>"
                         + "         </tbody>"
                         + "       </table></p>"
@@ -833,7 +773,7 @@ function generatePDF() {
             documentSize: 'A4',
             landscape: 'portrait',
             type: 'share',
-			fileName: 'pre-ero-'+ $("#acta").val()
+			fileName: 'post-ero-'+ $("#acta").val()
         }, this.success, this.failure );
 }
 
@@ -860,11 +800,11 @@ function resolveOnSuccess(entry){
     var d = new Date();
     var n = d.getTime();
     //new file name
-    var newFileName = 'pre-ero-' + ac +'-'+ eroImageNumber + ".jpg";
+    var newFileName = 'post-ero-' + ac +'-'+ eroImageNumber + ".jpg";
     i++;
     
     var dir = '/';
-    window.localStorage.setItem('pre-ero-' + ac +'-'+ eroImageNumber,'');
+    window.localStorage.setItem('post-ero-' + ac +'-'+ eroImageNumber,'');
 
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys) {      
     //The folder is created if doesn't exist
@@ -872,7 +812,6 @@ function resolveOnSuccess(entry){
     fileSys.root.getDirectory( dir ,
                     {create:false, exclusive: true},
                     function(directory) {
-						window.localStorage.setItem("imgURL", directory.nativeURL);
                         entry.copyTo(directory, newFileName,  successMove, resOnError);
                     },
                     resOnError);
@@ -884,7 +823,7 @@ function resolveOnSuccess(entry){
 function successMove(entry) {
     //I do my insert with "entry.fullPath" as for the path
 	var url = entry.toURL(); // file or remote URL. url can also be dataURL, but giving it a file path is much faster
-	var album = 'pre-ero-' + ac;
+	var album = 'post-ero-' + ac;
 	cordova.plugins.photoLibrary.saveImage(url, album, function (libraryItem) {}, function (err) {});
 }
 
@@ -924,7 +863,7 @@ function insertUpdate() {
     var id = $("#acta").val();
 	var programa_sismico = window.localStorage.getItem("programa_sismico");
     var operadora = window.localStorage.getItem("operadora");
-    var fecha = $("#fecha").val();
+    var fecha = getCurrentDateTime();
     var linea = $("#linea").val();	
 	var acta = $("#acta").val();
 	var permiso = $("#permiso").val();
@@ -1017,14 +956,11 @@ function insertUpdate() {
     var fechaHoraInicio = window.localStorage.getItem("fechaHoraIni");
     var usuario = window.localStorage.getItem("current_user");
     var estado = '1';
-	var customActa =  $("#customActa").val();
-	
-		var pagDe =  $("#pagDe").val();
 	
 
     if (window.localStorage.getItem("editar") === 'true') {
 
-        var executeQuery = "UPDATE pre_erosivo_p SET "				
+        var executeQuery = "UPDATE post_erosivo_p SET "				
 				+ "	permiso=?,"
 				+ "	P_DEPTO=?,"
 				+ "	P_MUN=?,"
@@ -1111,9 +1047,6 @@ function insertUpdate() {
 				+ "	pend_alta=?,"
 				+ "	pend_muyalta=?,"
 				+ "	aflorante=?,"
-				+ "	custom_acta=?,"
-				+ "	fecha=?,"
-				+ "	pag_de=?,"
 				+ "	no_aflorante=?"
                 + " WHERE id =" + id;
 
@@ -1206,9 +1139,6 @@ function insertUpdate() {
 				pend_alta,
 				pend_muyalta,
 				aflorante,
-				customActa,
-				fecha,
-				pagDe,
 				no_aflorante
             ]
             , function(tx, result) {
@@ -1225,7 +1155,7 @@ function insertUpdate() {
 
 
         myDB.transaction(function(transaction) {
-            var executeQuery = "INSERT INTO pre_erosivo_p ("
+            var executeQuery = "INSERT INTO post_erosivo_p ("
                     + "id,"
 					+ "	programa_sismico,"
 					+ "	operadora,"
@@ -1314,8 +1244,6 @@ function insertUpdate() {
 					+ "	pend_alta,"
 					+ "	pend_muyalta,"
 					+ "	aflorante,"
-					+ "	custom_acta,"
-					+ "pag_de,"
 					+ "	no_aflorante,"
 					+ "fecha_inicio,"
                     + "usuario,"
@@ -1330,7 +1258,7 @@ function insertUpdate() {
 					+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
 					+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
 					+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
- 					+ "?, ?, ?, ? " 
+ 					+ "?, ? " 
 					+ ");";
 					
 
@@ -1424,8 +1352,6 @@ function insertUpdate() {
 				pend_alta,
 				pend_muyalta,
 				aflorante,
-				customActa,
-				pagDe,
 				no_aflorante,
 				fecha_inicio,
 				usuario,

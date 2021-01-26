@@ -2,14 +2,13 @@ var i = 1;
 var ac= 0;
 var vialImageNumber;
 var currentPage = 2;
-
+var currentPage2 = 0;
 
 
 document.addEventListener("deviceready", onDeviceReady, false);
 
 $(document).ready(function() {
 
-/*
     function cascadeSelect(parent, child) {
         var childOptions = child.find('option:not(.static)');
         child.data('options', childOptions);
@@ -31,7 +30,7 @@ $(document).ready(function() {
         orgSelect = $("#P_DEPTO");
         terrSelect = $("#P_MUN");
         cascadeSelect(orgSelect, terrSelect);
-    });*/
+    });
 	
 	
 	var $TABLE_OBRAS = $('#tableObras');
@@ -64,9 +63,14 @@ function onDeviceReady() {
 
 	ac =  window.localStorage.getItem("actaId");
     var myDB = window.sqlitePlugin.openDatabase({name: "geominutes.db", location: 'default'});
-    var query = "SELECT * FROM pre_vial_p where id=" + window.localStorage.getItem("actaId");
 	
-    if (window.localStorage.getItem("editar") === 'true') {
+    var query = "SELECT * FROM pre_vial_p where id=" + window.localStorage.getItem("actaId");
+	if( window.localStorage.getItem("post") === 'true' ){
+		query = "SELECT * FROM post_vial_p where id=" + window.localStorage.getItem("actaId");
+	}
+
+
+    if (true) {
         myDB.transaction(function(transaction) {
             transaction.executeSql(query, [], function(tx, results) {
                 var len = results.rows.length, i;
@@ -77,7 +81,6 @@ function onDeviceReady() {
                     $("#programa_sismico").val(results.rows.item(i).programa_sismico);
                     $("#operadora").val(results.rows.item(i).operadora);
                     $("#fecha").val(results.rows.item(i).fecha);
-
                     $("#linea").val(results.rows.item(i).linea);
                     $("#acta").val(results.rows.item(i).acta);
                     $("#permiso").val(results.rows.item(i).permiso);
@@ -93,7 +96,7 @@ function onDeviceReady() {
                     $("#abscisa_final").val(results.rows.item(i).abscisa_final);
                     $("#desp_ensitu1").val(results.rows.item(i).desp_ensitu1);
                     $("#desp_ensitu2").val(results.rows.item(i).desp_ensitu2);
-                   
+                    $("#fecha").val(results.rows.item(i).fecha);
                     $("#coordenadasi_e").val(results.rows.item(i).coordenadasi_e);
                     $("#coordenadasi_n").val(results.rows.item(i).coordenadasi_n);
                     $("#coordenadasf_e").val(results.rows.item(i).coordenadasf_e);
@@ -148,15 +151,43 @@ function onDeviceReady() {
                     $("#parrafo_general").val(results.rows.item(i).parrafo_general);
 					$("#nvia").val(results.rows.item(i).via);
                     $("#customActa").val(results.rows.item(i).custom_acta);
-					$("#pagDe").val(results.rows.item(i).pag_de);
-					 $("#linea").val(results.rows.item(i).linea);
+					 $("#pagDe").val(results.rows.item(i).pag_de);
+					 
+										
+					var postVialParrafo = "En el municipio de " + ($("#P_MUN option:selected").text())+" vereda o barrio " + ($("#vereda").val())+" del departamento de " + ($("#P_DEPTO option:selected").text())+" el dia " + ($("#dia").val())+" del mes de " + ($("#mes").val())
+					+" del año " + ($("#ann").val())+", se reunieron el (la) señor(a) "+window.localStorage.getItem('representante')+" con cédula de ciudadanía N° "+window.localStorage.getItem('numdocrepre')+" de "+window.localStorage.getItem('lugarcc')
+					+", quien actúa como evaluador y el (la) señor(a)" + $("#propietario").val() + ", con cédula de ciudadanía No. "+ $("#cc_propietario").val() + "  de " + $("#lugar_cc_propietario").val() + ", como " + ($("#texcom").val()) +" , con el fin de comprobar y dar fé, que la via referenciada en el encabezado " + ($("#enca").val())+" presenta afectación alguna ocasionada con los recorridos de los vehiculos que transitaron durante el desarrollo de las diferentes etapas de exploración sismica del programa "+ window.localStorage.getItem('programa_sismico') +".";
 					
+						 if (window.localStorage.getItem("editar") === 'true'){								
+							
+							postVialParrafo = results.rows.item(i).post_cparrafo;				
+							
+							
+							if( postVialParrafo == null  ||  postVialParrafo === "" ){
+								
+								postVialParrafo = "En el municipio de " + ($("#P_MUN option:selected").text())+" vereda o barrio " + ($("#vereda").val())+" del departamento de " + ($("#P_DEPTO option:selected").text())+" el dia " + ($("#dia").val())+" del mes de " + ($("#mes").val())
+								+" del año " + ($("#ann").val())+", se reunieron el (la) señor(a) "+window.localStorage.getItem('representante')+" con cédula de ciudadanía N° "+window.localStorage.getItem('numdocrepre')+" de "+window.localStorage.getItem('lugarcc')
+								+", quien actúa como evaluador y el (la) señor(a)" + $("#propietario").val() + ", con cédula de ciudadanía No. "+ $("#cc_propietario").val() + "  de " + $("#lugar_cc_propietario").val() + ", como " + ($("#texcom").val()) +" , con el fin de comprobar y dar fé, que la via referenciada en el encabezado " + ($("#enca").val())+" presenta afectación alguna ocasionada con los recorridos de los vehiculos que transitaron durante el desarrollo de las diferentes etapas de exploración sismica del programa "+ window.localStorage.getItem('programa_sismico') +".";
+
+								
+							}
+							
+						}
+						
+		
+					 $("#postVialParrafo").val(postVialParrafo);
+			
+
+					myDB.transaction( function(transaction1) {   
+					
+						var query = "SELECT * FROM pre_obra_arte_p where id_acta=" + window.localStorage.getItem("actaId");
 					
 
-					myDB.transaction( function(transaction1) {                                  
+						if( window.localStorage.getItem("post") === 'true' ){
+							query = "SELECT * FROM post_obra_arte_p where id_acta=" + window.localStorage.getItem("actaId");
+						} 					
                         
-                                            
-						transaction1.executeSql("SELECT * FROM pre_obra_arte_p where id_acta=" + window.localStorage.getItem("actaId"), [], function(tx1, results1) {
+                        transaction1.executeSql(query, [], function(tx1, results1) {                   
 
 						var len2 = results1.rows.length, j;
 
@@ -196,17 +227,12 @@ function onDeviceReady() {
                                 var placas_l = (results1.rows.item(j).placas_l);
                                 var placas_a = (results1.rows.item(j).placas_a);
                                 var observaciones_o = (results1.rows.item(j).observaciones_o);
+      
                                                     
-                                                    
-                                var newRow =
-								"<tr>"
-								+"<td contenteditable='false'>"
-                                +"<input type='checkbox' class='form-control' id='removeR'>"
-                                +"</td>"
-								
+                                var newRow = "<tr>"                                        
                                     +"<td contenteditable='false'>"
                                          +"<select name='cod_obra_arte'>"
-                                            +"<option value='-' "+  ( cod_obra_arte === '' ? "selected" : "") +">-</option>"
+                                            +"<option value='' "+  ( cod_obra_arte === '' ? "selected" : "") +"></option>"
                                             +"<option value='1' "+ ( cod_obra_arte === '1' ? "selected" : "") +">Alcantarilla</option>"
                                             +"<option value='2' "+ ( cod_obra_arte === '2' ? "selected" : "") +">Ponton</option>"
                                             +"<option value='3' "+ ( cod_obra_arte === '3' ? "selected" : "") +">Puente</option>"
@@ -218,7 +244,7 @@ function onDeviceReady() {
                                     +"<td contenteditable='true' id='abscisa' style='text-align: center;' >"+abscisa+"</td>"
                                     +"<td contenteditable='false'>"
                                          +"<select name='estribos_col_m'>"
-                                                    +"<option value='-' "+  ( estribos_col_m === '' ? "selected" : "") +">-</option>"
+                                                    +"<option value='' "+  ( estribos_col_m === '' ? "selected" : "") +"></option>"
                                                     +"<option value='1' "+  ( estribos_col_m === '1' ? "selected" : "") +">Concreto Simple</option>"
                                                     +"<option value='2' "+  ( estribos_col_m === '2' ? "selected" : "") +">Concreto Reforzado</option>"	
                                                     +"<option value='3' "+  ( estribos_col_m === '3' ? "selected" : "") +">Tubería concreto ref.</option>"
@@ -228,14 +254,14 @@ function onDeviceReady() {
                                     +"</td>"
                                     +"<td contenteditable='false'>"
                                          +"<select name='estribos_col_e'>"
-                                                    +"<option value='-' "+  ( estribos_col_e === '' ? "selected" : "") +">-</option>"
+                                                    +"<option value='' "+  ( estribos_col_e === '' ? "selected" : "") +"></option>"
                                                     +"<option value='1' "+  ( estribos_col_e === '1' ? "selected" : "") +">Malo</option>"
                                                     +"<option value='2' "+  ( estribos_col_e === '2' ? "selected" : "") +">Regular</option>"	
                                                     +"<option value='3' "+  ( estribos_col_e === '3' ? "selected" : "") +">Bueno</option>"
                                     +"</td>"
                                     +"<td contenteditable='false'>"
                                          +"<select name='estribos_col_p'>"
-                                                    +"<option value='-' "+  ( estribos_col_p === '' ? "selected" : "") +">-</option>"
+                                                    +"<option value='' "+  ( estribos_col_p === '' ? "selected" : "") +"></option>"
                                                     +"<option value='1' "+  ( estribos_col_p === '1' ? "selected" : "") +">Grietas</option>"
                                                     +"<option value='2' "+  ( estribos_col_p === '2' ? "selected" : "") +">Fisuras</option>"	
                                                     +"<option value='3' "+  ( estribos_col_p === '3' ? "selected" : "") +">Desprendimientos</option>"
@@ -266,7 +292,7 @@ function onDeviceReady() {
                                         +"</td>"                                        
                                         +"<td contenteditable='false'>"
                                          +"<select name='vigas_col_m'>"
-                                                    +"<option value='-'>-</option>"
+                                                    +"<option value=''></option>"
                                                     +"<option value='1' "+  ( vigas_col_m === '1' ? "selected" : "") +">Concreto Simple</option>"
                                                     +"<option value='2' "+  ( vigas_col_m === '2' ? "selected" : "") +">Concreto Reforzado</option>"	
                                                     +"<option value='3' "+  ( vigas_col_m === '3' ? "selected" : "") +">Tubería concreto ref.</option>"
@@ -276,14 +302,14 @@ function onDeviceReady() {
                                     +"</td>"
                                     +"<td contenteditable='false'>"
                                          +"<select name='vigas_col_e'>"
-                                                    +"<option value='-'>-</option>"
+                                                    +"<option value=''></option>"
                                                     +"<option value='1' "+  ( vigas_col_e === '1' ? "selected" : "") +">Malo</option>"
                                                     +"<option value='2' "+  ( vigas_col_e === '2' ? "selected" : "") +">Regular</option>"	
                                                     +"<option value='3' "+  ( vigas_col_e === '3' ? "selected" : "") +">Bueno</option>"
                                     +"</td>"
                                     +"<td contenteditable='false'>"
                                          +"<select name='vigas_col_p'>"
-                                                    +"<option value='-'>-</option>"
+                                                    +"<option value=''></option>"
                                                     +"<option value='1'  "+  ( vigas_col_p === '1' ? "selected" : "") +">Grietas</option>"
                                                     +"<option value='2'  "+  ( vigas_col_p === '2' ? "selected" : "") +">Fisuras</option>"
                                                     +"<option value='3'  "+  ( vigas_col_p === '3' ? "selected" : "") +">Desprendimientos</option>"
@@ -314,7 +340,7 @@ function onDeviceReady() {
                                         +"</td>"										
                                         +"<td contenteditable='false'>"
                                          +"<select name='placas_col_m'>"
-                                                    +"<option value='-'>-</option>"
+                                                    +"<option value=''></option>"
                                                     +"<option value='1' "+  ( placas_col_m === '1' ? "selected" : "") +">Concreto Simple</option>"
                                                     +"<option value='2' "+  ( placas_col_m === '2' ? "selected" : "") +">Concreto Reforzado</option>"
                                                     +"<option value='3' "+  ( placas_col_m === '3' ? "selected" : "") +">Tubería concreto ref.</option>"
@@ -324,14 +350,14 @@ function onDeviceReady() {
                                     +"</td>"
                                     +"<td contenteditable='false'>"
                                          +"<select name='placas_col_e'>"
-                                                    +"<option value='-'>-</option>"
+                                                    +"<option value=''></option>"
                                                     +"<option value='1' "+  ( placas_col_e === '1' ? "selected" : "") +">Malo</option>"
                                                     +"<option value='2' "+  ( placas_col_e === '2' ? "selected" : "") +">Regular</option>"	
                                                     +"<option value='3' "+  ( placas_col_e === '3' ? "selected" : "") +">Bueno</option>"
                                     +"</td>"
                                     +"<td contenteditable='false'>"
                                          +"<select name='placas_col_p'>"
-                                                    +"<option value='-'>-</option>"
+                                                    +"<option value=''></option>"
                                                     +"<option value='1' "+  ( placas_col_p === '1' ? "selected" : "") +">Grietas</option>"
                                                     +"<option value='2' "+  ( placas_col_p === '2' ? "selected" : "") +">Fisuras</option>"	
                                                     +"<option value='3' "+  ( placas_col_p === '3' ? "selected" : "") +">Desprendimientos</option>"
@@ -378,9 +404,15 @@ function onDeviceReady() {
 					
 					myDB.transaction( function(transaction1) {
 						
-						console.log("SELECT * FROM pre_patologia_p where id_acta=" + window.localStorage.getItem("actaId"));
+						var query = "SELECT * FROM pre_patologia_p where id_acta=" + window.localStorage.getItem("actaId");
 						
-						transaction1.executeSql("SELECT * FROM pre_patologia_p where id_acta=" + window.localStorage.getItem("actaId"), [], function(tx1, results1) {
+						if( window.localStorage.getItem("post") === 'true' ){
+							query = "SELECT * FROM post_patologia_p where id_acta=" + window.localStorage.getItem("actaId");
+						} 
+						
+						
+						transaction1.executeSql(query, [], function(tx1, results1) {
+
 
 						console.log('*-*' + results1.rows.length);
 							
@@ -408,15 +440,10 @@ function onDeviceReady() {
                                                     
                                                     
                                 var newRow ="<tr>"
-								
-									+"<td contenteditable='false'>"
-									+"<input type='checkbox' class='form-control' id='removeRP'>"
-									+"</td>"
-								
                                   +"<td contenteditable='true' id='abscisa' style='text-align: center;'>"+abscisa+"</td>"
                                   +"<td contenteditable='false'>"
                                        +"<select name='valor_p'>"
-                                          +"<option value='-'>-</option>"
+                                          +"<option value=''></option>"
                                           +"<option value='1' "+  ( valor_p === '1' ? "selected" : "") +">Fisuras</option>"
                                           +"<option value='2' "+  ( valor_p === '2' ? "selected" : "") +">Grietas</option>"
                                           +"<option value='3' "+  ( valor_p === '3' ? "selected" : "") +">Baches</option>"
@@ -435,7 +462,7 @@ function onDeviceReady() {
                                   +"</td>"
                                   +"<td contenteditable='false'>"
                                       +" <select name='valor_e'>"
-                                                  +"<option value='-'>-</option>"
+                                                  +"<option value=''></option>"
                                                   +"<option value='1' "+  ( valor_e === '1' ? "selected" : "") +">Malo</option>"
                                                   +"<option value='2' "+  ( valor_e === '2' ? "selected" : "") +">Regular</option>"	
                                                   +"<option value='3' "+  ( valor_e === '3' ? "selected" : "") +">Bueno</option>"
@@ -637,39 +664,39 @@ function generatePDF() {
 		var obrasRowHtml = 	
 				"<tr>"
 				   +"<td style='width:2%;height:185px'><b>"+ j +"</b></td>"
-				   +"<td style='width:5%;text-align: center;'>"+ item.cod_obra_arte+"</td>"
+				   +"<td style='width:5%'>"+ item.cod_obra_arte+"</td>"
 				   +"<td style='width:5%;text-align: center;'>"+ item.abscisa+"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ item.estribos_col_m+"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ item.estribos_col_e +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ item.estribos_col_p +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ item.estribos_col_long_mayor +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ item.estribos_col_long_menor +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ item.estribos_col_ancho_mayor +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ item.estribos_col_ancho_menor +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ (item.estribos_t ? "X" : "-") +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ (item.estribos_l ? "X" : "-") +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ (item.estribos_a ? "X" : "-") +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ item.vigas_col_m +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ item.vigas_col_e +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ item.vigas_col_p +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ item.vigas_col_long_mayor +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ item.vigas_col_long_menor +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ item.vigas_col_ancho_mayor +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ item.vigas_col_ancho_menor +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ (item.vigas_t ? "X" : "-") +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ (item.vigas_l ? "X" : "-") +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ (item.vigas_a ? "X" : "-") +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ item.placas_col_m +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ item.placas_col_e +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ item.placas_col_p +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ item.placas_col_long_mayor +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ item.placas_col_long_menor +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ item.placas_col_ancho_mayor +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ item.placas_col_ancho_menor +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ (item.placas_t ? "X" : "-") +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ (item.placas_l ? "X" : "-") +"</td>"
-				   +"<td style='width:2%;text-align: center;'>"+ (item.placas_a ? "X" : "-") +"</td>"
-				   +"<td style='width:20;font-size:10px;text-align: "+ (item.observaciones_o === '------' ?  'center' : 'justify')  +";'>"+ item.observaciones_o  +"</td>"
+				   +"<td style='width:2%'>"+ item.estribos_col_m+"</td>"
+				   +"<td style='width:2%'>"+ item.estribos_col_e +"</td>"
+				   +"<td style='width:2%'>"+ item.estribos_col_p +"</td>"
+				   +"<td style='width:2%'>"+ item.estribos_col_long_mayor +"</td>"
+				   +"<td style='width:2%'>"+ item.estribos_col_long_menor +"</td>"
+				   +"<td style='width:2%'>"+ item.estribos_col_ancho_mayor +"</td>"
+				   +"<td style='width:2%'>"+ item.estribos_col_ancho_menor +"</td>"
+				   +"<td style='width:2%'>"+ (item.estribos_t ? "X" : "") +"</td>"
+				   +"<td style='width:2%'>"+ (item.estribos_l ? "X" : "") +"</td>"
+				   +"<td style='width:2%'>"+ (item.estribos_a ? "X" : "") +"</td>"
+				   +"<td style='width:2%'>"+ item.vigas_col_m +"</td>"
+				   +"<td style='width:2%'>"+ item.vigas_col_e +"</td>"
+				   +"<td style='width:2%'>"+ item.vigas_col_p +"</td>"
+				   +"<td style='width:2%'>"+ item.vigas_col_long_mayor +"</td>"
+				   +"<td style='width:2%'>"+ item.vigas_col_long_menor +"</td>"
+				   +"<td style='width:2%'>"+ item.vigas_col_ancho_mayor +"</td>"
+				   +"<td style='width:2%'>"+ item.vigas_col_ancho_menor +"</td>"
+				   +"<td style='width:2%'>"+ (item.vigas_t ? "X" : "") +"</td>"
+				   +"<td style='width:2%'>"+ (item.vigas_l ? "X" : "") +"</td>"
+				   +"<td style='width:2%'>"+ (item.vigas_a ? "X" : "") +"</td>"
+				   +"<td style='width:2%'>"+ item.placas_col_m +"</td>"
+				   +"<td style='width:2%'>"+ item.placas_col_e +"</td>"
+				   +"<td style='width:2%'>"+ item.placas_col_p +"</td>"
+				   +"<td style='width:2%'>"+ item.placas_col_long_mayor +"</td>"
+				   +"<td style='width:2%'>"+ item.placas_col_long_menor +"</td>"
+				   +"<td style='width:2%'>"+ item.placas_col_ancho_mayor +"</td>"
+				   +"<td style='width:2%'>"+ item.placas_col_ancho_menor +"</td>"
+				   +"<td style='width:2%'>"+ (item.placas_t ? "X" : "") +"</td>"
+				   +"<td style='width:2%'>"+ (item.placas_l ? "X" : "") +"</td>"
+				   +"<td style='width:2%'>"+ (item.placas_a ? "X" : "") +"</td>"
+				   +"<td style='width:20;font-size:10px;text-align: justify;'>"+ item.observaciones_o  +"</td>"
 			+"</tr>";
 
 			
@@ -687,7 +714,7 @@ function generatePDF() {
 								+ "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
 								+ "    <tbody>"
 								+ "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
-								+ "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA PRE REGISTRO DE EVALUACIÓN VIAL</td>"
+								+ "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA POST REGISTRO DE EVALUACIÓN VIAL</td>"
 								+ "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
 								+ "   </tr>"
 								+ "   <tr>"
@@ -698,7 +725,7 @@ function generatePDF() {
 								+ "  </td></tr><tr>"
 								+ "  <td style='width: 60%;font-size:14px'>  "+ window.localStorage.getItem('programa_sismico') +" </td>"
 								+ "  <td style='width: 10%;font-size:14px'>OPERADORA:</td>"
-								+ "  <td style='font-size:14px'>  "+  window.localStorage.getItem('operadora') +"  </td>"
+								+ "  <td style='font-size:14px;'>   "+  window.localStorage.getItem('operadora') +"  </td>"
 								+ "   </tr>    "
 								+ "    </tbody>"
 								+ "</table>"
@@ -708,7 +735,7 @@ function generatePDF() {
 								+ "  <td style='font-size:14px'>Fecha:</td>"
 								+ "  <td style='font-size:14px'> "+  ($("#fecha").val()) +"</td>"
 								+ "  <td style='font-size:14px'>Acta Nº.</td>"
-								+ "  <td style='font-size:14px'>  PRE-AV-" + $("#customActa").val() +" </td>"
+								+ "  <td style='font-size:14px'>  POST-AV-" + $("#customActa").val() +" </td>"
 								
 								+ "  <td style='font-size:14px'>Via</td>"
 								+ "  <td style='font-size:14px'> " + $("#nvia").val() +" </td>"
@@ -918,7 +945,7 @@ function generatePDF() {
 					+ "  <td style='width:4%'><b>Menor</b></td>"
 					+ "</tr>";
 					
-					var currentPage2 = currentPage + 1;
+					currentPage2 = currentPage + 1;
 	
 	$.each(JSON.parse(patoData), function(i, item) {
 		
@@ -927,21 +954,21 @@ function generatePDF() {
 				"<tr>"
 				   +"<td style='width:2%;height:100px'><b>"+ j +".</b></td>"
 				   +"<td style='width:10%;text-align: center'>"+ item.abscisa+"</td>"
-				   +"<td style='width:4%;text-align: center;'>"+ item.valor_p+"</td>"
-				   +"<td style='width:4%;text-align: center;'>"+ item.valor_e+"</td>"
-				   +"<td style='width:4%;text-align: center;'>"+ item.izq +"</td>"
-				   +"<td style='width:4%;text-align: center;'>"+ item.eje +"</td>"
-				   +"<td style='width:4%;text-align: center;'>"+ item.der +"</td>"
-				   +"<td style='width:4%;text-align: center;'>"+ (item.transver ? "X" : "-") +"</td>"
-				   +"<td style='width:4%;text-align: center;'>"+ (item.longi ? "X" : "-") +"</td>"
-				   +"<td style='width:4%;text-align: center;'>"+ (item.aleatoria ? "X" : "-") +"</td>"
-				   +"<td style='width:4%;text-align: center;'>"+ item.long_mayor +"</td>"
-				   +"<td style='width:4%;text-align: center;'>"+ item.long_menor +"</td>"
-				   +"<td style='width:4%;text-align: center;'>"+ item.ancho_mayor +"</td>"
-				   +"<td style='width:4%;text-align: center;'>"+ item.ancho_menor +"</td>"
-				   +"<td style='width:4%;text-align: center;'>"+ item.prof_mayor +"</td>"
-				   +"<td style='width:4%;text-align: center;'>"+ item.prof_menor +"</td>"
-                   +"<td style='width:20;font-size:10px;text-align: "+ (item.observaciones_p === '------' ?  'center' : 'justify')  +";'>"+ item.observaciones_p  +"</td>"
+				   +"<td style='width:4%'>"+ item.valor_p+"</td>"
+				   +"<td style='width:4%'>"+ item.valor_e+"</td>"
+				   +"<td style='width:4%'>"+ item.izq +"</td>"
+				   +"<td style='width:4%'>"+ item.eje +"</td>"
+				   +"<td style='width:4%'>"+ item.der +"</td>"
+				   +"<td style='width:4%'>"+ (item.transver ? "X" : "") +"</td>"
+				   +"<td style='width:4%'>"+ (item.longi ? "X" : "") +"</td>"
+				   +"<td style='width:4%'>"+ (item.aleatoria ? "X" : "") +"</td>"
+				   +"<td style='width:4%'>"+ item.long_mayor +"</td>"
+				   +"<td style='width:4%'>"+ item.long_menor +"</td>"
+				   +"<td style='width:4%'>"+ item.ancho_mayor +"</td>"
+				   +"<td style='width:4%'>"+ item.ancho_menor +"</td>"
+				   +"<td style='width:4%'>"+ item.prof_mayor +"</td>"
+				   +"<td style='width:4%'>"+ item.prof_menor +"</td>"
+                                   +"<td style='width:20;font-size:10px;text-align: justify;'>"+ item.observaciones_p  +"</td>"
 			+"</tr>";
                 
 						
@@ -961,7 +988,7 @@ function generatePDF() {
 								+ "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
 								+ "    <tbody>"
 								+ "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
-								+ "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA PRE REGISTRO DE EVALUACIÓN VIAL</td>"
+								+ "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA POST REGISTRO DE EVALUACIÓN VIAL</td>"
 								+ "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
 								+ "   </tr>"
 								+ "   <tr>"
@@ -974,7 +1001,7 @@ function generatePDF() {
 								+ "  <td style='width: 10%'>OPERADORA:</td>"
 								+ "  <td>  "+  window.localStorage.getItem('operadora') +"  </td>"
 								+ "   </tr>    "
-								+ "    </tbody>"
++ "    </tbody>"
 								+ "</table>"
 								+ "<table width='100%' border='1' cellspacing='0' cellpadding='0'>"
 								+ " <tbody>"
@@ -982,15 +1009,15 @@ function generatePDF() {
 								+ "  <td >Fecha:</td>"
 								+ "  <td > "+  ($("#fecha").val()) +"</td>"
 								+ "  <td >Acta Nº.</td>"
-								+ "  <td >  PRE-AV-" + $("#customActa").val() +" </td>"
-
+								+ "  <td >  POST-AV-" + $("#customActa").val() +" </td>"
+								
 								+ "  <td >Via</td>"
 								+ "  <td > " + $("#nvia").val() +" </td>"
-
+								
 
 								+ "   </tr>    "
 								+ "  </tbody>"
-								+ "</table>"            		
+								+ "</table>"            
 							
 							
 							
@@ -1082,7 +1109,7 @@ function generatePDF() {
                     + " white-space: nowrap;"
                     + " vertical-align: middle;"
                     + " width: 2em;"
-                    + " height:600px;"
+                    + " height:650px;"
                     + "}"
                     + ".rotate div {"
                     + "   -moz-transform: rotate(-270.0deg);"
@@ -1111,7 +1138,7 @@ function generatePDF() {
                     + "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
                     + "    <tbody>"
                     + "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
-                    + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA PRE REGISTRO DE EVALUACIÓN VIAL</td>"
+                    + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA POST REGISTRO DE EVALUACIÓN VIAL</td>"
 					+ "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
                     + "   </tr>"
 					+ "   <tr>"
@@ -1124,26 +1151,27 @@ function generatePDF() {
                     + "  <td style='width: 10%'>OPERADORA:</td>"
                     + "  <td>  "+  window.localStorage.getItem('operadora') +"  </td>"
                     + "   </tr>    "
-                    + "    </tbody>"
-                    + "</table>"
-                    + "<table width='100%' border='1' cellspacing='0' cellpadding='0'>"
-                    + " <tbody>"
-                    + "  <tr>"
-                    + "  <td >Fecha:</td>"
-                    + "  <td > "+  ($("#fecha").val()) +"</td>"
-                    + "  <td >Acta Nº.</td>"
-                    + "  <td >  PRE-AV-" + $("#customActa").val() +" </td>"
 					
-					+ "  <td >Via</td>"
-                    + "  <td > " + $("#nvia").val() +" </td>"
-					
++ "    </tbody>"
+								+ "</table>"
+								+ "<table width='100%' border='1' cellspacing='0' cellpadding='0'>"
+								+ " <tbody>"
+								+ "  <tr>"
+								+ "  <td >Fecha:</td>"
+								+ "  <td > "+  ($("#fecha").val()) +"</td>"
+								+ "  <td >Acta Nº.</td>"
+								+ "  <td >  POST-AV-" + $("#customActa").val() +" </td>"
+								
+								+ "  <td >Via</td>"
+								+ "  <td > " + $("#nvia").val() +" </td>"
+								
 
-                    + "   </tr>    "
-                    + "  </tbody>"
-                    + "</table>"                                
+								+ "   </tr>    "
+								+ "  </tbody>"
+								+ "</table>"                                           
                                 
 					+ " <table width='100%' border='1' cellspacing='0' cellpadding='0'>"
-					+ "  <tbody>"
+					+ "    <tbody>"
 					+ "   <tr>"
 					+ "  <td style='width:40%' class='encabezado' colspan='2'><b>1. LOCALIZACIÓN</b></td>"
 					+ "  <td style='width:30%' class='encabezado' colspan='2'><b>2. UNIDAD GEOMORFOLÓGICA</b></td>"
@@ -1162,7 +1190,7 @@ function generatePDF() {
 					+ "  <td style='width:20%'>  " + ($("#P_MUN option:selected").text())+" </td>"
 					+ "  <td style='width:15%'>Ondulada:</td>"
 					+ "  <td style='width:15%'>" + ($("#ondulada").is(':checked') ? "X" : "") + " </td>"
-					+ "  <td style='width:15%' rowspan='5'>Pendiente longitudinal %</td>"
+					+ "  <td style='width:15%' rowspan='3'>Pendiente longitudinal %</td>"
 					+ "   <td style='width:7.5%'>0 - 5</td>"
 					+ " <td style='width:7.5%'>" + ($("#pendiente1").is(':checked') ? "X" : "") + " </td>"
 					+ "   </tr>"
@@ -1177,23 +1205,11 @@ function generatePDF() {
 					+ "  <tr>"
 					+ "  <td style='width:15%'>Propietario:</td>"
 					+ "  <td style='width:15%'>  " + ($("#propietario").val())+" </td>"
-					+ "  <td style='width:15%' rowspan='3'>Escarpe:</td>"
-					+ "  <td style='width:15%' rowspan='3'>" + ($("#escarpe").is(':checked') ? "X" : "") + " </td>"
-					+ "  <td style='width:7.5%' rowspan='3'>&gt;10</td>"
-					+ " <td style='width:7.5%' rowspan='3'>" + ($("#pendiente3").is(':checked') ? "X" : "") + " </td>"
+					+ "  <td style='width:15%'>Escarpe:</td>"
+					+ "  <td style='width:15%'>" + ($("#escarpe").is(':checked') ? "X" : "") + " </td>"
+					+ "  <td style='width:7.5%'>&gt;10</td>"
+					+ " <td style='width:7.5%'>" + ($("#pendiente3").is(':checked') ? "X" : "") + " </td>"
 					+ " </tr>"
-					
-					+ "  <tr>"
-					+ "  <td>N. Cedula:</td>"
-					+ "  <td >  " + ($("#cc_propietario").val())+" </td>"
-					+ " </tr>"
-					
-					+ "  <tr>"
-					+ "  <td>Id Campo:</td>"
-					+ "  <td >  " + ($("#telefono").val())+" </td>"
-					+ " </tr>"
-	
-					
 					+ " </tbody>"
 					+ "</table>"
 					+ "<table width='100%' border='1' cellspacing='0' cellpadding='0'>"
@@ -1202,14 +1218,8 @@ function generatePDF() {
 					+ "  <td style='width:100%' class='encabezado'><b>4. INFORMACIÓN GENERAL</b></td>"
 					+ " </tr> "
 					+ " <tr>"
-                    + "<td style='width:100%' align='justify'><p></p><p> " + ( $("#parrafo_general").val() )+"</p>"
-                    + "ABSCISADO: Se tomó como punto de referencia la intersección de la vía en mención con " + ($("#conduce").val() )+"<p>"
-					+ "ANCHO CALZADA:" + ($("#ancho_promedio").val())+" m.</p><p> TOPOGRAFÍA:  " + ($("#topog").val() )+" .</p><p>"
-					+ "COORDENADAS ORIGEN:" + ($("#origen_coord").val() )+" </p><p>"
-					+" Iniciales:E:  " + ($("#coordenadasi_e").val())+"  N:  " + ($("#coordenadasi_n").val())+" .</p><p>		Finales:   E:  " + ($("#coordenadasf_e").val())+"  N:  " + ($("#coordenadasf_n").val())+" .</p><p></p>"
-					+" <p> ESTRUCTURA:  " + ($("#estructura").val() )+"  </p><p>"					
-                    + "TRÁFICO:  " + ($("#trafico").val() )+" </p><p>"
-					+ "GEOMETRÍA:  " + ($("#geometria").val() )+" </p><p></p></td>  "
+                    + "<td style='width:100%;padding:3px;' align='justify'><p>"+$("#postVialParrafo").val()
+					+ "</p></td>  "
 					+ "   </tr>"
 					+ "    </tbody>"
 					+ "</table>"
@@ -1380,7 +1390,7 @@ function generatePDF() {
                     + "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
                     + "    <tbody>"
                     + "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
-                    + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA PRE REGISTRO DE EVALUACIÓN VIAL</td>"
+                    + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA POST REGISTRO DE EVALUACIÓN VIAL</td>"
 					+ "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
                     + "   </tr>"
 					+ "   <tr>"
@@ -1393,25 +1403,23 @@ function generatePDF() {
                     + "  <td style='width: 10%'>OPERADORA:</td>"
                     + "  <td>  "+  window.localStorage.getItem('operadora') +"  </td>"
                     + "   </tr>    "
-					
- + "    </tbody>"
-                    + "</table>"
-                    + "<table width='100%' border='1' cellspacing='0' cellpadding='0'>"
-                    + " <tbody>"
-                    + "  <tr>"
-                    + "  <td >Fecha:</td>"
-                    + "  <td > "+  ($("#fecha").val()) +"</td>"
-                    + "  <td >Acta Nº.</td>"
-                    + "  <td >  PRE-AV-" + $("#customActa").val() +" </td>"
-					
-					+ "  <td >Via</td>"
-                    + "  <td > " + $("#nvia").val() +" </td>"
-					
++ "    </tbody>"
+								+ "</table>"
+								+ "<table width='100%' border='1' cellspacing='0' cellpadding='0'>"
+								+ " <tbody>"
+								+ "  <tr>"
+								+ "  <td >Fecha:</td>"
+								+ "  <td > "+  ($("#fecha").val()) +"</td>"
+								+ "  <td >Acta Nº.</td>"
+								+ "  <td >  POST-AV-" + $("#customActa").val() +" </td>"
+								
+								+ "  <td >Via</td>"
+								+ "  <td > " + $("#nvia").val() +" </td>"
+								
 
-                    + "   </tr>    "
-                    + "  </tbody>"
-                    + "</table>"            
-                    + "</table>"
+								+ "   </tr>    "
+								+ "  </tbody>"
+								+ "</table>"            
 					
 					
 					+ "<table width='100%' border='1' cellspacing='0' cellpadding='0'>"
@@ -1563,7 +1571,7 @@ function generatePDF() {
                     + "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
                     + "    <tbody>"
                     + "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
-                    + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA PRE REGISTRO DE EVALUACIÓN VIAL</td>"
+                    + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA POST REGISTRO DE EVALUACIÓN VIAL</td>"
 					+ "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
                     + "   </tr>"
 					+ "   <tr>"
@@ -1575,25 +1583,25 @@ function generatePDF() {
                     + "  <td style='width: 60%'>  "+ window.localStorage.getItem('programa_sismico') +" </td>"
                     + "  <td style='width: 10%'>OPERADORA:</td>"
                     + "  <td>  "+  window.localStorage.getItem('operadora') +"  </td>"
-                    + "   </tr>    "
 					
- + "    </tbody>"
-                    + "</table>"
-                    + "<table width='100%' border='1' cellspacing='0' cellpadding='0'>"
-                    + " <tbody>"
-                    + "  <tr>"
-                    + "  <td >Fecha:</td>"
-                    + "  <td > "+  ($("#fecha").val()) +"</td>"
-                    + "  <td >Acta Nº.</td>"
-                    + "  <td >  PRE-AV-" + $("#customActa").val() +" </td>"
-					
-					+ "  <td >Via</td>"
-                    + "  <td > " + $("#nvia").val() +" </td>"
-					
+					                       + "  <tr>"
++ "    </tbody>"
+								+ "</table>"
+								+ "<table width='100%' border='1' cellspacing='0' cellpadding='0'>"
+								+ " <tbody>"
+								+ "  <tr>"
+								+ "  <td >Fecha:</td>"
+								+ "  <td > "+  ($("#fecha").val()) +"</td>"
+								+ "  <td >Acta Nº.</td>"
+								+ "  <td >  POST-AV-" + $("#customActa").val() +" </td>"
+								
+								+ "  <td >Via</td>"
+								+ "  <td > " + $("#nvia").val() +" </td>"
+								
 
-                    + "   </tr>    "
-                    + "  </tbody>"
-                    + "</table>"            
+								+ "   </tr>    "
+								+ "  </tbody>"
+								+ "</table>"            
 
 					
 					+ "	<table width='100%' border='1' cellspacing='0' cellpadding='0' style='border: 1px solid black;'>"
@@ -1614,7 +1622,7 @@ function generatePDF() {
 					+ "  <td class='encabezado' colspan='4'><b>FIRMAS DE APROBACIÓN</b></td>"
 					+ "   </tr>"
 					+ "   <tr>"
-					+ " <td width='100%' colspan='4'><p></p>Los presentes están de acuerdo con la evaluación efectuada y en constancia firman siendo las  _______ horas del día ______ del mes  de  ______________ de 201___.</td></tr>"
+					+ " <td width='100%' colspan='4'><p></p><p style='text-align: justify;padding:3px'>Los presentes firman en constancia de la evaluación realizada y las partes se declaran entre si, a paz y salvo por todo concepto y responsabilidad en especial en lo referente a las afectaciones a la vía referenciada y/o construcciones anexas. Para constancia se firma siendo las _________ horas del día ___________ del mes de  ______________ de 201___.</p></td></tr>"
                                                     + "<tr>"
                                     + " <td colspan='4'>AVISO DE PRIVACIDAD PARA RECOLECCIÓN DE DATOS PERSONALES</td> "
                                     + "</tr>"
@@ -1623,190 +1631,134 @@ function generatePDF() {
                                     + "</tr> "
                                     + "<tr>"
                                     + " <td colspan='4'>El firmante manifiesta haber puesto a disposición del Proyecto, de manera verídica, toda la información existente al respecto.</td> "
-                                    + "</tr>"         
-                                    + " <tr>"
-                                    + "     <td style='height:100px;vertical-align:bottom;'>____________________________________</td><td style='height:100px;vertical-align:bottom;'>___________________________________</td><td  style='font-size:8px;vertical-align:bottom;text-align:center' rowspan='3'>huella</td>"
-									+ " </tr>"
-                                    +" <tr>"
-                                    + "     <td width='45%'>NOMBRE DEL REPRESENTANTE DE LA COMUNIDAD</td><td  width='45%'>FIRMA DEL REPRESENTANTE DE LA COMUNIDAD</td>"
-									+ " </tr>"
-                                    +" <tr>"
-                                    + "     <td>Teléfono_______________</td><td>C.C #_____________ de _________</td>"
-									+ " </tr>"  
+                                    + "</tr>"    
+  
+                
+                                        + " <tr>"
+                                        + "     <td style='height:60px;vertical-align:bottom;'>____________________________________</td><td style='height:60px;vertical-align:bottom;'>___________________________________</td><td  style='font-size:8px;vertical-align:bottom;text-align:center' rowspan='3'>huella</td>"
+					+ " </tr>"
+                                        +" <tr>"
+                                        + "     <td width='45%'>NOMBRE DEL REPRESENTANTE DE LA COMUNIDAD</td><td  width='45%'>FIRMA DEL REPRESENTANTE DE LA COMUNIDAD</td>"
+					+ " </tr>"
+                                
 
-									+ " <tr>"
-                                    + "     <td style='height:100px;vertical-align:bottom;'>____________________________________</td><td style='height:100px;vertical-align:bottom;'>___________________________________</td><td  style='font-size:8px;vertical-align:bottom;text-align:center' rowspan='3'>huella</td>"
-									+ " </tr>"
-                                    +" <tr>"
-                                    + "     <td width='45%'>NOMBRE DEL REPRESENTANTE DE LA COMUNIDAD</td><td  width='45%'>FIRMA DEL REPRESENTANTE DE LA COMUNIDAD</td>"
-									+ " </tr>"
-                                    +" <tr>"
-                                    + "     <td>Teléfono_______________</td><td>C.C #_____________ de _________</td>"
-									+ " </tr>"
+                                        +" <tr>"
+                                        + "     <td>Teléfono_______________</td><td>C.C #_____________ de _________</td>"
+					+ " </tr>"   
+                                
                                     + "</table>"
-                                    + "<table width='100%'>"
-									
-									+" <tr>"
-                                    + "     <td style='height:100px;vertical-align:bottom;'>____________________________________</td><td></td><td colspan='2' style='height:100px;vertical-align:bottom;'>___________________________________</td>"
-									+ " </tr>"
-                                    +" <tr>"
-                                    + "     <td>NOMBRE DEL REPRESENTANTE DEL MUNICIPIO</td><td></td><td colspan='2'>FIRMA DEL REPRESENTANTE DEL MUNICIPIO</td>"
-									+ "</tr>"
-                                    +" <tr>"
-                                    + "     <td></td><td></td><td colspan='2'>C.C #_____________ de _________</td>"
-									+ " </tr>"								
-									
-					                + " <tr>"
-                                    + "     <td style='height:100px;vertical-align:bottom;'>____________________________________</td><td></td><td style='height:100px;vertical-align:bottom;'>___________________________________</td><td  style='font-size:8px;vertical-align:bottom;text-align:center' rowspan='3'></td>"
-									+ " </tr>"
-									+" <tr>"
-                                    + "     <td>NOMBRE DEL EVALUADOR PETROSEISMIC SERVICES</td><td></td><td colspan='2'>FIRMA DEL EVALUADOR PETROSEISMIC SERVICES</td>"
-									+ "</tr>"
-                                    +" <tr>"
-                                    + "     <td></td><td></td><td colspan='2'>C.C #_____________ de _________</td>"
-									+ " </tr>"	
-									+" <tr>"
-									+ "     <td></td><td></td><td>TP_______________</td>"
-									+ " </tr>"  									
-                                    +" <tr>"
-                                    + "     <td style='height:100px;vertical-align:bottom;'>APROBADO POR</td><td></td><td colspan='2' style='height:100px;vertical-align:bottom;'></td>"
-									+ " </tr>"
-                                    +" <tr>"
-                                    + "     <td style='height:100px;vertical-align:bottom;'>____________________________________</td><td></td><td colspan='2' style='height:100px;vertical-align:bottom;'>___________________________________</td>"
-									+ " </tr>"
-                                    +" <tr>"
-                                    + "     <td>NOMBRE DEL INTERVENTOR AMBIENTAL</td><td></td><td colspan='2'>FIRMA DEL INTERVENTOR AMBIENTAL</td>"
-									+ "</tr>"
-                                    +" <tr>"
-                                    + "     <td></td><td></td><td colspan='2'>C.C #_____________ de _________</td>"
-									+ " </tr>"
-                                    +" <tr>"
-                                    + "     <td colspan='4' style='height:100px;vertical-align:bottom;'>FECHA DE APROBACIÓN________________</td>"
-									+ "</tr>"
+                                     + "<table width='100%'>"
+					                                	+ " <tr>"
+                                        + "     <td style='height:60px;vertical-align:bottom;'>____________________________________</td><td></td><td style='height:60px;vertical-align:bottom;'>___________________________________</td><td  style='font-size:8px;vertical-align:bottom;text-align:center' rowspan='3'></td>"
+					+ " </tr>"
+					+" <tr>"
+                                        + "     <td>NOMBRE DEL EVALUADOR PETROSEISMIC SERVICES</td><td></td><td colspan='2'>FIRMA DEL EVALUADOR PETROSEISMIC SERVICES</td>"
+					+ "</tr>"
+                                        +" <tr>"
+                                        + "     <td></td><td></td><td colspan='2'>C.C #_____________ de _________</td>"
+					+ " </tr>"
+									 
+									 
+                                	+ " <tr>"
+                                        + "     <td style='height:60px;vertical-align:bottom;'>____________________________________</td><td></td><td style='height:60px;vertical-align:bottom;'>___________________________________</td><td  style='font-size:8px;vertical-align:bottom;text-align:center' rowspan='3'></td>"
+					+ " </tr>"
+                                        +" <tr>"
+                                        + "     <td>NOMBRE DEL SUPERVISOR HSE DE CAMPO ANH </td><td></td><td>FIRMA DEL SUPERVISOR HSE DE CAMPO ANH 	</td>"
+					+ "</tr>"
+                                        +" <tr>"
+                                        + "     <td>FECHA DE APROBACIÓN________________</td><td></td><td>C.C #_____________ de _________</td>"
+					+ " </tr>"   
+                                        +" <tr>"
+                                        + "     <td style='height:60px;vertical-align:bottom;'>APROBADO POR</td><td></td><td colspan='2' style='height:60px;vertical-align:bottom;'></td>"
+					+ " </tr>"
+  
+                                        +" <tr>"
+                                        + "     <td style='height:60px;vertical-align:bottom;'>____________________________________</td><td></td><td colspan='2' style='height:60px;vertical-align:bottom;'>___________________________________</td>"
+					+ " </tr>"
+                                        +" <tr>"
+                                        + "     <td>NOMBRE DEL SUPERVISOR AMBIENTAL ANH</td><td></td><td colspan='2'>FIRMA DEL SUPERVISOR AMBIENTAL ANH</td>"
+					+ "</tr>"
+                                        +" <tr>"
+                                        + "     <td></td><td></td><td colspan='2'>C.C #_____________ de _________</td>"
+					+ " </tr>"
+                                        +" <tr>"
+                                        + "     <td colspan='4' style='height:60px;vertical-align:bottom;'>FECHA DE APROBACIÓN________________</td>"
+					+ "</tr>"
                 
                                         + " </tbody>"
 					+ "</table>"
                                         + "</p>"
-  					+ "<p style='page-break-after: always;'> "   
+  					+ "<p style='page-break-after: always;'> " 
 
-					+ " <table style='border-top: 1px solid' width='100%' border='1' cellspacing='0' cellpadding='0'>"
-					+ " <tbody>"
-					+ " <tr><td class='encabezado2' colspan='4'>Pagina "+ (currentPage2+1) +" de "+$("#pagDe").val()+"&nbsp&nbsp</td></tr>"
-					+ "  <tr>"
-					+ "  <td colspan='4'>"
-					+ "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
-					+ "    <tbody>"
-					+ "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
-					+ "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA POST REGISTRO DE EVALUACIÓN VIAL</td>"
-					+ "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
-					+ "   </tr>"
-					+ "   <tr>"
-					+ "    <td colspan='4'>"
-					+ "    <table width='100%' border='0' cellspacing='0' cellpadding='0'><tr>"
-					+ "     <td  style='font-size:10px;text-align:left;'>COD: FOR-QC-09</td>"					
-					+ "	    <td  style='font-size:10px;text-align:right;padding-right:5px'>Versi&oacute;n 8, Octubre de 2018</td></tr></table>"
-					+ "  </td></tr><tr>"
-					+ "  <td style='width: 60%;font-size:14px'>  "+ window.localStorage.getItem('programa_sismico') +" </td>"
-					+ "  <td style='width: 10%;font-size:14px'>OPERADORA:</td>"
-					+ "  <td style='font-size:14px;'>   "+  window.localStorage.getItem('operadora') +"  </td>"
-					+ "   </tr>    "
-					+ "    </tbody>"
-					+ "</table>"
-					+ "<table width='100%' border='1' cellspacing='0' cellpadding='0'>"
-					+ " <tbody>"
-					+ "  <tr>"
-					+ "  <td >Fecha:</td>"
-					+ "  <td > "+  ($("#fecha").val()) +"</td>"
-					+ "  <td >Acta Nº.</td>"
-					+ "  <td >  PRE-AV-" + $("#customActa").val() +" </td>"
-
-					+ "  <td >Via</td>"
-					+ "  <td > " + $("#nvia").val() +" </td>"
-
-					+ "   </tr>    "
-					+ "  </tbody>"
-					+ "</table>"
 
 					
-					+ "     <table width='100%' border='1' cellspacing='0' cellpadding='0'>"
+													+ " <table style='border-top: 1px solid' width='100%' border='1' cellspacing='0' cellpadding='0'>"
+								+ " <tbody>"
+								+ " <tr><td class='encabezado2' colspan='4'>Pagina "+ currentPage +" de "+$("#pagDe").val()+"&nbsp&nbsp</td></tr>"
+								+ "  <tr>"
+								+ "  <td colspan='4'>"
+								+ "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
+								+ "    <tbody>"
+								+ "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
+								+ "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA POST REGISTRO DE EVALUACIÓN VIAL</td>"
+								+ "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
+								+ "   </tr>"
+								+ "   <tr>"
+								+ "    <td colspan='4'>"
+								+ "    <table width='100%' border='0' cellspacing='0' cellpadding='0'><tr>"
+								+ "     <td  style='font-size:10px;text-align:left;'>COD: FOR-QC-09</td>"					
+								+ "	    <td  style='font-size:10px;text-align:right;padding-right:5px'>Versi&oacute;n 8, Octubre de 2018</td></tr></table>"
+								+ "  </td></tr><tr>"
+								+ "  <td style='width: 60%;font-size:14px'>  "+ window.localStorage.getItem('programa_sismico') +" </td>"
+								+ "  <td style='width: 10%;font-size:14px'>OPERADORA:</td>"
+								+ "  <td style='font-size:14px;'>   "+  window.localStorage.getItem('operadora') +"  </td>"
+								+ "   </tr>    "
+								+ "    </tbody>"
+								+ "</table>"
+					
+					
+
+					
+					+ "     <table width='100%' border='1' cellspacing='0' cellpadding='0'  style='padding-top: 10px;margin-top: 40px'>"
 					+ "       <tbody>"
                                 	+ "            <tr>"
-					+ "              <td class='rotate'><div>PRE-AV-"+(padDigits($("#customActa").val(), 3))+"-02</div></td>"
-                                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-vial-" + ac +"-"+ 2 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
-                                        + "              <td  class='rotate'><div>PRE-AV-"+(padDigits($("#customActa").val(), 3))+"-01</div></td>"
-                                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-vial-" + ac +"-"+ 1 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
+					+ "              <td class='rotate'><div>POST-AV-"+(padDigits($("#customActa").val(), 3))+"-02</div></td>"
+                                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-vial-" + ac +"-"+ 2 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
+                                        + "              <td  class='rotate'><div>POST-AV-"+(padDigits($("#customActa").val(), 3))+"-01</div></td>"
+                                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-vial-" + ac +"-"+ 1 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
 					+ "            </tr>"
                                 	+ "            <tr>"
-					+ "              <td class='rotate'><div>PRE-AV-"+(padDigits($("#customActa").val(), 3))+"-04</div></td>"
-                                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-vial-" + ac +"-"+ 4 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
-                                        + "              <td  class='rotate' ><div>PRE-AV-"+(padDigits($("#customActa").val(), 3))+"-03</div></td>"
-                                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-vial-" + ac +"-"+ 3 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
+					+ "              <td class='rotate'><div>POST-AV-"+(padDigits($("#customActa").val(), 3))+"-04</div></td>"
+                                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-vial-" + ac +"-"+ 4 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
+                                        + "              <td  class='rotate' ><div>POST-AV-"+(padDigits($("#customActa").val(), 3))+"-03</div></td>"
+                                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-vial-" + ac +"-"+ 3 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
 					+ "            </tr>"
  					+ "         </tbody>"
 					+ "       </table></p>"	
-                    + "     <p style='page-break-after: always;'> "
-									
-										+ " <table style='border-top: 1px solid' width='100%' border='1' cellspacing='0' cellpadding='0'>"
-					+ " <tbody>"
-					+ " <tr><td class='encabezado2' colspan='4'>Pagina "+ (currentPage2+2) +" de "+$("#pagDe").val()+"&nbsp&nbsp</td></tr>"
-					+ "  <tr>"
-					+ "  <td colspan='4'>"
-					+ "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
-					+ "    <tbody>"
-					+ "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
-					+ "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA POST REGISTRO DE EVALUACIÓN VIAL</td>"
-					+ "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
-					+ "   </tr>"
-					+ "   <tr>"
-					+ "    <td colspan='4'>"
-					+ "    <table width='100%' border='0' cellspacing='0' cellpadding='0'><tr>"
-					+ "     <td  style='font-size:10px;text-align:left;'>COD: FOR-QC-09</td>"					
-					+ "	    <td  style='font-size:10px;text-align:right;padding-right:5px'>Versi&oacute;n 8, Octubre de 2018</td></tr></table>"
-					+ "  </td></tr><tr>"
-					+ "  <td style='width: 60%;font-size:14px'>  "+ window.localStorage.getItem('programa_sismico') +" </td>"
-					+ "  <td style='width: 10%;font-size:14px'>OPERADORA:</td>"
-					+ "  <td style='font-size:14px;'>   "+  window.localStorage.getItem('operadora') +"  </td>"
-					+ "   </tr>    "
-					+ "    </tbody>"
-					+ "</table>"
-					+ "<table width='100%' border='1' cellspacing='0' cellpadding='0'>"
-					+ " <tbody>"
-					+ "  <tr>"
-					+ "  <td >Fecha:</td>"
-					+ "  <td > "+  ($("#fecha").val()) +"</td>"
-					+ "  <td >Acta Nº.</td>"
-					+ "  <td >  PRE-AV-" + $("#customActa").val() +" </td>"
-
-					+ "  <td >Via</td>"
-					+ "  <td > " + $("#nvia").val() +" </td>"
-
-					+ "   </tr>    "
-					+ "  </tbody> "				
-					+ "</table>"				
-									
-					+ "       <table width='100%' border='1' cellspacing='0' cellpadding='0'>"
+                                	+ "     <p style='page-break-after: always;'> "
+					+ "       <table width='100%' border='1' cellspacing='0' cellpadding='0'  style='padding-top: 10px;margin-top: 40px'>"
 					+ "       <tbody>"
                                 	+ "            <tr>"
                                 	+ "            <tr>"
-					+ "              <td class='rotate'><div>PRE-AV-"+(padDigits($("#customActa").val(), 3))+"-06</div></td>"
-                                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-vial-" + ac +"-"+ 6 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
-                                        + "              <td  class='rotate'><div>PRE-AV-"+(padDigits($("#customActa").val(), 3))+"-05</div></td>"
-                                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-vial-" + ac +"-"+ 5 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
+					+ "              <td class='rotate' style='height:650px;width:30px;'><div>POST-AV-"+(padDigits($("#customActa").val(), 3))+"-06</div></td>"
+                                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-vial-" + ac +"-"+ 6 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
+                                        + "              <td  class='rotate' style='height:650px;width:30px;'><div>POST-AV-"+(padDigits($("#customActa").val(), 3))+"-05</div></td>"
+                                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-vial-" + ac +"-"+ 5 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
 					+ "            </tr>"
                                 	+ "            <tr>"
-					+ "              <td class='rotate'><div>PRE-AV-"+(padDigits($("#customActa").val(), 3))+"-07</div></td>"
-                                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-vial-" + ac +"-"+ 7 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
-                                        + "              <td  class='rotate'><div>PRE-AV-"+(padDigits($("#customActa").val(), 3))+"-08</div></td>"
-                                        + "              <td  style='width:380px;'><img src='"+ window.localStorage.getItem('imgURL') +"pre-vial-" + ac +"-"+ 8 + ".jpg' style='transform:rotate(90deg);width: 490px;height: 360px'></td>"
+					+ "              <td class='rotate' style='height:650px;width:30px;'><div>POST-AV-"+(padDigits($("#customActa").val(), 3))+"-07</div></td>"
+                                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-vial-" + ac +"-"+ 7 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
+                                        + "              <td  class='rotate' style='height:650px;width:30px;'><div>POST-AV-"+(padDigits($("#customActa").val(), 3))+"-08</div></td>"
+                                        + "              <td  style='width:400px;'><img src='"+ cordova.file.dataDirectory +"/files/post-vial-" + ac +"-"+ 8 + ".jpg' style='transform:rotate(90deg);width: 500px;height: 360px'></td>"
 					+ "            </tr>"
 					+ "         </tbody>"
-					+ "       </table></p>"			
+					+ "       </table></p>"					
 
 					+ "</body></html>",
             documentSize: 'Letter',
             landscape: 'portrait',
             type: 'share',
-			fileName: 'pre-vial-'+ $("#acta").val()
+			fileName: 'post-vial-'+ $("#acta").val()
         }, this.success, this.failure);
 }
 
@@ -1833,11 +1785,11 @@ function resolveOnSuccess(entry){
     var d = new Date();
     var n = d.getTime();
     //new file name
-    var newFileName = 'pre-vial-' + ac +'-'+ vialImageNumber + ".jpg";
+    var newFileName = 'post-vial-' + ac +'-'+ vialImageNumber + ".jpg";
     i++;
     
     var dir = '/';
-    window.localStorage.setItem('pre-vial-' + ac +'-'+ vialImageNumber,'');
+    window.localStorage.setItem('post-vial-' + ac +'-'+ vialImageNumber,'');
 	
 
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys) {
@@ -1845,7 +1797,6 @@ function resolveOnSuccess(entry){
     fileSys.root.getDirectory( dir ,
                     {create:false, exclusive: true},
                     function(directory) {
-						window.localStorage.setItem("imgURL", directory.nativeURL);
                         entry.copyTo(directory, newFileName,  successMove, resOnError);
                     },
                     resOnError);
@@ -1857,7 +1808,7 @@ function resolveOnSuccess(entry){
 function successMove(entry) {
     //I do my insert with "entry.fullPath" as for the path
 	var url = entry.toURL(); // file or remote URL. url can also be dataURL, but giving it a file path is much faster
-	var album = 'pre-vial-' + ac;
+	var album = 'post-vial-' + ac;
 	cordova.plugins.photoLibrary.saveImage(url, album, function (libraryItem) {}, function (err) {});
 }
 
@@ -1913,6 +1864,7 @@ function insertUpdate() {
 	var abscisa_final = $("#abscisa_final").val();
 	var desp_ensitu1 = $("#desp_ensitu1").val();
 	var desp_ensitu2 = $("#desp_ensitu2").val();
+	var fecha = $("#fecha").val();
 	var coordenadasi_e = $("#coordenadasi_e").val();
 	var coordenadasi_n = $("#coordenadasi_n").val();
 	var coordenadasf_e = $("#coordenadasf_e").val();
@@ -1968,9 +1920,11 @@ function insertUpdate() {
     var estructura = $("#estructura").val();
     var geometria = $("#geometria").val();
     var parrafo_general = $("#parrafo_general").val();
+	
+	var  postVialParrafo  = $("#postVialParrafo").val();
+	
 	var via = $("#nvia").val();
-	var customActa =  $("#customActa").val();
-	var pagDe =  $("#pagDe").val();
+	
 	
 	jQuery.fn.pop = [].pop;
     jQuery.fn.shift = [].shift;
@@ -2012,7 +1966,7 @@ function insertUpdate() {
 		
 
 	var arteData = JSON.stringify(data);
-	//alert(arteData);
+	console.log(arteData);
 	
 	
 	
@@ -2057,33 +2011,15 @@ function insertUpdate() {
 	
 	myDB.transaction(function(transaction) {
        
-            transaction.executeSql("DELETE FROM pre_patologia_p where id_acta ="+id);
-            transaction.executeSql("DELETE FROM pre_obra_arte_p where id_acta ="+id);
+            transaction.executeSql("DELETE FROM post_patologia_p where id_acta ="+id);
+            transaction.executeSql("DELETE FROM post_obra_arte_p where id_acta ="+id);
 
         });
 	
 
-		
 	$.each(JSON.parse(arteData), function(i, item) {
 		
-		var abscisa =  item.abscisa === '' ? '-' : item.abscisa;
-		var estribos_col_long_mayor =  item.estribos_col_long_mayor === '' ? '-' : item.estribos_col_long_mayor;
-		var estribos_col_long_menor =  item.estribos_col_long_menor === '' ? '-' : item.estribos_col_long_menor;
-		var estribos_col_ancho_mayor =  item.estribos_col_ancho_mayor === '' ? '-' : item.estribos_col_ancho_mayor;
-		var estribos_col_ancho_menor =  item.estribos_col_ancho_menor === '' ? '-' : item.estribos_col_ancho_menor;		
-		var vigas_col_long_mayor =  item.vigas_col_long_mayor === '' ? '-' : item.vigas_col_long_mayor;
-		var vigas_col_long_menor =  item.vigas_col_long_menor === '' ? '-' : item.vigas_col_long_menor;
-		var vigas_col_ancho_mayor =  item.vigas_col_ancho_mayor === '' ? '-' : item.vigas_col_ancho_mayor;
-		var vigas_col_ancho_menor =  item.vigas_col_ancho_menor === '' ? '-' : item.vigas_col_ancho_menor;
-		var placas_col_long_mayor =  item.placas_col_long_mayor === '' ? '-' : item.placas_col_long_mayor;
-		var placas_col_long_menor =  item.placas_col_long_menor === '' ? '-' : item.placas_col_long_menor;
-		var placas_col_ancho_mayor =  item.placas_col_ancho_mayor === '' ? '-' : item.placas_col_ancho_mayor;
-		var placas_col_ancho_menor =  item.placas_col_ancho_menor === '' ? '-' : item.placas_col_ancho_menor;
-		var observaciones_o =  item.observaciones_o === '' ? '------' : item.observaciones_o;
-		
-		
-		
-		var artQuery = "INSERT INTO pre_obra_arte_p ("
+		var artQuery = "INSERT INTO post_obra_arte_p ("
                	+ "id_acta,"
 				+ "cod_obra_arte,"
 				+ "abscisa,"
@@ -2125,62 +2061,56 @@ function insertUpdate() {
 				+ ");";
 				
 		//alert(artQuery);
-		//console.log(artQuery);
-		
-
-		
-		if(!item.removeR){
+		console.log(artQuery);
 				
-			myDB.transaction(function(transaction) {
+		myDB.transaction(function(transaction) {
 
-			transaction.executeSql(artQuery, [
-					id,
-					item.cod_obra_arte,
-					abscisa,
-					item.estribos_col_m,
-					item.estribos_col_e,
-					item.estribos_col_p,
-					estribos_col_long_mayor,
-					estribos_col_long_menor,
-					estribos_col_ancho_mayor,
-					estribos_col_ancho_menor,
-					item.estribos_t,
-					item.estribos_l,
-					item.estribos_a,
-					item.vigas_col_m,
-					item.vigas_col_e,
-					item.vigas_col_p,
-					vigas_col_long_mayor,
-					vigas_col_long_menor,
-					vigas_col_ancho_mayor,
-					vigas_col_ancho_menor,
-					item.vigas_t,
-					item.vigas_l,
-					item.vigas_a,
-					item.placas_col_m,
-					item.placas_col_e,
-					item.placas_col_p,
-					placas_col_long_mayor,
-					placas_col_long_menor,
-					placas_col_ancho_mayor,
-					placas_col_ancho_menor,
-					item.placas_t,
-					item.placas_l,
-					item.placas_a,
-					observaciones_o
-				]
-				, function(tx, result) {
-					//alert('obras de arte guardadas');
-				},
-				function(tx, err) {
-					alert(err.message);
-				});
+		transaction.executeSql(artQuery, [
+				id,
+				item.cod_obra_arte,
+				item.abscisa,
+				item.estribos_col_m,
+				item.estribos_col_e,
+				item.estribos_col_p,
+				item.estribos_col_long_mayor,
+				item.estribos_col_long_menor,
+				item.estribos_col_ancho_mayor,
+				item.estribos_col_ancho_menor,
+				item.estribos_t,
+				item.estribos_l,
+				item.estribos_a,
+				item.vigas_col_m,
+				item.vigas_col_e,
+				item.vigas_col_p,
+				item.vigas_col_long_mayor,
+				item.vigas_col_long_menor,
+				item.vigas_col_ancho_mayor,
+				item.vigas_col_ancho_menor,
+				item.vigas_t,
+				item.vigas_l,
+				item.vigas_a,
+				item.placas_col_m,
+				item.placas_col_e,
+				item.placas_col_p,
+				item.placas_col_long_mayor,
+				item.placas_col_long_menor,
+				item.placas_col_ancho_mayor,
+				item.placas_col_ancho_menor,
+				item.placas_t,
+				item.placas_l,
+				item.placas_a,
+				item.observaciones_o
+            ]
+            , function(tx, result) {
+                //alert('obras de arte guardadas');
+            },
+			function(tx, err) {
+				alert(err.message);
 			});
-		
-		}
+        });
 				
 	
-		//console.log(item.cod_obra_arte);
+		console.log(item.cod_obra_arte);
 		
 		
 	});
@@ -2188,22 +2118,7 @@ function insertUpdate() {
 	
 	$.each(JSON.parse(patoData), function(i, item) {
 		
-		var abscisa =  item.abscisa === '' ? '-' : item.abscisa;
-		var izq =  item.izq === '' ? '-' : item.izq;
-		var eje =  item.eje === '' ? '-' : item.eje;
-		var der =  item.der === '' ? '-' : item.der;
-		
-		var long_mayor =  item.long_mayor === '' ? '-' : item.long_mayor;	
-		var long_menor =  item.long_menor === '' ? '-' : item.long_menor;	
-		var ancho_mayor =  item.ancho_mayor === '' ? '-' : item.ancho_mayor;	
-		var ancho_menor =  item.ancho_menor === '' ? '-' : item.ancho_menor;	
-		var prof_mayor =  item.prof_mayor === '' ? '-' : item.prof_mayor;	
-		var prof_menor =  item.prof_menor === '' ? '-' : item.prof_menor;
-		var observaciones_p =  item.observaciones_p === '' ? '------' : item.observaciones_p;			
-		
-		
-		
-		var patoQuery = "INSERT INTO pre_patologia_p ("
+		var patoQuery = "INSERT INTO post_patologia_p ("
 				+ "id_acta,"
 				+ "abscisa,"
 				+ "valor_p,"
@@ -2226,30 +2141,28 @@ function insertUpdate() {
 				+ ");";
 				
 		//alert(patoQuery);
-		//console.log(patoQuery);
-
-		if(!item.removeRP){
-			
+		console.log(patoQuery);
+				
 		myDB.transaction(function(transaction) {
 
 			transaction.executeSql(patoQuery, [
 					id,
-					abscisa,
+					item.abscisa,
 					item.valor_p,
 					item.valor_e,
-					izq,
-					eje,
-					der,
+					item.izq,
+					item.eje,
+					item.der,
 					item.longi,
 					item.aleatoria,
 					item.transver,
-					long_mayor,
-					long_menor,
-					ancho_mayor,
-					ancho_menor,
-					prof_mayor,
-					prof_menor,
-					observaciones_p
+					item.long_mayor,
+					item.long_menor,
+					item.ancho_mayor,
+					item.ancho_menor,
+					item.prof_mayor,
+					item.prof_menor,
+					item.observaciones_p
 				]
 				, function(tx, result) {
 					//alert('patologias guardadas');
@@ -2258,8 +2171,6 @@ function insertUpdate() {
 					alert(err.message);
 				});
         });
-		
-		}
 				
 
 		
@@ -2268,7 +2179,7 @@ function insertUpdate() {
 
     if (window.localStorage.getItem("editar") === 'true') {
 
-        var executeQuery = "UPDATE pre_vial_p SET "				
+        var executeQuery = "UPDATE post_vial_p SET "				
 				+ "	permiso=?,"
 				+ "	P_DEPTO=?,"
 				+ "	P_MUN=?,"
@@ -2333,10 +2244,9 @@ function insertUpdate() {
 				+ "	topog=?,"
 				+ "	estructura=?,"
 				+ "	geometria=?,"
-				+ "	custom_acta=?,"
-				+ "	pag_de=?,"
 				+ "	via=?,"
-                + "	parrafo_general=?"                        
+                + "	parrafo_general=?,"  
+				+ "post_cparrafo=?" 		
                 + " WHERE id =" + id;
 
         myDB.transaction(function(transaction) {
@@ -2406,10 +2316,9 @@ function insertUpdate() {
 				topog,
 				estructura,
 				geometria,
-				customActa,
-				pagDe,
 				via,
-                parrafo_general
+                                parrafo_general,
+								postVialParrafo
             ]
             , function(tx, result) {
                 alert('Se actualizo el acta');
@@ -2422,10 +2331,9 @@ function insertUpdate() {
 
     } else {
 
-
-
+		
         myDB.transaction(function(transaction) {
-            var executeQuery = "INSERT INTO pre_vial_p ("
+            var executeQuery = "INSERT INTO post_vial_p ("
                     + "	id,"
 					+ "	programa_sismico,"
 					+ "	operadora,"
@@ -2499,10 +2407,9 @@ function insertUpdate() {
                     + "topog, "
                     + "estructura, "
                     + "geometria,"
-					+ "custom_acta,"
-					+ "pag_de,"					
 					+ "via,"
-                    + "parrafo_general"            
+                    + "parrafo_general,"   
+					+ "post_cparrafo"
                     + ") VALUES ("
                     + "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
 					+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
@@ -2511,7 +2418,7 @@ function insertUpdate() {
 					+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
 					+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "		
 					+ "?, ? ,? ,? ,? ,? ,? ,? ,? ,?, "	
-					+ "?, ? ,?, ?, ?, ?, ?  "
+					+ "?, ? ,?, ?, ? , ? "
 					+ ");";
 					
 			//alert(executeQuery);	
@@ -2591,10 +2498,9 @@ function insertUpdate() {
                 topog,
                 estructura,
                 geometria,
-				customActa,
-				pagDe,
 				via,
-                parrafo_general
+                parrafo_general,
+				postVialParrafo
                 
             ]
             , function(tx, result) {
@@ -2641,7 +2547,7 @@ function generarEncabezado() {
                         + "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
                         + "    <tbody>"
                         + "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
-                        + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA PRE REGISTRO DE EVALUACIÓN VIAL</td><td>FR-QHSE-15<p style='font-size:11px'>V2  23-03-2018</p></td></tr></tbody></table></td>"
+                        + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA POST REGISTRO DE EVALUACIÓN VIAL</td><td>FR-QHSE-15<p style='font-size:11px'>V2  23-03-2018</p></td></tr></tbody></table></td>"
                         + "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
 						+ "   </tr>"
 						
@@ -2665,7 +2571,7 @@ function generarEncabezado() {
                         + "  <td >Fecha:</td>"
                         + "  <td > "+ ($("#fecha").val()) +"</td>"
                         + "  <td >Acta Nº.</td>"
-                        + "  <td >  PRE-AV-" + (padDigits(customActa, 3)) +" </td>"
+                        + "  <td >  POST-AV-" + (padDigits(customActa, 3)) +" </td>"
 						
 											+ "  <td >Via</td>"
                     + "  <td > " + $("#nvia").val() +" </td>"
@@ -2687,7 +2593,7 @@ function generarEncabezado() {
                     + "  <table width='100%' border='0' cellspacing='0' cellpadding='0'>"
                     + "    <tbody>"
                     + "      <tr><td style='width: 10%;height=75px'><img width='90' height='60' src='file:///storage/emulated/0/Download/logo.PNG'></td>"
-                    + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA PRE REGISTRO DE EVALUACIÓN VIAL</td>"
+                    + "      <td style='width: 80%;height:75px;text-align:center;font-size:18px'>ACTA POST REGISTRO DE EVALUACIÓN VIAL</td>"
 					+ "      <td><img width='90' height='60' src='file:///storage/emulated/0/Download/logo2.PNG'></td></tr></tbody></table></td>"
                     + "   </tr>"
 					+ "   <tr>"
@@ -2700,21 +2606,23 @@ function generarEncabezado() {
                     + "  <td style='width: 10%'>OPERADORA:</td>"
                     + "  <td>  "+  window.localStorage.getItem('operadora') +"  </td>"
                     + "   </tr>    "
-                    + "    </tbody>"
-                    + "</table>"
-                    + "<table width='100%' border='1' cellspacing='0' cellpadding='0'>"
-                    + " <tbody>"
-                    + "  <tr>"
-                    + "  <td >Fecha:</td>"
-                    + "  <td > "+  ($("#fecha").val()) +"</td>"
-                    + "  <td >Acta Nº.</td>"
-                    + "  <td >  PRE-AV-" + $("#customActa").val() +" </td>"
-					
-										+ "  <td >Via</td>"
-                    + "  <td > " + $("#nvia").val() +" </td>"
++ "    </tbody>"
+								+ "</table>"
+								+ "<table width='100%' border='1' cellspacing='0' cellpadding='0'>"
+								+ " <tbody>"
+								+ "  <tr>"
+								+ "  <td >Fecha:</td>"
+								+ "  <td > "+  ($("#fecha").val()) +"</td>"
+								+ "  <td >Acta Nº.</td>"
+								+ "  <td >  POST-AV-" + $("#customActa").val() +" </td>"
+								
+								+ "  <td >Via</td>"
+								+ "  <td > " + $("#nvia").val() +" </td>"
+								
 
-                    + "   </tr>    "
-                    + "  </tbody>"
+								+ "   </tr>    "
+								+ "  </tbody>"
+								+ "</table>"            
                     + "</table>"  
                         + "</p>";
                 
