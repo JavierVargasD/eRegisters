@@ -837,7 +837,7 @@ function generatePDF() {
         }, this.success, this.failure );
 }
 
-function capturePhoto() {
+function capturePhoto(imageNumber) {
     eroImageNumber = imageNumber;
     navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50, encodingType: Camera.EncodingType.JPEG });
 }
